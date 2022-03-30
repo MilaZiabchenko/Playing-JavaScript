@@ -52,7 +52,7 @@ input.invalid {
 
 input + p {
 	text-align: center;
-	margin: 0 10px;
+	margin: 5px;
 	color: hsl(15, 100%, 65%);
 	opacity: 0;
 	height: 2em;
