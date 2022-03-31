@@ -1,0 +1,23 @@
+{
+  "name": "javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d Regular Expressions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MilaZiabchenko/Playing-JavaScript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MilaZiabchenko/Playing-JavaScript/issues"
+  },
+  "homepage": "https://github.com/MilaZiabchenko/Playing-JavaScript",
+  "dependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}
