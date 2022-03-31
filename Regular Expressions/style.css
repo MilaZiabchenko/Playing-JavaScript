@@ -1,63 +1,63 @@
 body,
 input {
-	font-family: Arial, Helvetica, sans-serif;
-	color: hsl(120, 50%, 50%);
-	background: #111;
+  font-family: Arial, Helvetica, sans-serif;
+  color: hsl(120, 50%, 50%);
+  background: #111;
 }
 
 h1 {
-	font-size: 2.5em;
+  font-size: 2.5em;
 }
 
 h1,
 h3 {
-	text-align: center;
+  text-align: center;
 }
 
 header {
-	margin: 2em auto;
+  margin: 2em auto;
 }
 
 form {
-	width: 500px;
-	margin: 2.5em auto;
+  width: 500px;
+  margin: 2.5em auto;
 }
 
 input {
-	display: block;
-	padding: 8px 16px;
-	font-size: 2em;
-	margin: 10px auto;
-	width: 100%;
-	box-sizing: border-box;
-	border-radius: 10px;
-	border: 3px solid #ccc;
-	outline: none !important;
-	color: #fff;
+  display: block;
+  padding: 8px 16px;
+  font-size: 2em;
+  margin: 10px auto;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 10px;
+  border: 3px solid #ccc;
+  outline: none !important;
+  color: #fff;
 }
 
 input::placeholder {
-	color: #fff;
+  color: #fff;
 }
 
 input.valid {
-	border-color: hsl(120, 50%, 50%);
-	background: hsl(120, 30%, 90%);
-	color: hsl(120, 50%, 50%);
+  border-color: hsl(120, 50%, 50%);
+  background: hsl(120, 30%, 90%);
+  color: hsl(120, 50%, 50%);
 }
 
 input.invalid {
-	border-color: hsl(15, 100%, 65%);
+  border-color: hsl(15, 100%, 65%);
 }
 
 input + p {
-	text-align: center;
-	margin: 5px;
-	color: hsl(15, 100%, 65%);
-	opacity: 0;
-	height: 2em;
+  text-align: center;
+  margin: 5px;
+  color: hsl(15, 100%, 65%);
+  opacity: 0;
+  height: 2em;
 }
 
 input.invalid + p {
-	opacity: 1;
+  opacity: 1;
 }
