@@ -404,14 +404,22 @@ const todoTask = Saturday.map(todo => console.log(todo.task));
 // filter()
 const todoDone = Saturday.filter(todo => console.log(todo.done)); // returns a subset of the array
 
+// Higher-order array methods with predicate functions
+
+// A predicate function is a function that takes one value as input and returns true or false based on whether the value satisfies the condition.
+
 // find()
-const foundTask = Saturday.find(todo => todo.task === 'Coding'); // returns the first found item
+const foundTask = Saturday.find(todo => todo.task === 'Coding'); // returns the value of the first element in the array where predicate is true, and undefined otherwise.
 
 console.log({ foundTask });
 console.log(foundTask);
 
 // findIndex()
-index = Saturday.findIndex(todo => todo.task === 'Coding');
+index = Saturday.findIndex(todo => todo.task === 'Coding'); // returns the index of the first element in the array where predicate is true, and -1 otherwise.
+
+console.log(index);
+
+index = Saturday.findIndex(todo => todo.task === 'Slacking');
 
 console.log(index);
 
@@ -441,7 +449,7 @@ const doneTasks = Saturday.filter(todo => todo.done).map(todo => todo.task); // 
 
 console.log(doneTasks);
 
-const agenda = [
+const agendaItems = [
   {
     id: 1,
     task: 'Buying a new scratching post for Leo',
@@ -455,20 +463,23 @@ const agenda = [
   {
     id: 3,
     task: 'Connecting with feelings of Bogdan or disconnecting from him',
-    status: true,
+    status: false,
   },
   {
     id: 4,
     task: 'Resolving sleep issues',
-    status: true,
+    status: false,
   },
 ];
 
-agenda.push({
-  id: 5,
-  task: 'Writing a message to Massimo',
-  status: false,
-});
+const agenda = [
+  ...agendaItems,
+  {
+    id: 5,
+    task: 'Writing a message to Massimo',
+    status: false,
+  },
+];
 
 agenda[4].status = true;
 
@@ -482,7 +493,7 @@ for (let idx in agenda) {
   console.log(idx, typeof idx);
 }
 
-agenda.forEach(todo => console.log({ todo }));
+agenda.forEach(console.log);
 
 const agendaTasks = agenda.map(todo => todo.task);
 
@@ -526,30 +537,69 @@ const isAnyAgendaTaskEndsWithLeo = agenda.some(todo =>
 
 console.log(isAnyAgendaTaskEndsWithLeo);
 
-// How array methods work internally
+const arrOfNums = [1, 2, 3, 4, 5, 6, 7];
 
-function forEach(arr, cb) {
-  arr.forEach(el => cb(el));
+// reduceRight()
+let sumOfSquareRootsOfEvenNums = arrOfNums
+  .filter(element => !(element % 2))
+  .reduceRight((acc, element) => acc + Math.sqrt(element), 0); // filter().reduceRight()
+
+console.log(sumOfSquareRootsOfEvenNums);
+
+sumOfSquareRootsOfEvenNums = arrOfNums.reduce(
+  (acc, element) => acc + (element % 2 ? 0 : Math.sqrt(element)),
+  0
+); // filtering right inside reduce() or reduceRight() makes calculations faster
+
+console.log(sumOfSquareRootsOfEvenNums);
+
+// Polyfills: how array methods work internally
+
+// A piece of code that provides native support to the older browsers that don't have support of modern functionalities of JavaScript is known as polyfill.
+
+Array.prototype.myForEachPolyfill = function (cb) {
+  for (let i = 0; i < this.length; i++) {
+    cb(this[i]);
+  }
+};
+
+function myForEachFunc(arr, cb) {
+  arr.forEach(cb);
 }
 
-forEach(agenda, todo => console.log(todo.task));
-
-Array.prototype.myMap = function () {
-  return this;
-};
-Array.prototype.myArrowMap1 = () => this;
-Array.prototype.myArrowMap2 = () => agenda;
-Array.prototype.myArrowMap3 = () => `Hey, how's it going with your tasks?`;
-
-console.log(Array.prototype.myMap);
 console.log(Array.prototype);
-console.log(agenda.myMap());
-console.log(agenda.myArrowMap1());
-console.log(agenda.myArrowMap2());
-console.log(agenda.myArrowMap3());
+console.log(Array.prototype.myForEachPolyfill);
 
-function map(arr, transform) {
+agenda.myForEachPolyfill(todo => console.log(todo.task));
+myForEachFunc(agenda, todo => console.log(todo.task));
+
+Array.prototype.myMapPolyfill = function (cb) {
+  const newArr = [];
+
+  for (let i = 0; i < this.length; i++) {
+    newArr.push(cb(this[i]));
+  }
+
+  return newArr;
+};
+
+function double(num) {
+  return num + num;
+}
+
+function raiseToThePowerOfTwo(num) {
+  return num * num;
+}
+
+console.log(arrOfNums.myMapPolyfill(double));
+console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
+console.log(
+  arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
+);
+
+function myMapFunc(arr, transform) {
   let mapped = [];
+
   for (let el of arr) {
     mapped.push(transform(el));
   }
@@ -557,15 +607,27 @@ function map(arr, transform) {
   return mapped;
 }
 
-console.log(map(agenda, todo => todo.task));
-console.log(agenda.map(todo => todo.task));
-console.log(map([2, 5, 8], el => el + 3));
-console.log(map([1, 2, 3, 4, 5], el => el * 2));
+console.log(myMapFunc(agenda, todo => todo.task));
+console.log(myMapFunc(arrOfNums, el => el + 5));
+console.log(myMapFunc(arrOfNums, double));
 
-function filter(arr, test) {
+Array.prototype.myFilterPolyfill = function (cb) {
+  const output = [];
+
+  for (let i = 0; i < this.length; i++) {
+    if (cb(this[i])) {
+      output.push(this[i]);
+    }
+  }
+
+  return output;
+};
+
+function myFilterFunc(arr, test) {
   if (!Array.isArray(arr) || !arr.length || typeof test !== 'function') return;
 
   let passed = [];
+
   for (let el of arr) {
     if (test(el)) {
       passed.push(el);
@@ -575,14 +637,22 @@ function filter(arr, test) {
   return passed;
 }
 
-console.log(filter(agenda, todo => !todo.status));
-console.log(filter(agenda, todo => todo.status).map(todo => todo.task));
-console.log(agenda.filter(todo => todo.status).map(todo => todo.task));
-console.log(filter([1, 4, 6, 7, 8, 10], el => el % 2 === 0));
-console.log(filter([2, 5, 1, 3, 8, 6], el => el > 3));
+function greaterThan(num) {
+  return num > 3;
+}
+
+console.log(agenda.myFilterPolyfill(todo => !todo.status));
+console.log(myFilterFunc(agenda, todo => todo.status).map(todo => todo.task));
+
+console.log(arrOfNums.myFilterPolyfill(greaterThan));
+console.log(myFilterFunc(arrOfNums, greaterThan));
+
+console.log(arrOfNums.myFilterPolyfill(num => num % 2));
+console.log(myFilterFunc(arrOfNums, num => num % 2 === 0));
 
 const filterReversedNums = (arr, test) => {
   const reversedArr = [];
+
   for (let i = arr.length - 1; i >= 0; i--) {
     if (test(arr[i])) {
       reversedArr.push(arr[i]);
@@ -594,29 +664,40 @@ const filterReversedNums = (arr, test) => {
 
 const arr = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
 
-// More about indexOf
-console.log(arr.indexOf(9));
-console.log(arr.indexOf(9, 3));
-console.log(arr.lastIndexOf(9));
-console.log(arr.indexOf('water'));
-console.log(arr.indexOf('watermelon', 3));
-
-const numbers = filter(arr, el => typeof el === 'number');
+const numbers = myFilterFunc(arr, el => typeof el === 'number');
 const reversedNumbers = filterReversedNums(arr, el => typeof el === 'number');
 
 console.log(numbers);
 console.log(reversedNumbers);
 
-function reduce(acc, arr, cb) {
+// More about indexOf
+console.log(arr.indexOf(9));
+console.log(arr.indexOf(9, 3));
+console.log(arr.lastIndexOf(9));
+console.log(arr.indexOf('water'));
+
+Array.prototype.myReducePolyfill = function (initialValue, cb) {
+  let accumulator = initialValue;
+
+  for (let i = 0; i < this.length; i++) {
+    accumulator += cb(this[i]);
+  }
+
+  return accumulator;
+};
+
+function myReduceFunc(arr, combine, initialValue) {
+  let acc = initialValue;
+
   for (let cur of arr) {
-    acc += cb(cur);
+    acc = combine(acc, cur);
   }
 
   return acc;
 }
 
-console.log(reduce(0, [1, 2, 3, 4, 5], cur => 0 + cur));
-console.log([1, 2, 3, 4, 5].reduce((acc, cur) => acc + cur, 0));
+console.log(arrOfNums.myReducePolyfill(0, cur => 0 + cur));
+console.log(myReduceFunc(arrOfNums, (a, b) => a + b ** b, 0));
 
 // flat()
 const twoDArray = [1, [2, 3], [4, 5]];
@@ -645,14 +726,22 @@ console.log(numbers3);
 
 // It accepts an iterable object as the first argument and a mapping function as the second argument (optional)
 
-console.log(Array.from(numbers1, num => num + num));
+console.log(Array.from(numbers1, double));
 console.log(numbers1.map(num => num + num));
 
-console.log(Array.from('Mila'));
+const cats = [
+  { name: 'Leo', gender: 'male' },
+  { name: 'Mila', gender: 'female' },
+];
+
+const catsNames = Array.from(cats, ({ name }) => name);
+
+console.log(catsNames);
+
+console.log(Array.from(catsNames[0]));
 console.log([...'Mila']);
 
 console.log(Array.from(Object.values(arr)));
-console.log([...Object.values(arr)]);
 console.log(Object.values(arr));
 
 console.log(Object.getOwnPropertyNames(arr));
