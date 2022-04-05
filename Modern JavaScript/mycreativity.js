@@ -1,4 +1,7 @@
-// Primitive data types/comparison operators/loose and strict equality
+// Primitive data types
+
+// Comparison operators/loose and strict equality
+console.log(NaN == NaN);
 console.log(55 == '55');
 console.log(55 != '55');
 console.log(55 === '55');
@@ -19,16 +22,24 @@ console.log(Number.isInteger(3.7));
 console.log(Number.isInteger(Infinity));
 
 // Type conversion
-let something = '55';
+let something = '55.55';
 
-console.log(parseInt(something));
-console.log(+something);
-
-console.log(something, typeof something);
+console.log(
+  something,
+  +something,
+  +something + '',
+  parseInt(something),
+  parseFloat(something),
+  (+something).toFixed(2),
+  (+something).toFixed(2) + 5,
+  Number(something).toFixed(2) + 5,
+  parseFloat(something).toFixed(2) + 5
+);
 
 // Number constructor
 something = Number(something);
 
+console.log(something.toFixed(2) + 5);
 console.log(something, typeof something);
 
 // String constructor
@@ -65,9 +76,8 @@ console.log(typeof True, typeof False, typeof alsoTrue, typeof alsoFalse);
 // void operator
 
 // The void operator evaluates the given expression and then returns undefined
-console.log(void(0))
-console.log(void 1)
-console.log(void {name: 'Banksy'})
+console.log(void 1);
+console.log(void { name: 'Banksy' });
 
 // Order of math operations/operators
 let e;
@@ -86,7 +96,11 @@ if (day % 2 === 0) {
   console.log('This is an odd number');
 }
 
-const evenOrOdd = day % 2 === 0 ? 'even' : 'odd';
+let evenOrOdd = day % 2 === 0 ? 'even' : 'odd';
+
+console.log(evenOrOdd);
+
+evenOrOdd = day % 2 ? 'odd' : 'even';
 
 console.log(evenOrOdd);
 
@@ -115,7 +129,7 @@ console.log(`Game over. ${(score *= 2)} was your final score.`);
 
 let num = 5;
 
-console.log(num++, ++num, num);
+console.log(num++, num, ++num, num);
 
 // Template strings with HTML templates
 const title =
@@ -152,10 +166,10 @@ console.log(email < editedEmail);
 const line = `I don't love you like I did yesterday`;
 
 console.log(line.indexOf('I'));
+console.log(line.indexOf('I', 1));
 console.log(line.lastIndexOf('I'));
-console.log(line.toUpperCase());
-console.log(line.slice(0, 16));
-console.log(line.substring(0, 16));
+console.log(line.slice(0, 16).toUpperCase());
+console.log(`${line.substring(0, 16)} anymore.`);
 console.log(line.split(' you '));
 console.log(line.split(' '));
 console.log(line.split(' ', 4));
@@ -226,7 +240,6 @@ while (i) {
   console.log(i--);
 }
 
-
 // 'Do/while' loop
 i = 'I send you one message.';
 let j = null;
@@ -275,9 +288,12 @@ if (time <= 6 || time >= 22) {
 }
 
 // Ternary operator
-let func = time > 6 && time < 19 ? 'Be active' : 'Relax';
-
-func = 'noRules';
+let func =
+  time < 7 || time > 22
+    ? 'Sleep'
+    : time > 10 && time < 19
+    ? 'Be active'
+    : 'Relax';
 
 console.log(func);
 
@@ -290,7 +306,7 @@ switch (func) {
     console.log('Relax');
     break;
   default:
-    console.log('Whatever');
+    console.log('Sleep');
 }
 
 let flat = 62;
@@ -305,9 +321,14 @@ if (flat === 62) {
   console.log(`There is no flat No. ${flat} in this condo`);
 }
 
-const whereWeLive = flat === 62 ? 'We live here' : 'We do not live there';
+const whoLivesHere =
+  flat === 62
+    ? 'Mila & Leo live here'
+    : flat === 65
+    ? 'Bogdan lives here'
+    : 'We do not live there';
 
-console.log(whereWeLive);
+console.log(whoLivesHere);
 
 switch (flat) {
   case 62:
@@ -344,7 +365,7 @@ const gang = ['Bo', 'Mi', 'Leo', 'Art'];
 
 // Keywords 'break' and 'continue'
 for (let i = 0; i < gang.length; i++) {
-  if (gang[i] === 'Bogdan') {
+  if (gang[i] === 'Art') {
     continue;
   }
 
@@ -360,7 +381,7 @@ for (let creature of awesomeCreatures) {
   console.log(creature);
 }
 
-awesomeCreatures.forEach(creature => console.log(creature));
+awesomeCreatures.forEach(console.log);
 
 // DOM
 const ul = document.querySelector('.awesome-creatures');

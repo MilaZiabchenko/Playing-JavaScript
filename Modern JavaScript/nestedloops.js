@@ -91,6 +91,14 @@ const playingAnimals = 'Three funny squirrels are playing with a baby elephant';
 
 findCharacters(playingAnimals, ['u', 'i', 'y']);
 
+const countCharacters = string => {
+  const searchedChars = string.match(/[uiy]/g);
+
+  return searchedChars ? searchedChars.length : 0;
+};
+
+console.log(`${countCharacters(playingAnimals)} characters 'u', 'i', and 'y' are found in the phrase.`);
+
 const arrayOfArrays = [
   [0, 5],
   [10, 15],
