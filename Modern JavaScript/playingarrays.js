@@ -203,6 +203,15 @@ years.sort();
 
 console.log(years);
 
+const nestYears = ([y1, y2, y3, ...restOfTheYears]) => [
+  y1,
+  y2,
+  y3,
+  restOfTheYears,
+];
+
+console.log(nestYears(years));
+
 // Merging arrays:
 
 // - using the spread syntax (and combining them with normal values)

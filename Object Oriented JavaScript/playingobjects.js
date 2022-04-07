@@ -278,6 +278,14 @@ console.log(h1.hasOwnProperty('gender'));
 console.log(h2.hasOwnProperty('gender'));
 console.log(h3.hasOwnProperty('gender'));
 
+let getSelectedDetails = human => ({
+  name: human.firstName,
+  lastName: human.lastName,
+  city: human.address.city,
+});
+
+console.log(getSelectedDetails(human));
+
 // Destructuring
 
 // The destructuring assignment syntax is a JS expression that makes it possible to unpack values from arrays, or properties from objects, into distinct variables
@@ -289,14 +297,13 @@ const {
   special,
 } = human;
 
-console.log(country);
 console.log(country === human.address.country);
 
 // Using destructuring for accessing keys of the object with a function:
-const getHumanDetails = ({ firstName, lastName, address: { city } }) =>
+getSelectedDetails = ({ firstName, lastName, address: { city } }) =>
   `${firstName} ${lastName} lives in ${city}`;
 
-console.log(getHumanDetails(human));
+console.log(getSelectedDetails(human));
 
 const newHuman = Object.assign(human, { kind: true });
 
@@ -317,6 +324,7 @@ console.log(h3.interests);
 console.log(human.interests);
 console.log(newHuman.interests);
 
+// Using destructuring for renaming variables
 const me = { shortName: 'Mi' };
 const { shortName } = me;
 const { shortName: nickName } = me;

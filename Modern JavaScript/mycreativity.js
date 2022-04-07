@@ -198,15 +198,6 @@ const today = [
   },
 ];
 
-console.log(today);
-console.log(typeof today);
-console.log(typeof today[1]);
-console.log(typeof today[2].task);
-console.log(typeof today[2].done);
-console.log(today.length);
-console.log(today[0]);
-console.log(today[2].id);
-
 // JSON data format
 const todayJSON = JSON.stringify(today, null, 2);
 

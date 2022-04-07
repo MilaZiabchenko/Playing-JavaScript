@@ -117,6 +117,7 @@ console.log(blogger.hometown);
 
 console.log(blogger.location); // key location value
 console.log(blogger['location']); // key location value
+console.log(blogger['location']); // key location value
 
 const key = 'location';
 

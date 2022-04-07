@@ -123,11 +123,12 @@ console.log(getObjFrom(arrayOfArrays));
 
 // We create a symbol by using a factory function, in other words we are going to call a function to create the symbol.
 
-const id = Symbol();
+const id = Symbol('id');
 
 const courseInfo = {
   title: 'ECMAScript6+',
   topics: ['destructuring', 'maps', 'promises'],
+  [Symbol('access_key')]: 12345,
   id: 'ES6-course',
 };
 
@@ -136,6 +137,8 @@ courseInfo[id] = 41284;
 console.log(courseInfo);
 console.log(courseInfo[id]);
 console.log(courseInfo['id']);
+console.log(Object.getOwnPropertySymbols(courseInfo));
+console.log(Object.getOwnPropertyNames(courseInfo));
 
 for (let key in courseInfo) {
   console.log(key);

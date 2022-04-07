@@ -97,7 +97,11 @@ const countCharacters = string => {
   return searchedChars ? searchedChars.length : 0;
 };
 
-console.log(`${countCharacters(playingAnimals)} characters 'u', 'i', and 'y' are found in the phrase.`);
+console.log(
+  `${countCharacters(
+    playingAnimals
+  )} characters 'u', 'i', and 'y' are found in the phrase.`
+);
 
 const arrayOfArrays = [
   [0, 5],
@@ -153,6 +157,56 @@ const ranges = [
 ];
 
 console.log(calcMaxSum(arr, ranges));
+
+const sumIntervals = intervals => {
+  const newIntervals = [];
+  let topInterval = null;
+  let sum = 0;
+
+  const sortedIntervals = intervals.sort((prev, next) => prev[0] - next[0]);
+
+  newIntervals.push(sortedIntervals[0]);
+
+  for (let i = 1; i < sortedIntervals.length; i++) {
+    topInterval = newIntervals[newIntervals.length - 1];
+
+    if (topInterval[1] < sortedIntervals[i][0]) {
+      newIntervals.push(sortedIntervals[i]);
+    } else if (topInterval[1] < sortedIntervals[i][1]) {
+      topInterval[1] = sortedIntervals[i][1];
+    }
+  }
+
+  newIntervals.forEach(([start, end]) => (sum += end - start));
+
+  return sum;
+};
+
+console.log(
+  sumIntervals([
+    [1, 2],
+    [6, 10],
+    [11, 15],
+  ])
+);
+
+console.log(
+  sumIntervals([
+    [1, 4],
+    [7, 10],
+    [3, 5],
+  ])
+);
+
+console.log(
+  sumIntervals([
+    [1, 5],
+    [10, 20],
+    [1, 6],
+    [16, 19],
+    [5, 11],
+  ])
+);
 
 const playlistOfRadioheadSongs = [
   ['Paranoid Android', 'OK Computer', 7.15, '06:27'],
