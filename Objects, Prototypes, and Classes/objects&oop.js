@@ -47,7 +47,7 @@ let ninja = 'Ryu';
 console.log(ninja); // regular string
 console.log(ninja.length);
 
-// We can see a string wrapper in action by creating a string using a string constructor
+// We can see a string wrapper in action by creating a string using a string constructor function
 
 ninja = new String('Ryu');
 
@@ -123,7 +123,7 @@ const key = 'location';
 
 console.log(blogger[key]); // const key value;
 
-const user = {
+let user = {
   // Encapsulation
 
   // The literal meaning of encapsulation is to enclose a mixture of something inside a capsule. It means that we are capturing everything to do with the user here and we are containing it all together in one piece, one object, and any kind of this user's properties and methods will live inside this object
@@ -283,7 +283,7 @@ class Admin extends User {
   }
 }
 
-const admin = new Admin('shaun@ninjas.com', 'Shaun');
+let admin = new Admin('shaun@ninjas.com', 'Shaun');
 
 admin.updateScore();
 
@@ -387,3 +387,161 @@ creator.addMember(memberThree);
 console.log(members);
 
 // All of this good stuff - creating a prototype for our emulated class, adding the methods to that prototype etc - this is all going in the background when we use the 'class' keyword
+
+const proto = {
+  name: 'Mila',
+};
+
+console.log(proto);
+
+const obj = Object.create(proto);
+
+console.log(Object, typeof Object);
+
+console.log(obj);
+console.log(obj.name);
+
+console.log(delete obj.name);
+
+console.log(obj);
+console.log(obj.name);
+
+obj.name = 'Bo';
+
+console.log(obj);
+console.log(obj.name);
+console.log(delete obj.name);
+console.log(obj);
+console.log(obj.name);
+
+obj.name = 'Leo';
+Object.seal(obj);
+delete obj.name;
+
+console.log(obj);
+console.log(obj.name);
+
+obj.name = 'Bogdan';
+obj.surname = 'OldMan';
+
+console.log(obj);
+console.log(obj.name);
+console.log(obj.surname);
+
+Object.freeze(obj);
+
+obj.name = 'Mi';
+
+console.log(obj);
+console.log(obj.name);
+
+const UserDataBlueprint = {
+  name: '',
+  surname: '',
+  password: '',
+};
+
+const UserDataValidationBlueprint = {
+  validate() {
+    return this._name.length >= 2 && this._password.length >= 8;
+  },
+
+  __proto__: UserDataBlueprint, //setter
+};
+
+console.info(UserDataValidationBlueprint);
+
+const ProtectedUser = function (name = '', password = '') {
+  this._name = name;
+  this._surname = 'Ziablick';
+  this._fullName = `${name} ${this._surname}`;
+  this._password = password;
+};
+
+ProtectedUser.prototype = UserDataValidationBlueprint;
+
+user = new ProtectedUser('Leo', '87654321');
+
+console.info(user);
+console.info(user.validate());
+console.info(user.__proto__);
+console.info(UserDataValidationBlueprint.isPrototypeOf(user));
+console.info(user.hasOwnProperty('_password'));
+console.info(user.hasOwnProperty('password'));
+
+class AdminUser extends ProtectedUser {
+  _workingHours = 0; // protected field;
+  #level = 0; // private field;
+
+  set workingHours(hours) {
+    if (hours < 0) hours = 0;
+    this._workingHours = hours;
+  }
+
+  get workingHours() {
+    return this._workingHours;
+  }
+
+  constructor(name = '', password = '', level = 0, workingHours = 0) {
+    // Protected fields are inheritable:
+    super(name, password);
+
+    // Private fields are only accessible from inside the class:
+    this.#level = level;
+    this._workingHours = workingHours;
+  }
+
+  validate() {
+    return this._name === 'Mila' && this._password.length >= this.#level * 2;
+  }
+}
+
+admin = new AdminUser('Mila', '9753579753', 5, 8);
+
+admin.level = 3;
+admin.workingHours = -8;
+
+console.info(admin);
+console.info(admin.validate());
+console.log('name' in user);
+console.log('level' in admin);
+console.log('#level' in admin);
+console.log(admin.level);
+console.log(admin.workingHours);
+
+// getters and setters in regular objects
+let attendance = {
+  _list: [],
+
+  set addName(name) {
+    this._list.push(name);
+  },
+
+  get list() {
+    return this._list.join(', ');
+  },
+};
+
+attendance.addName = 'Leo';
+attendance.addName = 'Mi';
+attendance.addName = 'Bo';
+
+console.log(attendance.list);
+
+// getters and setters in classes
+class Hike {
+  constructor(distance, pace) {
+    (this.distance = distance), (this.pace = pace);
+  }
+
+  calcTime() {
+    return this.distance / this.pace;
+  }
+
+  get lengthInHours() {
+    return `${this.calcTime()} hours`;
+  }
+}
+
+const mtTallac = new Hike(10, 2);
+console.log(mtTallac.lengthInHours);

@@ -172,16 +172,14 @@ console.log('id' in obj1 && 'id' in obj2);
 console.log(obj1.id === obj2.id);
 
 // Object literal enhancement
-function skier(name, sound) {
-  return {
-    name,
-    sound,
-    powderYell: function () {
-      let yell = this.sound.toUpperCase();
-      console.log(`${yell}! ${yell}!`);
-    },
-  };
-}
+const skier = (name, sound) => ({
+  name,
+  sound,
+  powderYell() {
+    const yell = this.sound.toUpperCase();
+    console.log(`${yell}! ${yell}!`);
+  },
+});
 
 console.log(skier('Sendy', 'woo'));
 console.log(skier('Sendy', 'woo').name);
