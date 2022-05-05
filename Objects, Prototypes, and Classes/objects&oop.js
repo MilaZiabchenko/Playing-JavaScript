@@ -510,7 +510,7 @@ console.log(admin.level);
 console.log(admin.workingHours);
 
 // getters and setters in regular objects
-let attendance = {
+const attendance = {
   _list: [],
 
   set addName(name) {

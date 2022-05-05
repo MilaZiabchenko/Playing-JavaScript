@@ -139,9 +139,7 @@ console.log(sumOfYears(...years, 2021, 2022, 2023));
 
 // 'reduce' method reduces the array to a single value. It loops over and executes a function for each value of the array. The return value of the function is stored in an accumulator (result/total). This method is doing some operation(s) on the array and returns a result of all the operations
 
-// syntax:
-
-// array.reduce(function(total, currentValue, currentIndex, array), initialValue);
+// syntax: array.reduce(function(total, currentValue, currentIndex, array), initialValue);
 let counter = 0;
 
 sumOfYears = years.reduce((total, val) => {
@@ -160,23 +158,19 @@ sumOfYears = years.reduce((total, val) => {
 
 console.log(years, sumOfYears, counter);
 
-sumOfYears = years.reduce((total, year) => total + year, 0);
+const minYear = years.reduce((prevYear, curYear) =>
+  prevYear < curYear ? prevYear : curYear
+);
+const maxYear = years.reduce((prevYear, curYear) =>
+  prevYear > curYear ? prevYear : curYear
+);
 
-console.log(sumOfYears);
+const getAverageValue = nums =>
+  nums.reduce((prevNum, curNum) => prevNum + curNum, 0) / nums.length;
 
-sumOfYears = years.reduce((total, year) => total + year);
-
-console.log(sumOfYears);
-
-const maxYear = years.reduce((y1, y2) => (y1 > y2 ? y1 : y2));
-const minYear = years.reduce((y1, y2) => (y1 < y2 ? y1 : y2));
-
-const getAverage = nums =>
-  nums.reduce((acc, num) => acc + num, 0) / nums.length;
-
-console.log(maxYear);
 console.log(minYear);
-console.log(getAverage(years));
+console.log(maxYear);
+console.log(getAverageValue(years));
 
 // Sorting arrays
 
@@ -558,7 +552,7 @@ console.log(sumOfSquareRootsOfEvenNums);
 sumOfSquareRootsOfEvenNums = arrOfNums.reduce(
   (acc, element) => acc + (element % 2 ? 0 : Math.sqrt(element)),
   0
-); // filtering right inside reduce() or reduceRight() makes calculations faster
+); // filtering inside reduce() or reduceRight() makes calculations faster
 
 console.log(sumOfSquareRootsOfEvenNums);
 
@@ -573,7 +567,9 @@ Array.prototype.myForEachPolyfill = function (cb) {
 };
 
 function myForEachFunc(arr, cb) {
-  arr.forEach(cb);
+  for (let el of arr) {
+    cb(el);
+  }
 }
 
 console.log(Array.prototype);
@@ -592,20 +588,6 @@ Array.prototype.myMapPolyfill = function (cb) {
   return newArr;
 };
 
-function double(num) {
-  return num + num;
-}
-
-function raiseToThePowerOfTwo(num) {
-  return num * num;
-}
-
-console.log(arrOfNums.myMapPolyfill(double));
-console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
-console.log(
-  arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
-);
-
 function myMapFunc(arr, transform) {
   let mapped = [];
 
@@ -616,9 +598,22 @@ function myMapFunc(arr, transform) {
   return mapped;
 }
 
-console.log(myMapFunc(agenda, todo => todo.task));
-console.log(myMapFunc(arrOfNums, el => el + 5));
+function double(num) {
+  return num + num;
+}
+
+function raiseToThePowerOfTwo(num) {
+  return num * num;
+}
+
+console.log(arrOfNums.myMapPolyfill(double));
 console.log(myMapFunc(arrOfNums, double));
+console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
+console.log(
+  arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
+);
+console.log(myMapFunc(arrOfNums, el => el + 5));
+console.log(myMapFunc(agenda, todo => todo.task));
 
 Array.prototype.myFilterPolyfill = function (cb) {
   const output = [];
@@ -685,33 +680,33 @@ console.log(arr.indexOf(9, 3));
 console.log(arr.lastIndexOf(9));
 console.log(arr.indexOf('water'));
 
-Array.prototype.myReducePolyfill = function (initialValue, cb) {
-  let accumulator = initialValue;
-
-  for (let i = 0; i < this.length; i++) {
-    accumulator += cb(this[i]);
-  }
-
-  return accumulator;
-};
-
-function myReduceFunc(arr, combine, initialValue) {
+Array.prototype.myReducePolyfill = function (combine, initialValue) {
   let acc = initialValue;
 
-  for (let cur of arr) {
-    acc = combine(acc, cur);
+  for (let i = 0; i < this.length; i++) {
+    acc = combine(acc, this[i]);
   }
 
   return acc;
+};
+
+function myReduceFunc(array, combine, initialValue) {
+  let current = initialValue;
+
+  for (let element of array) {
+    current = combine(current, element);
+  }
+
+  return current;
 }
 
-console.log(arrOfNums.myReducePolyfill(0, cur => 0 + cur));
-console.log(myReduceFunc(arrOfNums, (a, b) => a + b ** b, 0));
+console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur, 0));
+console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur * 10, 0));
 
 // flat()
 const twoDArray = [1, [2, 3], [4, 5]];
 
-let flattenedArray = twoDArray.reduce((acc, cur) => acc.concat(cur), []);
+let flattenedArray = twoDArray.reduce((prev, cur) => prev.concat(cur), []);
 
 console.log(flattenedArray);
 
@@ -736,7 +731,7 @@ console.log(numbers3);
 // It accepts an iterable object as the first argument and a mapping function as the second argument (optional)
 
 console.log(Array.from(numbers1, double));
-console.log(numbers1.map(num => num + num));
+console.log(numbers1.map(double));
 
 const cats = [
   { name: 'Leo', gender: 'male' },
@@ -820,7 +815,7 @@ const arrayOfObjects = arrayOfArrays.map(([key, value]) => ({ [key]: value }));
 
 console.log(arrayOfObjects);
 
-// Array of arrays => object of objects
+// Array of arrays => object
 obj = arrayOfArrays.reduce(
   (acc, current) => Object.assign(acc, { [current[0]]: current[1] }),
   {}
@@ -858,7 +853,7 @@ const hslColors = data.reduce(
 // On the second iteration variables are acc = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands acc and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
 
 // Third iteration: acc = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when acc is spread inside the object, our function returns the final value:
-console.log(hslColors);
+console.table(hslColors);
 console.log({ hslColors });
 
 const entries = [
@@ -873,7 +868,7 @@ let transactions = entries.map(([operation, currency, amount]) => ({
   amount,
 }));
 
-console.log({ transactions });
+console.table(transactions);
 
 transactions = entries.reduce((acc, [operation, currency, amount], index) => {
   acc[index] = { operation, currency, amount };
@@ -883,17 +878,23 @@ transactions = entries.reduce((acc, [operation, currency, amount], index) => {
 
 console.log({ transactions });
 
-const budget = entries.reduce((total, [operation, currency, amount]) => {
-  currency === 'eur' && (amount *= 1.135);
+const budget = entries.reduce((total, [operation, currency, amount], index) => {
+  currency === 'eur' && (amount *= 1.05);
 
-  console.log(`Total: ${total}$, amount: ${Math.round(amount)}$`);
+  console.log(
+    `Iteration ${
+      index + 1
+    }: total sum: ${total}$, operation: '${operation}', amount: ${Math.round(
+      amount
+    )}$`
+  );
 
   operation === 'buy' ? (total -= amount) : (total += amount);
 
   return total;
 }, 1000);
 
-console.log(`Total on the last iteration: ${budget}$`);
+console.log(`Total sum after the last iteration: ${budget}$`);
 
 const allVehicles = [
   'bike',
@@ -915,6 +916,9 @@ const transportation = allVehicles.reduce((obj, item) => {
   !obj[item] && (obj[item] = 0);
 
   obj[item]++;
+
+  // Logs the result on each iteration:
+  console.log(obj['car']);
 
   return obj;
 }, {});
@@ -946,11 +950,6 @@ const pancakes = [
   { name: 'S L a V u N I A', technology: 'React' },
 ];
 
-pancakes.push({ name: 'Bodia', technology: 'React' });
-
-const foundPancake = pancakes.find(pancake => pancake.name === 'Roma');
-foundPancake.technology = 'MERN';
-
 console.log(pancakes);
 
 const technologies = pancakes.reduce((specialization, pancake) => {
@@ -964,3 +963,17 @@ const technologies = pancakes.reduce((specialization, pancake) => {
 }, {});
 
 console.log(technologies);
+
+// Updating one object in an array in an immutable way
+const updatedPancakes = pancakes.map(pancake =>
+  pancake.name === 'Roma'
+    ? Object.assign({}, pancake, { technology: 'MERN' })
+    : pancake
+);
+
+console.log(updatedPancakes);
+
+// Adding new item to the end of the array of objects in an immutable way
+const newPancakes = [...pancakes, { name: 'Bodia', technology: 'React' }];
+
+console.log(newPancakes);

@@ -278,10 +278,10 @@ console.log(h1.hasOwnProperty('gender'));
 console.log(h2.hasOwnProperty('gender'));
 console.log(h3.hasOwnProperty('gender'));
 
-let getSelectedDetails = human => ({
-  name: human.firstName,
-  lastName: human.lastName,
-  city: human.address.city,
+let getSelectedDetails = personalInfo => ({
+  name: personalInfo.firstName,
+  lastName: personalInfo.lastName,
+  city: personalInfo.address.city,
 });
 
 console.log(getSelectedDetails(human));
@@ -299,9 +299,14 @@ const {
 
 console.log(country === human.address.country);
 
-// Using destructuring for accessing keys of the object with a function:
+// Using destructuring with function parameters:
 getSelectedDetails = ({ firstName, lastName, address: { city } }) =>
   `${firstName} ${lastName} lives in ${city}`;
+
+console.log(getSelectedDetails(human));
+
+// Using destructuring with rest parameters:
+getSelectedDetails = ({ firstName, lastName, ...otherInfo }) => otherInfo;
 
 console.log(getSelectedDetails(human));
 
@@ -451,25 +456,22 @@ const humans = [].concat(human, creativeCoder, musician);
 
 console.log(humans);
 
-const student = { name: 'Andrew', gender: 'male' };
-const teamMember = { ...student, role: 'key player' }; // student shallow copy, reference is changed
+const keyboardist = { firstName, gender: 'male' };
+const bandMember = { ...keyboardist, role: 'keyboardist' }; // keyboardist shallow copy, reference is changed
 
-student.name = 'Ann';
-student.gender = 'female';
+const updateInfo = member => {
+  const updatedMember = { ...member };
+  updatedMember.location = city;
+  updatedMember.dateOfBirth = human.dateOfBirth;
 
-console.log(student);
-console.log(teamMember);
-
-const getInfo = (member, year) => {
-  member.birthYear = year;
-  member.location = 'London';
-
-  return member;
+  return updatedMember;
 };
 
-const birthYear = '2000';
+const updatedBandMember = updateInfo(bandMember);
 
-console.log(getInfo(teamMember, birthYear));
+console.log(keyboardist);
+console.log(bandMember);
+console.log(updatedBandMember);
 
 const isEmpty = object => Object.entries(object).length === 0;
 
