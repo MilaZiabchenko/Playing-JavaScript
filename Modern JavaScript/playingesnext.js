@@ -259,52 +259,6 @@ for (const value of gangMap.values()) {
   console.log(value);
 }
 
-// padStart() string method
-const hideNumber = number => number.slice(-FOUR).padStart(number.length, '*');
-
-const phoneNumber = '0123456789';
-
-console.log(hideNumber(phoneNumber));
-
-// repeat() string method
-const yell = 'Woo! ';
-
-const party = yell.repeat(2);
-
-console.log(party);
-
-const cat = {
-  meow(times) {
-    console.log('Meow! '.repeat(times));
-  },
-
-  purr(times) {
-    console.log('prrr '.repeat(times));
-  },
-
-  snore(times) {
-    console.log('Zzz'.repeat(times));
-  },
-};
-
-console.log(typeof cat);
-console.log(cat instanceof Object);
-console.log(Object.entries(cat));
-
-cat.meow(3);
-cat.purr(5);
-cat.snore(8);
-
-// Required function arguments
-const isRequired = arg => {
-  throw new Error(`${arg} is required`);
-};
-
-const add = (a = isRequired('a'), b = isRequired('b'), c = isRequired('c')) =>
-  a + b + c;
-
-console.log(add(TWO, THREE, FIVE));
-
 // Generator functions
 function* generateIterableSequence() {
   yield 'I';
@@ -322,18 +276,68 @@ const generateString = [...generateIterableSequence()].join(' ');
 
 console.log(generateString);
 
+// Required function arguments
+const isRequired = arg => {
+  throw new Error(`${arg} is required`);
+};
+
+const add = (a = isRequired('a'), b = isRequired('b'), c = isRequired('c')) =>
+  a + b + c;
+
+console.log(add(TWO, THREE, FIVE));
+
+// padStart() string method
+const hideNumber = number => number.slice(-FOUR).padStart(number.length, '*');
+
+const phoneNumber = '0123456789';
+
+console.log(hideNumber(phoneNumber));
+
+// repeat() string method
+const yell = 'Woo! ';
+
+const party = yell.repeat(2);
+
+console.log(party);
+
+const cat = {
+  name: 'Leo',
+
+  meow(times) {
+    console.log('Meow! '.repeat(times));
+  },
+
+  purr(times) {
+    console.log('prrr '.repeat(times));
+  },
+
+  snore(times) {
+    console.log('Zzz'.repeat(times));
+  },
+};
+
+cat.meow(3);
+cat.purr(5);
+cat.snore(8);
+
 // Nullish coalescing operator
 a = undefined ?? 'Hello';
-b = null ?? 'world';
-let c = null ?? '!';
+b = null ?? cat.name;
+let c = null ?? '! 👻';
 let d = '' ?? 'Bye!';
 
 console.log(`${a}, ${b}${c}${d}`);
 
-const getValue = val => val ?? '-';
+const breed = cat.breed ?? 'Scottish Fold';
 
-console.log(getValue(0));
-console.log(getValue(FOUR));
-console.log(getValue('someText'));
-console.log(getValue(undefined));
-console.log(getValue(null));
+console.log(`${cat.name}'s breed is ${breed}.`);
+
+const getScore = score => {
+  const result = score ?? `Let's start the game and score some points!`;
+  return typeof result === 'number' ? { score: score } : result;
+};
+
+console.log(getScore(null));
+console.log(getScore());
+console.log(getScore(0));
+console.log(getScore(FIVE));
