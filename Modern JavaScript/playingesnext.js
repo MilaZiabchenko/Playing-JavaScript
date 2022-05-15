@@ -304,26 +304,31 @@ const cat = {
   name: 'Leo',
 
   meow(times) {
-    console.log('Meow! '.repeat(times));
+    return 'Meow! '.repeat(times);
   },
 
   purr(times) {
-    console.log('prrr '.repeat(times));
+    return 'prrr'.repeat(times);
   },
 
   snore(times) {
-    console.log('Zzz'.repeat(times));
+    return 'Zzz'.repeat(times);
   },
 };
 
-cat.meow(3);
-cat.purr(5);
-cat.snore(8);
+console.log(cat);
+console.log(cat.meow(3));
+console.log(cat.purr(5));
+
+// Optional chaining operator
+console.log(cat?.snore?.(8) || `The cat doesn't snore`);
 
 // Nullish coalescing operator
+console.log(cat?.bark?.(8) ?? `Hey, cats don't bark 😂😂😂`);
+
 a = undefined ?? 'Hello';
 b = null ?? cat.name;
-let c = null ?? '! 👻';
+let c = '' || '! 👻';
 let d = '' ?? 'Bye!';
 
 console.log(`${a}, ${b}${c}${d}`);
@@ -341,3 +346,49 @@ console.log(getScore(null));
 console.log(getScore());
 console.log(getScore(0));
 console.log(getScore(FIVE));
+
+// Computed properties
+const initialProp = 'initialScore';
+const finalProp = 'finalScore';
+
+const objectWithResults = {
+  [initialProp]: getScore(0).score,
+  updatedScore: getScore(10).score,
+  updatedScore: getScore(52).score,
+  [finalProp]: getScore(99).score,
+};
+
+console.log(objectWithResults);
+
+// Logical OR assignment operator
+
+// The logical OR assignment operator (||=) accepts two operands and assigns the right operand to the left operand if the left operand is falsy
+
+let song = '';
+
+console.log(song || (song = 'Map Of Your Head'));
+console.log((song ||= 'Map Of Your Head'));
+
+song = 'Diamant';
+
+console.log(song || (song = 'Map Of Your Head'));
+console.log((song ||= 'Map Of Your Head'));
+
+// Logical AND assignment operator
+
+// The logical AND assignment operator only assigns the right operand to the left operand if the right operand is truthy
+
+console.log(song && (song = 'Map Of Your Head'));
+console.log((song &&= 'Map Of Your Head'));
+
+// The nullish coalescing assignment operator
+
+// The nullish coalescing assignment operator only assigns the right operand to the left operand if the right operand is null or undefined
+
+cat.age ??= 5;
+
+console.log(cat);
+
+cat.age ?? (cat.age = 5.5);
+
+console.log(cat.age);
