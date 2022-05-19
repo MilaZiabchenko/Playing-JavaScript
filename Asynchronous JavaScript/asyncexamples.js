@@ -1,4 +1,4 @@
-const getToDosXML = (resource, callback) => {
+const getToDosWithCallbacks = (resource, callback) => {
   const request = new XMLHttpRequest();
 
   request.addEventListener('readystatechange', () => {
@@ -14,31 +14,22 @@ const getToDosXML = (resource, callback) => {
   request.send();
 };
 
-getToDosXML('todos/shaun.json', (err, data) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(data);
-  }
+const callbackFunc = (err, data) =>
+  err ? console.log(err) : console.log(data);
 
-  getToDosXML('todos/brad.json', (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(data);
-    }
+getToDosWithCallbacks(
+  'todos/bucky.json',
+  callbackFunc,
 
-    getToDosXML('todos/bucky.json', (err, data) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(data);
-      }
-    });
-  });
-});
+  getToDosWithCallbacks(
+    'todos/brad.json',
+    callbackFunc,
 
-const getToDosPromise = resource =>
+    getToDosWithCallbacks('todos/shaun.json', callbackFunc)
+  )
+);
+
+const getToDosWithPromise = resource =>
   new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
 
@@ -56,14 +47,14 @@ const getToDosPromise = resource =>
     request.send();
   });
 
-getToDosPromise('todos/shaun.json')
+getToDosWithPromise('todos/shaun.json')
   .then(data => {
     console.log('Promise 1 resolved:', data);
-    return getToDosPromise('todos/brad.json');
+    return getToDosWithPromise('todos/brad.json');
   })
   .then(data => {
     console.log('Promise 2 resolved:', data);
-    return getToDosPromise('todos/bucky.json');
+    return getToDosWithPromise('todos/bucky.json');
   })
   .then(data => {
     console.log('Promise 3 resolved:', data);
@@ -74,22 +65,23 @@ getToDosPromise('todos/shaun.json')
 
 // Fetch API
 
-// Fetch API allows us to hit an endpoint and have response returned to us as a promise of the response provided with the first callback to map it to json, which is also a promise, so we can return that promise from the original then callback and then in the next one we'll have the actual data as a plain JavaScript object:
+// Fetch API allows us to hit an endpoint and have response returned to us as a promise of the response provided with the callback to map it to json, which is also a promise, so we can return that promise from the first 'then' callback and then in the next one we'll have the actual data as a plain JavaScript object
+
 fetch('todos/shaun.json')
   .then(response => {
-    console.log('Resolved', response);
+    console.log('RESOLVED', response);
     const promise = response.json();
-    console.log('Fulfilled', promise);
+    console.log('JSON', promise);
     return promise;
   })
   .then(data => {
-    console.log(data);
+    console.log('DATA', data);
   })
   .catch(err => {
-    console.log('Rejected', err);
+    console.log('REJECTED', err);
   });
 
-const getToDosAsync = async () => {
+const getToDoWithAsync = async () => {
   const response = await fetch('todos/shaun.json');
 
   if (response.status !== 200) {
@@ -101,9 +93,9 @@ const getToDosAsync = async () => {
   return data;
 };
 
-getToDosAsync()
-  .then(data => console.log('Resolved:', data))
-  .catch(err => console.log('Rejected:', err.message));
+getToDoWithAsync()
+  .then(data => console.log(data))
+  .catch(err => console.log(err.message));
 
 const delay = seconds =>
   new Promise((resolve, reject) => {
@@ -114,16 +106,18 @@ const delay = seconds =>
     setTimeout(resolve, seconds * 1000);
   });
 
-delay(3).then(() => console.log('Resolved with a delay of 3 seconds.'));
+delay(5)
+  .then(() => console.log('Resolved with a delay of 5 seconds.'))
+  .catch(error => console.log(`Rejected... :( \n${error.message}`));
 
 const countToThree = async () => {
-  console.log('0 seconds');
-  await delay(1);
-  console.log('1 second');
-  await delay(2);
-  console.log('2 seconds');
+  console.log('Count starts here...');
   await delay(3);
-  console.log('3 seconds');
+  console.log('3 seconds delay');
+  await delay(6);
+  console.log('6 seconds delay');
+  await delay(9);
+  console.log('9 seconds delay');
 };
 
 countToThree();
@@ -132,10 +126,10 @@ console.time('id-space');
 
 let getSpacePeople = () =>
   new Promise((resolve, reject) => {
-    const api = 'http://api.open-notify.org/astros.json';
     const request = new XMLHttpRequest();
+    const url = 'http://api.open-notify.org/astros.json';
 
-    request.open('GET', api);
+    request.open('GET', url);
     request.onload = () => {
       if (request.status === 200) {
         resolve(JSON.parse(request.response));
@@ -153,15 +147,16 @@ getSpacePeople()
 
 console.timeLog('id-space');
 
-// fetch() returns the entire response object, and this object has a json() function that parses the results:
 getSpacePeople = () =>
   fetch('http://api.open-notify.org/astros.json').then(res => res.json());
+
+// fetch() returns the entire response object, and this object has a json() method that parses the results
 
 getSpacePeople().then(console.log);
 
 const getSpacemenNames = () =>
   getSpacePeople()
-    .then(json => json.people)
+    .then(result => result.people)
     .then(people => people.map(p => p.name));
 
 getSpacemenNames().then(console.log);
@@ -178,10 +173,10 @@ const githubRequest = async login => {
 
 githubRequest('milaziabchenko');
 
-let getCountries = () =>
+let getCountriesData = () =>
   fetch('https://restcountries.com/v3.1/all').then(response => response.json());
 
-getCountries()
+getCountriesData()
   .then(countries => {
     const countriesArr = [];
 
@@ -197,45 +192,63 @@ getCountries()
       const listOfLanguages = arrOfLanguages.join(', ');
 
       countriesArr.push({
-        name: name,
-        population: population,
+        name,
+        population,
         languages: listOfLanguages,
       });
     });
 
-    countriesArr.length = 22;
+    const first20Countries = countriesArr.slice(0, 20);
 
-    console.log(countriesArr);
+    console.log(first20Countries);
   })
-  .catch(err => console.log('errors: ' + err.message));
+  .catch(error => console.log(error.message));
 
-getCountries = async () => {
+getCountriesData = async () => {
   const response = await fetch('https://restcountries.com/v3.1/all');
   const data = await response.json();
 
   return data;
 };
 
-getCountries().then(countries => {
+getCountriesData().then(countries => {
   const myCountry = countries.find(
-    country => country.name.common === 'Ukraine'
+    country => country.name.official === 'Ukraine'
   );
 
   console.log(myCountry);
+
+  myCountry.independent &&
+    console.log(`${myCountry.name.official} is free and independent`);
 });
 
-const getTodo = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/todos/3');
+const getCountryArea = async country => {
+  const res = await fetch(`https://restcountries.com/v3.1/name/${country}`);
+  const data = await res.json();
+  const { area } = data[0];
 
-  const { id, title } = await res.json();
+  console.log(
+    `The area of ${country.charAt(0).toUpperCase()}${country.slice(
+      1
+    )} is ${area} square kilometers.`
+  );
 
-  console.log(`id: ${id}, \ntitle: ${title}`);
+  return area;
 };
 
-getTodo();
+const countries = [
+  'canada',
+  'ukraine',
+  'germany',
+  'norway',
+  'italy',
+  'switzerland',
+];
+
+countries.forEach(country => getCountryArea(country));
 
 const tick = Date.now();
-const log = value =>
+const logResultAndElapsedTime = value =>
   console.log(`${value} \n \nElapsed: ${Date.now() - tick} ms`);
 
 // The creation of the promise is still blocking because it happens in the main thread. It's only the resolving of the value that is a micro task
@@ -249,27 +262,25 @@ const nonBlockingLoop = async () => {
     i++;
   }
 
-  return '🐱‍💻 billion loops done';
+  return 'One billion loops done 🐱‍💻';
 };
-
-console.log('🥪 Synchronous 1');
 
 // A fulfilled promise will run in the micro task queue after all the synchronous code in the current macro task has completed and before the start of the next event loop
 
-nonBlockingLoop().then(log);
-
-console.log('🥪 Synchronous 2');
+nonBlockingLoop().then(logResultAndElapsedTime);
 
 // Async function
 
-// Whatever gets returned inside the async function will be a promise of that value.
+// Whatever gets returned inside the async function will be a promise of that value
 
-// If we didn't use the async keyword, we could write this function by just returning a promise that resolves to this value:
+// If we didn't use the async keyword, we could write this function by just returning a promise that resolves to this value
+
 const getHearts = hearts => Promise.resolve(hearts);
 
-getHearts('💛💚💖').then(log);
+getHearts('💛💚💖').then(logResultAndElapsedTime);
 
-// With the async keyword it takes the return value and automatically resolves it as a promise:
+// With the async keyword it takes the return value and automatically resolves it as a promise
+
 const getFruit = async name => {
   const fruits = {
     peach: '🍑',
@@ -282,7 +293,7 @@ const getFruit = async name => {
   return fruits[name];
 };
 
-getFruit('peach').then(log);
+getFruit('peach').then(logResultAndElapsedTime);
 
 // Async + Await
 
@@ -296,7 +307,6 @@ const makeSmoothie = async () => {
 };
 
 makeSmoothie().then(console.log);
-makeSmoothie().then(log);
 
 // Concurrency with Promise.all()
 
@@ -312,7 +322,8 @@ const getFruitsForSmoothieConcurrently = async () => {
   return smoothie;
 };
 
-getFruitsForSmoothieConcurrently().then(log);
+getFruitsForSmoothieConcurrently().then(console.log);
+getFruitsForSmoothieConcurrently().then(logResultAndElapsedTime);
 
 const fruitRace = async () => {
   const first = getFruit('peach');
@@ -348,24 +359,39 @@ const badSmoothie = async () => {
 };
 
 badSmoothie()
-  .then(value => console.log({ value }))
+  .then(console.log)
   .catch(error => console.log({ error }));
 
-// Running async loops concurrently
 const fruits = ['cherries', 'watermelon', 'apple'];
 const smoothie = fruits.map(value => getFruit(value));
 
+// Asynchronous conditional expressions
+const fruitInspection = async () => {
+  (await getFruit('peach')) === '🍑' && console.log('Looks peachy 😋!');
+};
+
+fruitInspection();
+
+//  Asynchronous loops
 const fruitLoop = async () => {
-  for await (const emoji of smoothie) {
-    log(emoji);
+  for await (let emoji of smoothie) {
+    logResultAndElapsedTime(emoji);
   }
 };
 
 fruitLoop();
 
-// Conditional expressions with promises
-const fruitInspection = async () => {
-  (await getFruit('peach')) === '🍑' && console.log('Looks peachy!');
-};
+// Asynchronous generator functions
+async function* generate(...items) {
+  for (let item of items) {
+    yield Promise.resolve(item);
+  }
+}
 
-fruitInspection();
+const fruitsGen = generate(...fruits);
+
+(async () => {
+  for await (let fruit of fruitsGen) {
+    console.log(fruit);
+  }
+})();

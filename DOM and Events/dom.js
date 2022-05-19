@@ -1,32 +1,7 @@
-// DOMContentLoaded Event
-document.addEventListener('DOMContentLoaded', () => {
-  const teachers = [
-    {
-      name: 'Brad',
-      surname: 'Traversy',
-      country: 'USA',
-      subs: 1_800_000,
-    },
-    {
-      name: 'Shaun',
-      surname: 'Pelling',
-      country: 'UK',
-      subs: 900_000,
-    },
-    {
-      name: 'Bucky',
-      surname: 'Roberts',
-      country: 'USA',
-      subs: 2_650_000,
-    },
-    {
-      name: 'Eve',
-      surname: 'Porcello',
-      country: 'USA',
-      subs: 500_000,
-    },
-  ];
+// 'DOMContentLoaded' event
+import { teachers } from './constants.js';
 
+document.addEventListener('DOMContentLoaded', () => {
   const tbody = document.querySelector('tbody');
 
   function createRows() {
@@ -99,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .querySelector('.subs-up-arrow')
     .addEventListener('click', sortSubsDescend);
 
-  // Quering & traversing
+  // Querying & traversing
   console.log(tbody.nodeType);
   console.log(tbody.nodeName);
   console.log(tbody.children);
@@ -117,11 +92,25 @@ document.addEventListener('DOMContentLoaded', () => {
       .firstElementChild
   );
 
-  // Traversing & manipulating
+  // Setting, removing, and manipulating attributes
+  tbody.id = 't-body';
   tbody.setAttribute('class', 'table-body');
+  tbody.dataset.tbodyName = 'table-body-name';
 
+  console.log(tbody.hasAttribute('id'));
   console.log(tbody.hasAttribute('class'));
   console.log(tbody.getAttribute('class'));
+  console.log(tbody.getAttribute('data-tbody-name'));
+
+  console.log(tbody);
+
+  tbody.removeAttribute('id');
+
+  tbody.classList.toggle('table-body', false);
+  tbody.classList.toggle('table-body', true);
+  tbody.style.backgroundColor = 'hsla(120, 95%, 95%, 0.35)';
+  tbody.style.fontSize = '1.62rem';
+
   console.log(tbody);
 
   tbody.parentNode.previousElementSibling.innerHTML += ` =)<br/><span>Too cool for everyone else!!</span><span>!</span>`;
@@ -143,20 +132,21 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(`Navigation to ${e.target.textContent} was prevented.`);
   });
 
-  // Event bubbling and capturing(optional)
-
+  // Event bubbling and capturing
   const triggers = document.querySelectorAll('.triggered');
 
   function logText(e) {
     // e.stopPropagation();
     console.log(this);
-    // console.log(this.classList.value);
+    console.log(this.classList.value);
   }
 
   triggers.forEach(trigger => trigger.addEventListener('click', logText));
+
   // triggers.forEach(trigger =>
   //   trigger.addEventListener('click', logText, { capture: true })
   // );
+
   // triggers.forEach(trigger =>
   //   trigger.addEventListener('click', logText, { once: true })
   // );
@@ -257,8 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Sroll event
+// Scroll event
 document.addEventListener('scroll', e => console.log(e, 'I scrolled'), {
   once: true,
 });
-

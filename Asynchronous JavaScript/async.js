@@ -20,7 +20,7 @@ console.log(5);
 
 // Async code comes to play to help us out. We are using asynchronous functions mostly to request some external data. The browser takes that network request and handles it outside of the scope of this single thread, and JavaScript can carry on down the queue and run the remaining functions.
 
-// Since an async function finishes later, we typically pass this function or this statement some kind of callback function as a parameter. The browser takes and puts a callback func aside too to execute it later on once the request is complete and the data comes back. Now we are allowed to call this callback func and finish the parant function.
+// Since an async function finishes later, we typically pass this function or this statement some kind of callback function as a parameter. The browser takes and puts a callback func aside too to execute it later on once the request is complete and the data comes back. Now we are allowed to call this callback func and finish the parent function.
 
 // HTTP requests
 
@@ -77,9 +77,9 @@ console.log(5);
 
 // JSON
 
-// The crux of JSON is a way of transferring data between server and client. JSON format is essentially strings, which look like JS objects. When a browser exchanges data with a server, it has to be done in text format because that is a format of data transfer. So, we need to figure out a way of taking this JSON string we get back and turning it into a real JS object so that we can access all of the properties and values easily. That kind of stuff is much easier, if we have everything nicely packedged into objects in an array. Fortunately, there is a JSON object built into JS that we can use to do this.
+// The crux of JSON is a way of transferring data between server and client. JSON format is essentially strings, which look like JS objects. When a browser exchanges data with a server, it has to be done in text format because that is a format of data transfer. So, we need to figure out a way of taking this JSON string we get back and turning it into a real JS object so that we can access all of the properties and values easily. That kind of stuff is much easier, if we have everything nicely packaged into objects in an array. Fortunately, there is a JSON object built into JS that we can use to do this.
 
-// We can also create our own JSON in the separate files with the .json extention
+// We can also create our own JSON in the separate files with the .json extension
 
 // We wrap up our code inside a function getToDos1 to make it reusable
 

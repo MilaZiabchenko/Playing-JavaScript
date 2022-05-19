@@ -126,6 +126,9 @@ console.log(matrixBoy.validateLanguage());
 console.log(catWoman.getLanguage());
 console.log(catWoman.validateLanguage());
 
+console.log(catWoman.hasOwnProperty('firstName'));
+console.log('firstName' in catWoman);
+
 console.log(catWoman instanceof Personality);
 console.log(catWoman instanceof Programmer);
 console.log(catWoman instanceof Object);
