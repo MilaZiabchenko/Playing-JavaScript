@@ -70,10 +70,10 @@ console.log([...physicalState]);
 
 // Mutable methods
 
-// Array has several mutable operations - push, pop, splice, shift, unshift, reverse and sort. Using them is usually causing side effects and bugs that are hard to track. That’s why it’s important to use an immutable way.
+// Array has several mutable operations - push, pop, unshift, shift, reverse, sort and splice. Using them is usually causing side effects and bugs that are hard to track. That’s why it’s important to use an immutable way.
 
 // push()
-array = [];
+const array = [];
 
 const arrLength = array.push(2020, 'bicycle', 'backpack');
 
@@ -118,6 +118,7 @@ console.log(slicedYear);
 // The rest parameter syntax allows us to more easily handle various input as parameters in a function, representing an indefinite number of arguments as an array.
 
 // The dots here mean 'gather the rest of the parameters into the array 'args'
+
 let sumOfYears = (...args) => {
   let sum = 0;
 
@@ -131,6 +132,7 @@ let sumOfYears = (...args) => {
 // Spread syntax looks similar to rest parameters, but does quite the opposite: it takes in an iterable (e.g an array) and expands it into individual elements.
 
 // The spread operator turns the elements of an iterable (array, string) into elements of an array literal or into arguments of a function call
+
 console.log([...'Leo']);
 console.log(sumOfYears(...years));
 console.log(sumOfYears(...years, 2021, 2022, 2023));
@@ -140,6 +142,7 @@ console.log(sumOfYears(...years, 2021, 2022, 2023));
 // 'reduce' method reduces the array to a single value. It loops over and executes a function for each value of the array. The return value of the function is stored in an accumulator (result/total). This method is doing some operation(s) on the array and returns a result of all the operations
 
 // syntax: array.reduce(function(total, currentValue, currentIndex, array), initialValue);
+
 let counter = 0;
 
 sumOfYears = years.reduce((total, val) => {
@@ -172,8 +175,6 @@ console.log(minYear);
 console.log(maxYear);
 console.log(getAverageValue(years));
 
-// Sorting arrays
-
 // sort()
 
 // years = years.sort((a, b) => (a > b ? 1 : -1));
@@ -185,6 +186,7 @@ years.sort((a, b) => b - a); // descending array values
 
 console.log(years);
 
+// reverse()
 years.reverse();
 
 console.log(years);
@@ -231,8 +233,8 @@ let linkToArray = original;
 console.log(original);
 console.log(linkToArray);
 
-linkToArray.length = 0;
-// linkToArray.splice(0, linkToArray.length);
+// linkToArray.length = 0;
+linkToArray.splice(0, linkToArray.length);
 
 console.log(linkToArray);
 console.log(original);
@@ -325,7 +327,6 @@ Bogdan.pop();
 
 console.log(Bogdan);
 
-// reverse()
 Bogdan.reverse();
 
 console.log(Bogdan);
@@ -452,7 +453,7 @@ const doneTasks = Saturday.filter(todo => todo.done).map(todo => todo.task); // 
 
 console.log(doneTasks);
 
-const agendaItems = [
+const agenda = [
   {
     id: 1,
     task: 'Buying a new scratching post for Leo',
@@ -475,8 +476,8 @@ const agendaItems = [
   },
 ];
 
-const agenda = [
-  ...agendaItems,
+const newAgenda = [
+  ...agenda,
   {
     id: 5,
     task: 'Writing a message to Massimo',
@@ -484,33 +485,33 @@ const agenda = [
   },
 ];
 
-agenda[4].status = true;
+newAgenda[4].status = true;
 
-console.log(agenda);
+console.log(newAgenda);
 
-for (let todo of agenda) {
+for (let todo of newAgenda) {
   console.log(todo);
 }
 
-for (let idx in agenda) {
+for (let idx in newAgenda) {
   console.log(idx, typeof idx);
 }
 
-agenda.forEach(console.log);
+newAgenda.forEach(console.log);
 
-const agendaTasks = agenda.map(todo => todo.task);
+const agendaTasks = newAgenda.map(todo => todo.task);
 
 console.log(agendaTasks);
 
-const agendaIdsWithTasks = agenda.map(todo =>
+const agendaIdsWithTasks = newAgenda.map(todo =>
   console.log(`${todo.id}) ${todo.task}`)
 );
 
-const descendingIds = agenda.map(todo => todo.id).sort((a, b) => b - a); // map().sort()
+const descendingIds = newAgenda.map(todo => todo.id).sort((a, b) => b - a); // map().sort()
 
 console.log(descendingIds);
 
-const bingo = agenda.filter(todo => todo.status).map(todo => todo.task); // filter().map()
+const bingo = newAgenda.filter(todo => todo.status).map(todo => todo.task); // filter().map()
 
 console.log(bingo);
 
@@ -518,23 +519,23 @@ const bingoCopy = JSON.parse(JSON.stringify(bingo));
 
 console.log(bingoCopy);
 
-const foundCompletedTask = agenda
+const foundCompletedTask = newAgenda
   .filter(todo => todo.status)
   .find(todo => todo.task.includes('of')); // filter().find()
 
 console.log(foundCompletedTask);
 
-const sortedTasks = agenda.map(todo => todo.task).sort(); //map().sort()
+const sortedTasks = newAgenda.map(todo => todo.task).sort(); //map().sort()
 
 console.log(sortedTasks);
 
-const isEveryAgendaTaskEndsWithLeo = agenda.every(todo =>
+const isEveryAgendaTaskEndsWithLeo = newAgenda.every(todo =>
   todo.task.endsWith('Leo')
 );
 
 console.log(isEveryAgendaTaskEndsWithLeo);
 
-const isAnyAgendaTaskEndsWithLeo = agenda.some(todo =>
+const isAnyAgendaTaskEndsWithLeo = newAgenda.some(todo =>
   todo.task.endsWith('Leo')
 );
 
@@ -545,12 +546,13 @@ const arrOfNums = [1, 2, 3, 4, 5, 6, 7];
 // reduceRight()
 let sumOfSquareRootsOfEvenNums = arrOfNums
   .filter(element => !(element % 2))
-  .reduceRight((acc, element) => acc + Math.sqrt(element), 0); // filter().reduceRight()
+  .reduceRight((accumulator, element) => accumulator + Math.sqrt(element), 0); // filter().reduceRight()
 
 console.log(sumOfSquareRootsOfEvenNums);
 
 sumOfSquareRootsOfEvenNums = arrOfNums.reduce(
-  (acc, element) => acc + (element % 2 ? 0 : Math.sqrt(element)),
+  (accumulator, element) =>
+    accumulator + (element % 2 ? 0 : Math.sqrt(element)),
   0
 ); // filtering inside reduce() or reduceRight() makes calculations faster
 
@@ -562,37 +564,38 @@ console.log(sumOfSquareRootsOfEvenNums);
 
 Array.prototype.myForEachPolyfill = function (cb) {
   for (let i = 0; i < this.length; i++) {
-    cb(this[i]);
+    cb(this[i], i, this);
   }
 };
 
-function myForEachFunc(arr, cb) {
-  for (let el of arr) {
-    cb(el);
+function myForEachFunc(array, cb) {
+  for (let element of array) {
+    cb(element);
   }
 }
 
 console.log(Array.prototype);
-console.log(Array.prototype.myForEachPolyfill);
+console.log(typeof Array.prototype);
+console.log(typeof Array.prototype.myForEachPolyfill === typeof myForEachFunc);
 
-agenda.myForEachPolyfill(todo => console.log(todo.task));
-myForEachFunc(agenda, todo => console.log(todo.task));
+newAgenda.myForEachPolyfill(todo => console.log(todo.task));
+myForEachFunc(newAgenda, todo => console.log(todo.task));
 
 Array.prototype.myMapPolyfill = function (cb) {
-  const newArr = [];
+  const newArray = [];
 
   for (let i = 0; i < this.length; i++) {
-    newArr.push(cb(this[i]));
+    newArray.push(cb(this[i], i, this));
   }
 
-  return newArr;
+  return newArray;
 };
 
-function myMapFunc(arr, transform) {
-  let mapped = [];
+function myMapFunc(array, transform) {
+  const mapped = [];
 
-  for (let el of arr) {
-    mapped.push(transform(el));
+  for (let element of array) {
+    mapped.push(transform(element));
   }
 
   return mapped;
@@ -612,14 +615,16 @@ console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
 console.log(
   arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
 );
-console.log(myMapFunc(arrOfNums, el => el + 5));
-console.log(myMapFunc(agenda, todo => todo.task));
+console.log(myMapFunc(arrOfNums, element => element + 5));
+console.log(myMapFunc(newAgenda, todo => todo.task));
 
 Array.prototype.myFilterPolyfill = function (cb) {
+  if (!Array.isArray(this) || !this.length || typeof cb !== 'function') return;
+
   const output = [];
 
   for (let i = 0; i < this.length; i++) {
-    if (cb(this[i])) {
+    if (cb(this[i], i, this)) {
       output.push(this[i]);
     }
   }
@@ -627,92 +632,176 @@ Array.prototype.myFilterPolyfill = function (cb) {
   return output;
 };
 
-function myFilterFunc(arr, test) {
-  if (!Array.isArray(arr) || !arr.length || typeof test !== 'function') return;
+function myFilterFunc(array, test) {
+  const passed = [];
 
-  let passed = [];
-
-  for (let el of arr) {
-    if (test(el)) {
-      passed.push(el);
+  for (let element of array) {
+    if (test(element)) {
+      passed.push(element);
     }
   }
 
   return passed;
 }
 
-function greaterThan(num) {
+function greaterThanThree(num) {
   return num > 3;
 }
 
-console.log(agenda.myFilterPolyfill(todo => !todo.status));
-console.log(myFilterFunc(agenda, todo => todo.status).map(todo => todo.task));
+console.log(newAgenda.myFilterPolyfill(todo => !todo.status));
+console.log(
+  myFilterFunc(newAgenda, todo => todo.status).map(todo => todo.task)
+);
 
-console.log(arrOfNums.myFilterPolyfill(greaterThan));
-console.log(myFilterFunc(arrOfNums, greaterThan));
+console.log(arrOfNums.myFilterPolyfill(greaterThanThree));
+console.log(myFilterFunc(arrOfNums, greaterThanThree));
 
 console.log(arrOfNums.myFilterPolyfill(num => num % 2));
 console.log(myFilterFunc(arrOfNums, num => num % 2 === 0));
 
-const filterReversedNums = (arr, test) => {
-  const reversedArr = [];
+const filterReversedNums = (array, test) => {
+  const reversedArray = [];
 
-  for (let i = arr.length - 1; i >= 0; i--) {
-    if (test(arr[i])) {
-      reversedArr.push(arr[i]);
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (test(array[i])) {
+      reversedArray.push(array[i]);
     }
   }
 
-  return reversedArr;
+  return reversedArray;
 };
 
-const arr = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
+const mixedArray = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
 
-const numbers = myFilterFunc(arr, el => typeof el === 'number');
-const reversedNumbers = filterReversedNums(arr, el => typeof el === 'number');
+const numbers = myFilterFunc(
+  mixedArray,
+  element => typeof element === 'number'
+);
+const reversedNumbers = filterReversedNums(
+  mixedArray,
+  element => typeof element === 'number'
+);
 
 console.log(numbers);
 console.log(reversedNumbers);
 
-// More about indexOf
-console.log(arr.indexOf(9));
-console.log(arr.indexOf(9, 3));
-console.log(arr.lastIndexOf(9));
-console.log(arr.indexOf('water'));
+// indexOf() with one argument
+console.log(mixedArray.indexOf(9));
+
+// indexOf() with two arguments
+console.log(mixedArray.indexOf(9, 3));
+
+// lastIndexOf()
+console.log(mixedArray.lastIndexOf(9));
 
 Array.prototype.myReducePolyfill = function (combine, initialValue) {
-  let acc = initialValue;
+  let accumulator = initialValue;
+  let index = 0;
 
-  for (let i = 0; i < this.length; i++) {
-    acc = combine(acc, this[i]);
+  typeof accumulator == 'undefined' && (accumulator = this[index++]);
+
+  for (; index < this.length; index++) {
+    accumulator = combine(accumulator, this[index], index, this);
   }
 
-  return acc;
+  return accumulator;
 };
 
 function myReduceFunc(array, combine, initialValue) {
-  let current = initialValue;
+  let accumulator = initialValue;
+  let index = 0;
 
-  for (let element of array) {
-    current = combine(current, element);
+  if (typeof accumulator == 'undefined') {
+    accumulator = array[index++];
   }
 
-  return current;
+  while (index < array.length) {
+    accumulator = combine(accumulator, array[index]);
+    index++;
+  }
+
+  return accumulator;
 }
 
+console.log(arrOfNums.reduce((prev, cur) => prev + cur, 0));
+console.log(arrOfNums.reduce((prev, cur) => prev + cur));
 console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur, 0));
+console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur));
+console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur, 0));
+console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur));
+
+console.log(arrOfNums.reduce((prev, cur) => prev + cur * 10, 0));
+console.log(arrOfNums.reduce((prev, cur) => prev + cur * 10));
+console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur * 10, 0));
+console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur * 10));
 console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur * 10, 0));
+console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur * 10));
+
+function mySomeFunc(array, cb) {
+  for (let element of array) {
+    if (cb(element)) return true;
+  }
+
+  return false;
+}
+
+console.log(mySomeFunc(arrOfNums, greaterThanThree));
+console.log(mySomeFunc(arrOfNums, element => element === 7));
+console.log(mySomeFunc(arrOfNums, element => element === 8));
+
+function myEveryFunc(array, cb) {
+  for (let element of array) {
+    if (!cb(element)) return false;
+  }
+
+  return true;
+}
+
+console.log(myEveryFunc(arrOfNums, greaterThanThree));
+console.log(myEveryFunc(arrOfNums, element => element === 7));
+console.log(myEveryFunc(arrOfNums, element => typeof element === 'number'));
+
+function myFindLastFunc(array, cb) {
+  for (let i = array.length - 1; i >= 0; i--) {
+    if (cb(array[i], i, array)) return array[i];
+  }
+}
+
+// findLast()
+console.log(arrOfNums.findLast(greaterThanThree));
+console.log(myFindLastFunc(arrOfNums, greaterThanThree));
+console.log(myFindLastFunc(arrOfNums, element => element % 2));
+
+console.log(arrOfNums);
 
 // flat()
 const twoDArray = [1, [2, 3], [4, 5]];
 
-let flattenedArray = twoDArray.reduce((prev, cur) => prev.concat(cur), []);
+console.log(twoDArray.flat());
 
-console.log(flattenedArray);
+const flattenedTwoDArray = twoDArray.reduce(
+  (prev, cur) => prev.concat(cur),
+  []
+);
 
-flattenedArray = twoDArray.flat();
+console.log(flattenedTwoDArray);
 
-console.log(flattenedArray);
+function myFlatFunc(array, depth = 1) {
+  const flattenedArray = [];
+
+  for (let element of array) {
+    if (Array.isArray(element) && depth > 0) {
+      flattenedArray.push(...myFlatFunc(element, depth - 1));
+    } else {
+      flattenedArray.push(element);
+    }
+  }
+
+  return flattenedArray;
+}
+
+console.log(myFlatFunc(twoDArray));
+console.log(myFlatFunc([1, 2, 3, [4, 5, [6, 7, [8, 9, 10]]]], 3));
 
 const arrOfUndef = [...Array(3)];
 const numbers1 = Array.of(1000, 2000, 3000);
@@ -738,40 +827,43 @@ const cats = [
   { name: 'Mila', gender: 'female' },
 ];
 
-const catsNames = Array.from(cats, ({ name }) => name);
+let catsNames = Array.from(cats, ({ name }) => name);
+
+console.log(catsNames);
+
+catsNames = cats.map(cat => cat.name);
 
 console.log(catsNames);
 
 console.log(Array.from(catsNames[0]));
 console.log([...'Mila']);
 
-console.log(Array.from(Object.values(arr)));
-console.log(Object.values(arr));
+console.log(Array.from(Object.values(mixedArray)));
+console.log(Object.values(mixedArray));
 
-console.log(Object.getOwnPropertyNames(arr));
-console.log(arr.hasOwnProperty('length'));
-console.log(arr.hasOwnProperty(10));
-console.log(arr.hasOwnProperty(9));
+console.log(Object.getOwnPropertyNames(mixedArray));
+console.log(mixedArray.hasOwnProperty('length'));
+console.log(mixedArray.hasOwnProperty(10));
 
-console.log(Object.values(arr));
-console.log(Object.entries(arr));
-console.log(Object.fromEntries(Object.entries(arr)));
+console.log(Object.values(mixedArray));
+console.log(Object.entries(mixedArray));
+console.log(Object.fromEntries(Object.entries(mixedArray)));
 
-console.log([...new Set(arr)]);
+console.log([...new Set(mixedArray)]);
 
 // Copying arrays
-let arrCopy = arr;
-let arrCopy1 = [...arr];
-let arrCopy2 = arr.slice();
-let arrCopy3 = Object.assign([], arr);
-let arrCopy4 = JSON.parse(JSON.stringify(arr));
+let arrCopy = mixedArray;
+let arrCopy1 = [...mixedArray];
+let arrCopy2 = mixedArray.slice();
+let arrCopy3 = Object.assign([], mixedArray);
+let arrCopy4 = JSON.parse(JSON.stringify(mixedArray));
 
 // Comparing arrays
-console.log(arrCopy === arr);
-console.log(arrCopy1 == arr);
-console.log(arrCopy2 == arr);
-console.log(arrCopy3 == arr);
-console.log(arrCopy4 == arr);
+console.log(arrCopy === mixedArray);
+console.log(arrCopy1 == mixedArray);
+console.log(arrCopy2 == mixedArray);
+console.log(arrCopy3 == mixedArray);
+console.log(arrCopy4 == mixedArray);
 console.log([1, 20] == [1, 20]);
 console.log([] == []);
 console.log([] == true);
@@ -779,60 +871,79 @@ console.log(Boolean([]) === true);
 
 console.log(arrCopy.push(999));
 console.log(arrCopy);
-console.log(arr);
+console.log(mixedArray);
 
 arrCopy = ['ha', 'ha', 'ha'];
 
 console.log(arrCopy);
-console.log(arr);
-
-const techArr = ['frontend', 'backend', 'qa'];
+console.log(mixedArray);
 
 // Array => object
-let obj = Object.assign({}, techArr);
+const techArray = ['frontend', 'backend', 'qa'];
+let object = Object.assign({}, techArray);
 
-console.log(obj);
+console.log(object);
 
-obj = { ...techArr };
+object = { ...techArray };
 
-console.log(obj);
+console.log(object);
 
-obj = techArr.reduce((res, key, index) => {
-  res[index] = key;
+object = techArray.reduce((result, key, index) => {
+  result[index] = key;
 
-  return res;
+  return result;
 }, {});
 
-console.log(obj);
+console.log(object);
 
-// Array of arrays => array of objects
+// Array of arrays => object
 const arrayOfArrays = [
   ['name', 'Kate'],
   ['city', 'New York'],
 ];
 
+object = arrayOfArrays.reduce(
+  (accumulator, current) =>
+    Object.assign(accumulator, { [current[0]]: current[1] }),
+  {}
+);
+
+console.log(object);
+
+object = arrayOfArrays.reduce(
+  (accumulator, current) => ({ ...accumulator, [current[0]]: current[1] }),
+  {}
+);
+
+console.log(object);
+
+object = Object.fromEntries(arrayOfArrays);
+
+console.log(object);
+
+// Array of arrays => array of objects
 const arrayOfObjects = arrayOfArrays.map(([key, value]) => ({ [key]: value }));
 
 console.log(arrayOfObjects);
 
-// Array of arrays => object
-obj = arrayOfArrays.reduce(
-  (acc, current) => Object.assign(acc, { [current[0]]: current[1] }),
-  {}
-);
+// Array of objects => object
+const trafficLightsData = [
+  { key: 'red', value: '🔴' },
+  { key: 'yellow', value: '🟡' },
+  { key: 'green', value: '🟢' },
+];
 
-console.log(obj);
+const assembleTrafficLight = array => {
+  const lights = array.reduce((acc, obj) => {
+    acc[obj.key] = obj.value;
 
-obj = arrayOfArrays.reduce(
-  (acc, current) => ({ ...acc, [current[0]]: current[1] }),
-  {}
-);
+    return acc;
+  }, {});
 
-console.log(obj);
+  return lights;
+};
 
-obj = Object.fromEntries(arrayOfArrays);
-
-console.log(obj);
+console.log(assembleTrafficLight(trafficLightsData));
 
 // Array of objects => object of objects
 const data = [
@@ -842,17 +953,20 @@ const data = [
 ];
 
 const hslColors = data.reduce(
-  (acc, cur) => ({ ...acc, [cur.color]: `hsl(${cur.hue}, 100%, 52%)` }),
+  (accumulator, cur) => ({
+    ...accumulator,
+    [cur.color]: `hsl(${cur.hue}, 100%, 52%)`,
+  }),
   {}
 );
 
 // Here is how it works:
 
-// reduce is initialized with an empty object ({} at the end), therefore first iteration variables are acc = {}, cur = { hue: 120, color: 'green' }. This function returns an object - this is why its body is wrapped in parentheses => ({ ... }). Spread operator doesn't do anything on the first iteration, so 'green: hsl(120, 100%, 52%)' is set as the first item.
+// reduce is initialized with an empty object ({} at the end), therefore first iteration variables are accumulator = {}, cur = { hue: 120, color: 'green' }. This function returns an object - this is why its body is wrapped in parentheses => ({ ... }). Spread operator doesn't do anything on the first iteration, so 'green: hsl(120, 100%, 52%)' is set as the first item.
 
-// On the second iteration variables are acc = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands acc and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
+// On the second iteration variables are accumulator = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands accumulator and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
 
-// Third iteration: acc = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when acc is spread inside the object, our function returns the final value:
+// Third iteration: accumulator = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when accumulator is spread inside the object, our function returns the final value:
 console.table(hslColors);
 console.log({ hslColors });
 
@@ -870,11 +984,14 @@ let transactions = entries.map(([operation, currency, amount]) => ({
 
 console.table(transactions);
 
-transactions = entries.reduce((acc, [operation, currency, amount], index) => {
-  acc[index] = { operation, currency, amount };
+transactions = entries.reduce(
+  (accumulator, [operation, currency, amount], index) => {
+    accumulator[index] = { operation, currency, amount };
 
-  return acc;
-}, []);
+    return accumulator;
+  },
+  []
+);
 
 console.log({ transactions });
 
@@ -896,7 +1013,7 @@ const budget = entries.reduce((total, [operation, currency, amount], index) => {
 
 console.log(`Total sum after the last iteration: ${budget}$`);
 
-const allVehicles = [
+const vehicles = [
   'bike',
   'bike',
   'van',
@@ -912,15 +1029,15 @@ const allVehicles = [
 ];
 
 // Sum up the instances of each vehicle
-const transportation = allVehicles.reduce((obj, item) => {
-  !obj[item] && (obj[item] = 0);
+const transportation = vehicles.reduce((accumulator, item) => {
+  !accumulator[item] && (accumulator[item] = 0);
 
-  obj[item]++;
+  accumulator[item]++;
 
   // Logs the result on each iteration:
-  console.log(obj['car']);
+  console.log(accumulator['car']);
 
-  return obj;
+  return accumulator;
 }, {});
 
 console.log(transportation);
@@ -967,13 +1084,13 @@ console.log(technologies);
 // Updating one object in an array in an immutable way
 const updatedPancakes = pancakes.map(pancake =>
   pancake.name === 'Roma'
-    ? Object.assign({}, pancake, { technology: 'MERN' })
+    ? Object.assign({}, pancake, { technology: 'React Native' })
     : pancake
 );
 
 console.log(updatedPancakes);
 
 // Adding new item to the end of the array of objects in an immutable way
-const newPancakes = [...pancakes, { name: 'Bodia', technology: 'React' }];
+const newPancakes = [...pancakes, { name: 'Bodia', technology: 'Angular' }];
 
 console.log(newPancakes);

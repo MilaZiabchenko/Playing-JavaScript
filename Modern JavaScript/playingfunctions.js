@@ -39,7 +39,8 @@ console.log(calcMaxNumber(10, 10));
 
 // When you execute a piece of code, the JavaScript engine creates the Global Execution Context, which has two phases: creation and execution.
 
-// During the creation phase, the engine moves the variable and function declarations to the top of your code. This feature is known as hoisting in JavaScript:
+// During the creation phase, the engine moves the variable and function declarations to the top of your code. This feature is known as hoisting in JavaScript
+
 console.log(a);
 
 function a() {}
@@ -51,7 +52,7 @@ function f() {
   console.log(this);
 }
 
-// During the creation phase, the engine places var variable in the memory and initializes its value to undefined:
+// During the creation phase, the engine places var variable in the memory and initializes its value to undefined
 console.log(b);
 
 var b = function () {};
@@ -91,7 +92,8 @@ for (var i = 0; i < 9; i += 2) {
 
 console.log(i);
 
-// The JavaScript engine hoists the variables declared using the let keyword, but it doesn’t initialize them:
+// The JavaScript engine hoists the variables declared using the let keyword, but it doesn’t initialize them
+
 // console.log(c);
 // console.log(d);
 
@@ -174,18 +176,20 @@ show = () => console.log('Anonymous function 2');
 
 show();
 
-// Immediately invoked function expression
+// Immediately invoked function expression(IIFE)
 (function () {
   console.log('Function executed');
 })(); // trailing parenthesis
 
 const personality = {
-  fName: 'Leo',
-  lName: 'Ziablick',
+  firstName: 'Leo',
+  lastName: 'Ziablick',
 };
 
 (function () {
-  console.log(`${personality.fName} ${personality.lName}`);
+  console.log(
+    `${personality.firstName} ${personality.lastName} is invoked immediately`
+  );
 })(personality);
 
 (() => {
@@ -283,7 +287,7 @@ console.log(binet(10));
 
 // Recursive functions
 
-// The simplest and easiest algorithm is the recursive algorithm. All recursive algorithms work on the same principle. The function calls itself and passes results from the previous calculation.
+// The simplest and easiest algorithm is the recursive algorithm. All recursive algorithms work on the same principle. The function calls itself and passes results from the previous calculation
 
 const fibonacciValue = index =>
   index < 2 ? index : fibonacciValue(index - 2) + fibonacciValue(index - 1);
@@ -393,7 +397,7 @@ console.log(makeTree(categories, null));
 
 // Closures
 
-// A closure is a function combined with references to the variables defined outside of it. Closures maintain the variable references, which allow functions to access variables outside of their scope. They “enclose” the function and the variables in its environment.
+// A closure is a function combined with references to the variables defined outside of it. Closures maintain the variable references, which allow functions to access variables outside of their scope.
 
 // A closure is the combination of a function and the lexical environment within which that function was declared. This environment consists of any variables that were in-scope at the time the closure was created.
 
@@ -435,14 +439,14 @@ function outerSpace() {
     );
   }
 
-  // The inner function is returned from the outer function before being executed.
+  // The inner function is returned from the outer function before being executed
   return innerSpace;
 }
 
-// ourSpace is a reference to the instance of the function innerSpace that is created when outerSpace is run.
+// ourSpace is a reference to the instance of the function innerSpace that is created when outerSpace is run
 const ourSpace = outerSpace();
 
-// When ourSpace is invoked, the variable ourCity remains available for use because the instance of innerSpace maintains a reference to its lexical environment, within which the variable ourCity exists.
+// When ourSpace is invoked, the variable ourCity remains available for use because the instance of innerSpace maintains a reference to its lexical environment, within which the variable ourCity exists
 ourSpace();
 
 const outerFn = () => {
@@ -459,7 +463,7 @@ const outerFn = () => {
 
 console.log(outerFn());
 
-// We can use closures to return objects from functions that store state. The following makePerson function returns an object that can store and change a name:
+// We can use closures to return objects from functions that store state. The following makePerson function returns an object that can store and change a name
 let makePerson = name => {
   let _name = name;
 
@@ -471,19 +475,20 @@ let makePerson = name => {
 
 const me = makePerson('Mila');
 
+console.log(me === me.getName());
 console.log(me.getName());
 
 me.setName('Mila Ziablick');
 
 console.log(me.getName());
 
-// The previous example closely resembles a class that stores private state and exposes public getter and setter methods. We can extend this object-oriented parallel further by using closures to implement private methods:
+// The previous example closely resembles a class that stores private state and exposes public getter and setter methods. We can extend this object-oriented parallel further by using closures to implement private methods
 makePerson = name => {
   let _name = name;
 
   const privateSetName = newName => (_name = newName);
 
-  // privateSetName is not directly accessible to consumers and it can access the private state variable _name through a closure.
+  // privateSetName is not directly accessible to consumers and it can access the private state variable _name through a closure
 
   return {
     setName: newName => privateSetName(newName),
@@ -504,20 +509,18 @@ const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const inBetween = (x, y) => num => num >= x && num <= y;
 
 // With closures we remember parameters passed into the function inBetween and then we use them in the returned function
+console.log(nums.filter(inBetween(3, 7)));
 
-console.log(nums.filter(inBetween(3, 6)));
+// It is common for a callback to reference a variable declared outside of itself
+console.log(nums.filter(num => num >= 3 && num <= 7));
 
-// It is common for a callback to reference a variable declared outside of itself.
-
-console.log(nums.filter(num => num >= 3 && num <= 6));
-
-// num is available in the callback because of lexical scoping, and the value of num is persisted when the anonymous function is called by filter because of a closure.
+// num is available in the callback because of lexical scoping, and the value of num is persisted when the anonymous function is called by filter because of a closure
 
 let countEven = 0;
 
 nums.forEach(num => num % 2 === 0 && ++countEven);
 
-// The callback iterator is a closure because it captures countEven variable.
+// The callback iterator is a closure because it captures countEven variable
 
 console.log(countEven);
 
@@ -535,7 +538,7 @@ btn.addEventListener(
       ? (btn.textContent = `You clicked ${countClicked} time`)
       : (btn.textContent = `You clicked ${countClicked} times`);
 
-    // Being a closure, handleClick() captures countClicked from the lexical scope and updates it when a click happens. Even more, btn.textContent is captured too.
+    // Being a closure, handleClick() captures countClicked from the lexical scope and updates it when a click happens. Even more, btn.textContent is captured too
 
     setTimeout(() => {
       btn.textContent = `Clicking session is over!`;
@@ -556,19 +559,17 @@ btn.addEventListener(
 
 const curry = f => a => b => c => f(a, b, c);
 const sum = (a, b, c) => a + b + c;
-const curriedSum = curry(sum);
+const curriedResult = curry(sum);
 
-console.log(curriedSum(1)(2)(3));
-console.log(curriedSum(3)(5)(7));
+console.log(curriedResult(3)(5)(7));
 
-const subtract = a => b => a - b;
+const subtract = a => b => c => a - b - c;
 
-console.log(subtract(5)(15));
-console.log(subtract(15)(5));
+console.log(subtract(5)(15)(0));
+console.log(subtract(15)(5)(0));
 
 console.log(sum.length);
 console.log(subtract.length);
-console.log(subtract(5).length);
 
 console.log(sum.call(null, 1, 3, 5));
 console.log(sum.apply(null, [1, 3, 5]));
@@ -593,8 +594,8 @@ const curryUs = you => and => me => `${you} ${and} ${me}`;
 
 console.log(curryUs(bo)(and)(mi));
 
-const curryAMessage = greetings => name => message =>
-  `${greetings}, ${name}! ${message}?`;
+const curryAMessage = greeting => name => message =>
+  `${greeting}, ${name}! ${message}?`;
 
 console.log(curryAMessage(`Hey`)(`Beth`)(`What's up`));
 
@@ -610,7 +611,7 @@ console.log(b(a(5)));
 
 // 1. 'this' value
 
-// Regular function:
+// Regular function from the lowest priority to the highest:
 
 // -simple invocation => global object;
 // -method invocation => object owning the method;
@@ -618,22 +619,22 @@ console.log(b(a(5)));
 // -constructor invocation (new) => newly created instance
 
 function update(...params) {
-  this.arr.push(...params);
+  this.arrayOfAddresses.push(...params);
 }
 
-const obj = { arr: [1, 3, 5] };
+const objectOfAddresses = { arrayOfAddresses: [52, 62] };
 
-update.apply(obj, [52, 62]);
+update.apply(objectOfAddresses, [52, 65]);
 
-console.log(obj.arr);
+console.log(objectOfAddresses.arrayOfAddresses);
 
-update.call(obj, [52, 65]);
+update.call(objectOfAddresses, [52, 68]);
 
-console.log(obj.arr);
+console.log(objectOfAddresses.arrayOfAddresses);
 
-update.call(obj, 7, 8, 9);
+update.call(objectOfAddresses, 52, 86);
 
-console.log(obj.arr);
+console.log(objectOfAddresses.arrayOfAddresses);
 
 // Arrow function:
 
@@ -653,16 +654,16 @@ console.log(obj.arr);
 
 // On the other side, no arguments special keyword is defined inside an arrow function. The arrow function accesses arguments from the outer function. Same as with 'this' value, the arguments object is resolved lexically.
 
-const myFunc = function () {
-  console.log(this, arguments);
+const myFunc = function (...args) {
+  console.log(this, arguments, args);
 
-  // The arrow function myArrowFunc() is invoked with the arguments 'y', 'z'. Still, inside of its body, arguments object equals to the arguments of myFunc() invocation. If you’d like to access the direct arguments of the arrow function, then you can use the rest parameters feature:
+  // Inside of the body of myArrowFunc, arguments object equals to the arguments of myFunc invocation. If you’d like to access the direct arguments of the arrow function, you can use the rest parameters feature:
   const myArrowFunc = (...args) => console.log(this, arguments, args);
 
-  myArrowFunc([1, 2, 3]);
+  myArrowFunc(1, 2, 3);
 };
 
-myFunc();
+myFunc(10, 20, 30);
 
 // Generators(ES6)
 
@@ -702,6 +703,7 @@ for (let fish of fishSample) {
 
 function* getNextFlat() {
   let flat = 62;
+
   while (flat <= 65) {
     yield flat++;
   }
@@ -711,13 +713,13 @@ const flatNumbers = [...getNextFlat()];
 
 console.log(flatNumbers);
 
-function* generate() {
+function* generateMessage() {
   yield 'I';
   yield 'am not';
   yield 'a fan';
-  yield 'of generators';
+  yield 'of generators.';
 }
 
-const text = [...generate()].join(' ');
+const message = [...generateMessage()].join(' ');
 
-console.log(text);
+console.log(message);

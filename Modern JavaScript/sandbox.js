@@ -1,6 +1,4 @@
-// Primitive data types
-
-// Comparison operators/loose and strict equality
+// Comparison operators/loose vs strict equality
 console.log(NaN == NaN);
 console.log(55 == '55');
 console.log(55 != '55');
@@ -10,18 +8,37 @@ console.log(55 > '53');
 console.log(55 === 55 / 1);
 console.log('leo' > 'Milu');
 
-// Number methods
+// isNaN()
+
+// isNaN() converts the argument to a Number and returns true if the resulting value is NaN
+
+console.log(isNaN(77));
+console.log(isNaN('77'));
+console.log(isNaN('Milu'));
+console.log(isNaN(NaN));
+
+// Number.isNaN()
+
+// Number.isNaN() does not convert the argument; it returns true when the argument is a Number and is NaN
+
+console.log(Number.isNaN(77));
+console.log(Number.isNaN('77'));
+console.log(Number.isNaN('Milu'));
 console.log(Number.isNaN(NaN));
+
+// Number.isFinite();
 console.log(Number.isFinite(NaN));
 console.log(Number.isFinite(Infinity));
 console.log(Number.isFinite(-Infinity));
 console.log(Number.isFinite(-3));
+
+// Number.isInteger()
 console.log(Number.isInteger(-3));
 console.log(Number.isInteger(0));
 console.log(Number.isInteger(3.7));
 console.log(Number.isInteger(Infinity));
 
-// Type conversion
+// Type conversion: string <==> number
 let something = '55.55';
 
 console.log(
@@ -39,7 +56,6 @@ console.log(
 // Number constructor
 something = Number(something);
 
-console.log(something.toFixed(2) + 5);
 console.log(something, typeof something);
 
 // String constructor
@@ -76,6 +92,7 @@ console.log(typeof True, typeof False, typeof alsoTrue, typeof alsoFalse);
 // void operator
 
 // The void operator evaluates the given expression and then returns undefined
+
 console.log(void 1);
 console.log(void { name: 'Banksy' });
 
@@ -203,7 +220,7 @@ const todayJSON = JSON.stringify(today, null, 2);
 
 console.log(todayJSON);
 
-// 'For' loop
+// 'for' loop
 for (let i = 0; i < today.length; i++) {
   console.log(today[i].id);
 }
@@ -217,9 +234,30 @@ for (let i = initialArr.length - 1; i >= 0; i--) {
 
 console.log(reversedArr);
 
-// 'While' loop
+// Optional 'for' expressions
+
+// All three expressions ([initialization]; [condition]; [final-expression]) in the head of the 'for' loop are optional.
+
+for (let i = 0; i < 4; i++) {
+  console.log(i);
+}
+
+for (let i = 0; ; i++) {
+  console.log(i);
+
+  if (i >= 3) break;
+}
+
 let i = 0;
 
+for (;;) {
+  console.log(i);
+
+  if (i >= 3) break;
+  i++;
+}
+
+// 'while' loop
 while (i < today.length) {
   console.log(today[i].task);
   i++;
@@ -231,7 +269,7 @@ while (i) {
   console.log(i--);
 }
 
-// 'Do/while' loop
+// 'do-while' loop
 i = 'I send you one message.';
 let j = null;
 
@@ -240,7 +278,7 @@ do {
   i++;
 } while (j === 'You wright me back.');
 
-// 'For/of' statement
+// 'for-of' statement
 const salaries = [1000, 2000, 3000];
 salaries[0] += 500;
 
@@ -265,7 +303,7 @@ console.log(resultA, resultB, resultC);
 
 let time = 5;
 
-// If/else statement
+// 'if-else' statement
 if (time <= 6 || time >= 22) {
   console.log('Time to sleep');
 } else if (time > 7 && time <= 10) {

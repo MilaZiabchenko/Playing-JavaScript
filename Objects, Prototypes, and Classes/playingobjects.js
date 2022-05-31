@@ -2,11 +2,11 @@ console.time('Elapsed');
 
 // Browser Object Model
 
-// BOM is the core of JavaScript on the web. It refers to all the objects exposed by the web browser that allow JavaScript to interact with it:
+// BOM is the core of JavaScript on the web. It refers to all the objects exposed by the web browser that allow JavaScript to interact with it
 
 // 1. Window Object
 
-// The object of window represents a browser window and all its corresponding features. A window object is created automatically by the browser itself.
+// The object of window represents a browser window and all its corresponding features. A window object is created automatically by the browser itself
 
 console.log(this);
 console.log(window.innerWidth);
@@ -16,7 +16,7 @@ console.log(typeof window.addEventListener === 'function');
 
 // 2. Location Object
 
-// As well as other window objects, it can be written with or without the window or document prefix.
+// As well as other window objects, it can be written with or without the window or document prefix
 
 console.log(window.location);
 console.log(location.pathname);
@@ -26,7 +26,7 @@ console.log(location.href);
 
 // 3. Navigator Object
 
-// The Navigator object has properties that convey the browser’s information. For example, the userAgent is a property of the window.navigator object. It is a long string that identifies the web browser.
+// The Navigator object has properties that convey the browser’s information. For example, the userAgent is a property of the window.navigator object. It is a long string that identifies the web browser
 
 console.log(window.navigator);
 console.log(typeof navigator);
@@ -57,18 +57,15 @@ console.log(screen.pixelDepth);
 
 // 5. History Object
 
-// The window.history object allows you to access the history stack of the browser.
-
+// The window.history object allows you to access the history stack of the browser
 console.log(window.history);
 
-// To navigate to a URL in the history, you use the back(), forward(), and go() methods.
-
+// To navigate to a URL in the history, you use the back(), forward(), and go() methods
 console.log(window.history.back());
 console.log(history.go(-1));
 console.log(history.forward());
 
-// The history.length returns the number of URLs in the history stack.
-
+// The history.length returns the number of URLs in the history stack
 console.log(history.length);
 
 // Math object
@@ -111,28 +108,25 @@ console.log(
 );
 
 // Date object
-const tick = Date.now();
 const currentDate = new Date();
 const randomDate = new Date(289765388228);
-const futureDate = new Date(2030, 11, 31, 23, 59, 59, 900);
+
 const pastDate = new Date();
 pastDate.setFullYear(1770);
 pastDate.setMonth(11);
 pastDate.setDate(17);
 
-console.log(tick);
-console.log(currentDate.getTime());
-console.log(tick === currentDate.getTime());
 console.log(currentDate);
+console.log(currentDate.getTime());
+console.log(Date.now() === currentDate.getTime());
+console.log(currentDate.toLocaleTimeString());
 console.log(currentDate.toTimeString()); // time of the time zone of the browser
 console.log(currentDate.toUTCString()); // GMT
+
 console.log(randomDate);
-console.log(futureDate);
-console.log(futureDate.getTime());
-console.log(futureDate.getMilliseconds());
 console.log(pastDate);
 
-const birthday = new Date(1977, 6, 3, 19, 30, 37);
+const birthday = new Date(1977, 6, 3, 19, 30, 37, 555);
 
 console.log(birthday);
 console.log(birthday.getFullYear());
@@ -141,6 +135,7 @@ console.log(birthday.getDate());
 console.log(birthday.getDay());
 console.log(birthday.getHours());
 console.log(birthday.getTime());
+console.log(birthday.getMilliseconds());
 
 // String constructor
 let myString = '33 whales eat fish';
@@ -198,7 +193,7 @@ const human = {
 
   logInterests() {
     this.interests.forEach(hobby =>
-      console.log(`${this.firstName} likes ${hobby}`)
+      console.log(`${this.firstName} likes ${hobby}.`)
     );
   },
 };
@@ -234,16 +229,6 @@ console.log(h1['dateOfBirth']);
 console.log(h2.interests[1]);
 console.log(h3.address.city);
 
-// Accessing/updating dynamic properties, using square brackets
-let property = 'dateOfBirth';
-
-console.log(human[property]); // dateOfBirth value
-
-property = 'special';
-
-console.log(human[property]); // special value
-console.log(human['special']); // special value
-
 // Setting/updating object members
 
 // 1) using dot notation:
@@ -270,6 +255,16 @@ console.log(h1['address']);
 console.log(h2['address']);
 console.log(h3['address']);
 
+// Accessing/updating dynamic properties, using square brackets
+let property = 'dateOfBirth';
+
+console.log(human[property]); // dateOfBirth value
+
+property = 'special';
+
+console.log(human[property]); // special value
+console.log(human['special']); // special value
+
 // Deleting object members
 delete human.gender;
 
@@ -278,13 +273,13 @@ console.log(h1.hasOwnProperty('gender'));
 console.log(h2.hasOwnProperty('gender'));
 console.log(h3.hasOwnProperty('gender'));
 
-let getSelectedDetails = personalInfo => ({
-  name: personalInfo.firstName,
-  lastName: personalInfo.lastName,
-  city: personalInfo.address.city,
+let getSelectedInfo = person => ({
+  name: person.firstName,
+  lastName: person.lastName,
+  city: person.address.city,
 });
 
-console.log(getSelectedDetails(human));
+console.log(getSelectedInfo(human));
 
 // Destructuring
 
@@ -299,20 +294,20 @@ const {
 
 console.log(country === human.address.country);
 
-// Using destructuring with function parameters:
-getSelectedDetails = ({ firstName, lastName, address: { city } }) =>
+// Using destructuring with function parameters
+getSelectedInfo = ({ firstName, lastName, address: { city } }) =>
   `${firstName} ${lastName} lives in ${city}`;
 
-console.log(getSelectedDetails(human));
+console.log(getSelectedInfo(human));
 
-// Using destructuring with rest parameters:
-getSelectedDetails = ({ firstName, lastName, ...otherInfo }) => otherInfo;
+// Using destructuring with rest parameters
+getSelectedInfo = ({ firstName, lastName, ...otherInfo }) => otherInfo;
 
-console.log(getSelectedDetails(human));
+console.log(getSelectedInfo(human));
 
-const newHuman = Object.assign(human, { kind: true });
+const updatedHuman = Object.assign(human, { kind: true });
 
-console.log(newHuman === human);
+console.log(updatedHuman === human);
 console.log(human.hasOwnProperty('kind'));
 console.log(h1.hasOwnProperty('kind'));
 console.log(h2.hasOwnProperty('kind'));
@@ -327,7 +322,7 @@ console.log(h1.interests);
 console.log(h2.interests);
 console.log(h3.interests);
 console.log(human.interests);
-console.log(newHuman.interests);
+console.log(updatedHuman.interests);
 
 // Using destructuring for renaming variables
 const me = { shortName: 'Mi' };
@@ -359,7 +354,7 @@ console.log([...passions, ...activities]);
 const coder = { language: 'JavaScript', technology: 'React' };
 const languages = 'Expert';
 
-// Merging objects in an immutable way:
+// Merging objects in an immutable way
 const creativeCoder = {
   ...me,
   city,
@@ -377,7 +372,6 @@ const musician = {
   born: 'September 20, 1982',
   location: 'Berlin',
   site: 'https://www.nilsfrahm.com',
-  // Array of objects embedded in the object
   latestAlbums: [
     {
       title: 'Old Friends New Friends',
@@ -416,11 +410,17 @@ console.log(Object.getOwnPropertyNames(musician));
 console.log(musician.hasOwnProperty('genres'));
 console.log('genres' in musician);
 
-const musicianDeepCopy = JSON.parse(JSON.stringify(musician));
+// Copying object with methods
+const musicianShallowCopyOneWithMethods = Object.assign({}, musician);
+const musicianShallowCopyTwoWithMethods = { ...musician };
+
+// Copying object without methods
+const musicianDeepCopyWithoutMethods = JSON.parse(JSON.stringify(musician));
 
 console.log(musician);
-console.log(musicianDeepCopy);
-console.log(musician === musicianDeepCopy);
+console.log(musicianShallowCopyOneWithMethods);
+console.log(musicianShallowCopyTwoWithMethods);
+console.log(musicianDeepCopyWithoutMethods);
 
 const props = [];
 const values = [];
@@ -456,8 +456,8 @@ const humans = [].concat(human, creativeCoder, musician);
 
 console.log(humans);
 
-const keyboardist = { firstName, gender: 'male' };
-const bandMember = { ...keyboardist, role: 'keyboardist' }; // keyboardist shallow copy, reference is changed
+const keyboardist = { firstName, pro: false };
+const bandMember = { ...keyboardist, memberSince: 2022 }; // keyboardist shallow copy, reference is changed
 
 const updateInfo = member => {
   const updatedMember = { ...member };
@@ -479,7 +479,7 @@ const schedule = {};
 
 console.log(isEmpty(schedule));
 
-// Dynamic object keys
+// Dynamic object keys (aka computed properties)
 let time = ['morning_', 'night_'];
 
 schedule[time[0] + '7:30'] = 'Get up, greet Leo, and have a cup of coffee :)';
@@ -490,7 +490,7 @@ console.log(isEmpty(schedule));
 console.log(schedule);
 
 // Nested objects
-const obj = {
+const object = {
   littleFriends: {
     Wendy: {
       says: `I am here :)`,
@@ -507,14 +507,16 @@ const obj = {
   },
 };
 
-console.log(obj.littleFriends.Wendy.says);
-console.log(obj.littleFriends.Tim.says);
+console.log(object.littleFriends.Wendy.says);
+console.log(object.littleFriends.Tim.says);
 
-console.log(JSON.stringify(obj.littleFriends.Danny, ['actions', 'plays'], 2)); // array replacer
+console.log(
+  JSON.stringify(object.littleFriends.Danny, ['actions', 'plays'], 2)
+); // array replacer
 console.log(
   JSON.stringify(
-    obj.littleFriends.Danny,
-    obj.littleFriends.Danny.actions.filter(item => item === 'says'),
+    object.littleFriends.Danny,
+    object.littleFriends.Danny.actions.filter(item => item === 'says'),
     2
   )
 ); // function replacer
@@ -523,10 +525,10 @@ console.log(
 
 // 1. Logical && operator
 let info =
-  obj &&
-  obj.littleFriends &&
-  obj.littleFriends.Danny &&
-  obj.littleFriends.Danny.actions;
+  object &&
+  object.littleFriends &&
+  object.littleFriends.Danny &&
+  object.littleFriends.Danny.actions;
 
 console.log(info);
 
@@ -534,27 +536,28 @@ console.log(info);
 
 // With this notation, you’ll never run into Cannot read property '...' of undefined. You basically check if object exists, if not, you create an empty object on the fly. This way, the next level key will always be accessed from an object that exists or an empty object, but never from undefined:
 
-info = (((obj || {}).littleFriends || {}).Danny || {}).says;
+info = (((object || {}).littleFriends || {}).Danny || {}).says;
 
 console.log(info);
 
 // 3. Optional chaining
-info = obj?.littleFriends?.Danny?.actions;
+info = object?.littleFriends?.Danny?.actions;
 
 console.log(info);
 
-info = obj?.littleFriends?.Danny?.says;
+info = object?.littleFriends?.Danny?.says;
 
 console.log(info);
 
+// Getting deep object properties
 const path1 = 'littleFriends.Wendy.says';
 const path2 = 'littleFriends.Tim.says';
 const path3 = 'littleFriends.Danny.actions';
 const path4 = 'littleFriends.Danny.says';
 
-let getDeepProperty = (obj, path) => {
+let getDeepProperty = (object, path) => {
   let paths = path.split('.'),
-    prop = { ...obj },
+    prop = { ...object },
     i;
 
   for (i = 0; i < paths.length; i++) {
@@ -566,11 +569,11 @@ let getDeepProperty = (obj, path) => {
   return prop;
 };
 
-console.log(getDeepProperty(obj, path1));
+console.log(getDeepProperty(object, path1));
 
-getDeepProperty = (obj, path) => {
+getDeepProperty = (object, path) => {
   let paths = path.split('.');
-  let prop = { ...obj };
+  let prop = { ...object };
 
   for (const el of paths) {
     prop = prop[el];
@@ -579,21 +582,26 @@ getDeepProperty = (obj, path) => {
   return prop;
 };
 
-console.log(getDeepProperty(obj, path2));
+console.log(getDeepProperty(object, path2));
 
-getDeepProperty = (obj, path) =>
-  path.split('.').reduce((o, p) => (o && o[p] ? o[p] : undefined), obj); // helper
+getDeepProperty = (object, path) =>
+  path.split('.').reduce((o, p) => (o && o[p] ? o[p] : undefined), object); // helper
 
-console.log(getDeepProperty(obj, path3));
+console.log(getDeepProperty(object, path3));
 
-getDeepProperty = (obj, path) => path.split('.').reduce((o, p) => o?.[p], obj);
+getDeepProperty = (object, path) =>
+  path.split('.').reduce((o, p) => o?.[p], object);
 
-console.log(getDeepProperty(obj, path4));
+console.log(getDeepProperty(object, path4));
 
-const objectCopy = JSON.parse(JSON.stringify(obj));
-const objectClone = structuredClone(obj);
+const objectCopyOne = { ...object };
+const objectCopyTwo = Object.assign({}, object);
+const objectCopyThree = JSON.parse(JSON.stringify(object));
+const objectCopyFour = structuredClone(object);
 
-console.log(objectCopy);
-console.log(objectClone);
+console.log(objectCopyOne);
+console.log(objectCopyTwo);
+console.log(objectCopyThree);
+console.log(objectCopyFour);
 
 console.timeEnd('Elapsed');

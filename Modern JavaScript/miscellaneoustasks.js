@@ -103,6 +103,7 @@ const getBiggestNumber = args => {
 
 const findMaxDifference = arr => {
   let maxDiff = arr[1] - arr[0];
+
   for (let i = 0; i < arr.length; i++) {
     for (let j = i + 1; j < arr.length; j++) {
       if (arr[j] - arr[i] > maxDiff) {
@@ -131,6 +132,7 @@ const findMinDifference = arr => {
 
 function adjacentElementsMaxProduct(array) {
   let newArr = [];
+  
   for (let i = 0; i < array.length - 1; i++) {
     newArr.push(array[i] * array[i + 1]);
   }
@@ -345,6 +347,7 @@ console.log(setOfDuplicates);
 function deleteNth(arr, n) {
   arr.map(el => {
     let arrOfDuplicates = arr.filter(num => num === el);
+
     if (arrOfDuplicates.length > n) {
       for (let i = 0; i < arrOfDuplicates.length - n; i++) {
         arr.splice(arr.lastIndexOf(el), 1);
@@ -365,6 +368,7 @@ arr = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
 const findAllIndices = (arr, element) => {
   let indices = [];
   let index = arr.indexOf(element);
+
   for (let el of arr) {
     if (el === element) {
       indices.push(index);
@@ -381,6 +385,7 @@ console.log(findAllIndices(arr, 'watermelon'));
 
 const peak = arr => {
   let index = -1;
+
   for (let i = 0; i < arr.length; i++) {
     if (
       arr.slice(0, i).reduce((total, current) => total + current, 0) ===
