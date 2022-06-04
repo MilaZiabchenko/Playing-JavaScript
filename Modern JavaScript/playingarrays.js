@@ -107,6 +107,30 @@ let slicedYear = years.slice(0, 1); // returning a shallow copy of a portion of 
 console.log(years);
 console.log(slicedYear);
 
+// sort()
+
+// years = years.sort((a, b) => (a > b ? 1 : -1));
+years.sort((a, b) => a - b); // ascending array values
+
+console.log(years);
+
+years.sort((a, b) => b - a); // descending array values
+
+console.log(years);
+
+// reverse()
+years.reverse();
+
+console.log(years);
+
+years.sort(() => 0.5 - Math.random());
+
+console.log(years);
+
+years.sort();
+
+console.log(years);
+
 // When we see "..." in the code, it is either rest parameters or the spread syntax. There’s an easy way to distinguish between them:
 
 // When ... is at the end of function parameters, it’s “rest parameters” and gathers the rest of the list of arguments into an array.
@@ -119,6 +143,15 @@ console.log(slicedYear);
 
 // The dots here mean 'gather the rest of the parameters into the array 'args'
 
+const nestYears = ([y1, y2, y3, ...restOfTheYears]) => [
+  y1,
+  y2,
+  y3,
+  restOfTheYears,
+];
+
+console.log(nestYears(years));
+
 let sumOfYears = (...args) => {
   let sum = 0;
 
@@ -127,7 +160,7 @@ let sumOfYears = (...args) => {
   return sum;
 };
 
-// Spread operator ... (ES6)
+// Spread operator ...
 
 // Spread syntax looks similar to rest parameters, but does quite the opposite: it takes in an iterable (e.g an array) and expands it into individual elements.
 
@@ -174,39 +207,6 @@ const getAverageValue = nums =>
 console.log(minYear);
 console.log(maxYear);
 console.log(getAverageValue(years));
-
-// sort()
-
-// years = years.sort((a, b) => (a > b ? 1 : -1));
-years.sort((a, b) => a - b); // ascending array values
-
-console.log(years);
-
-years.sort((a, b) => b - a); // descending array values
-
-console.log(years);
-
-// reverse()
-years.reverse();
-
-console.log(years);
-
-years.sort(() => 0.5 - Math.random());
-
-console.log(years);
-
-years.sort();
-
-console.log(years);
-
-const nestYears = ([y1, y2, y3, ...restOfTheYears]) => [
-  y1,
-  y2,
-  y3,
-  restOfTheYears,
-];
-
-console.log(nestYears(years));
 
 // Merging arrays:
 
@@ -550,13 +550,28 @@ let sumOfSquareRootsOfEvenNums = arrOfNums
 
 console.log(sumOfSquareRootsOfEvenNums);
 
-sumOfSquareRootsOfEvenNums = arrOfNums.reduce(
-  (accumulator, element) =>
-    accumulator + (element % 2 ? 0 : Math.sqrt(element)),
-  0
-); // filtering inside reduce() or reduceRight() makes calculations faster
+// filtering inside reduce() or reduceRight() makes calculations faster
+const getSumOfSquareRootsOfEvenNums = array => {
+  const sum = array.reduce(
+    (accumulator, element) =>
+      accumulator + (element % 2 ? 0 : Math.sqrt(element)),
+    0
+  );
 
-console.log(sumOfSquareRootsOfEvenNums);
+  return sum;
+};
+
+console.log(getSumOfSquareRootsOfEvenNums(arrOfNums));
+
+const getMaxOddElement = array => {
+  const maxEvenNumber = array.reduce((accumulator, value) =>
+    Math.max(accumulator, value % 2 ? value : 0)
+  );
+
+  return maxEvenNumber;
+};
+
+console.log(getMaxOddElement(arrOfNums));
 
 // Polyfills: how array methods work internally
 
@@ -877,220 +892,3 @@ arrCopy = ['ha', 'ha', 'ha'];
 
 console.log(arrCopy);
 console.log(mixedArray);
-
-// Array => object
-const techArray = ['frontend', 'backend', 'qa'];
-let object = Object.assign({}, techArray);
-
-console.log(object);
-
-object = { ...techArray };
-
-console.log(object);
-
-object = techArray.reduce((result, key, index) => {
-  result[index] = key;
-
-  return result;
-}, {});
-
-console.log(object);
-
-// Array of arrays => object
-const arrayOfArrays = [
-  ['name', 'Kate'],
-  ['city', 'New York'],
-];
-
-object = arrayOfArrays.reduce(
-  (accumulator, current) =>
-    Object.assign(accumulator, { [current[0]]: current[1] }),
-  {}
-);
-
-console.log(object);
-
-object = arrayOfArrays.reduce(
-  (accumulator, current) => ({ ...accumulator, [current[0]]: current[1] }),
-  {}
-);
-
-console.log(object);
-
-object = Object.fromEntries(arrayOfArrays);
-
-console.log(object);
-
-// Array of arrays => array of objects
-const arrayOfObjects = arrayOfArrays.map(([key, value]) => ({ [key]: value }));
-
-console.log(arrayOfObjects);
-
-// Array of objects => object
-const trafficLightsData = [
-  { key: 'red', value: '🔴' },
-  { key: 'yellow', value: '🟡' },
-  { key: 'green', value: '🟢' },
-];
-
-const assembleTrafficLight = array => {
-  const lights = array.reduce((acc, obj) => {
-    acc[obj.key] = obj.value;
-
-    return acc;
-  }, {});
-
-  return lights;
-};
-
-console.log(assembleTrafficLight(trafficLightsData));
-
-// Array of objects => object of objects
-const data = [
-  { hue: 120, color: 'green' },
-  { hue: 240, color: 'blue' },
-  { hue: 360, color: 'red' },
-];
-
-const hslColors = data.reduce(
-  (accumulator, cur) => ({
-    ...accumulator,
-    [cur.color]: `hsl(${cur.hue}, 100%, 52%)`,
-  }),
-  {}
-);
-
-// Here is how it works:
-
-// reduce is initialized with an empty object ({} at the end), therefore first iteration variables are accumulator = {}, cur = { hue: 120, color: 'green' }. This function returns an object - this is why its body is wrapped in parentheses => ({ ... }). Spread operator doesn't do anything on the first iteration, so 'green: hsl(120, 100%, 52%)' is set as the first item.
-
-// On the second iteration variables are accumulator = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands accumulator and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
-
-// Third iteration: accumulator = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when accumulator is spread inside the object, our function returns the final value:
-console.table(hslColors);
-console.log({ hslColors });
-
-const entries = [
-  ['buy', 'usd', 50],
-  ['sell', 'usd', 100],
-  ['sell', 'eur', 200],
-];
-
-let transactions = entries.map(([operation, currency, amount]) => ({
-  operation,
-  currency,
-  amount,
-}));
-
-console.table(transactions);
-
-transactions = entries.reduce(
-  (accumulator, [operation, currency, amount], index) => {
-    accumulator[index] = { operation, currency, amount };
-
-    return accumulator;
-  },
-  []
-);
-
-console.log({ transactions });
-
-const budget = entries.reduce((total, [operation, currency, amount], index) => {
-  currency === 'eur' && (amount *= 1.05);
-
-  console.log(
-    `Iteration ${
-      index + 1
-    }: total sum: ${total}$, operation: '${operation}', amount: ${Math.round(
-      amount
-    )}$`
-  );
-
-  operation === 'buy' ? (total -= amount) : (total += amount);
-
-  return total;
-}, 1000);
-
-console.log(`Total sum after the last iteration: ${budget}$`);
-
-const vehicles = [
-  'bike',
-  'bike',
-  'van',
-  'car',
-  'truck',
-  'car',
-  'bike',
-  'car',
-  'bike',
-  'truck',
-  'bike',
-  'car',
-];
-
-// Sum up the instances of each vehicle
-const transportation = vehicles.reduce((accumulator, item) => {
-  !accumulator[item] && (accumulator[item] = 0);
-
-  accumulator[item]++;
-
-  // Logs the result on each iteration:
-  console.log(accumulator['car']);
-
-  return accumulator;
-}, {});
-
-console.log(transportation);
-
-let typesOfVehicle = Object.assign([], Object.keys(transportation));
-
-console.log(typesOfVehicle);
-
-typesOfVehicle = [...Object.keys(transportation)];
-
-console.log(typesOfVehicle);
-
-typesOfVehicle = { ...Object.keys(transportation) };
-
-console.log(typesOfVehicle);
-
-const pancakes = [
-  { name: 'Vika', technology: 'Angular' },
-  { name: 'Valery', technology: 'React' },
-  { name: 'Roma', technology: 'React' },
-  { name: 'Denys', technology: 'Angular' },
-  { name: 'Lizo4ka', technology: 'Angular' },
-  { name: 'Veronika', technology: 'Node' },
-  { name: 'Yaroslava', technology: 'Node' },
-  { name: 'Mila', technology: 'React' },
-  { name: 'Toma', technology: 'React' },
-  { name: 'S L a V u N I A', technology: 'React' },
-];
-
-console.log(pancakes);
-
-const technologies = pancakes.reduce((specialization, pancake) => {
-  const technology = pancake.technology;
-
-  !specialization[technology] && (specialization[technology] = []);
-
-  specialization[technology].push(pancake.name);
-
-  return specialization;
-}, {});
-
-console.log(technologies);
-
-// Updating one object in an array in an immutable way
-const updatedPancakes = pancakes.map(pancake =>
-  pancake.name === 'Roma'
-    ? Object.assign({}, pancake, { technology: 'React Native' })
-    : pancake
-);
-
-console.log(updatedPancakes);
-
-// Adding new item to the end of the array of objects in an immutable way
-const newPancakes = [...pancakes, { name: 'Bodia', technology: 'Angular' }];
-
-console.log(newPancakes);

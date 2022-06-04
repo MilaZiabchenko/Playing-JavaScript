@@ -1,33 +1,3 @@
-const TWO = 2;
-const THREE = 3;
-const FOUR = 4;
-const FIVE = 5;
-
-const arr = ['1', '52', '17', '3', '4', '16', '5'];
-
-// Higher order functions chaining
-const getMaxEvenElement = array => {
-  const maxEvenNumber = array
-    .filter(el => el % TWO === 0)
-    .reduce((acc, value) => Math.max(acc, value));
-
-  return maxEvenNumber;
-};
-
-console.log(getMaxEvenElement(arr));
-
-// Destructuring assignment
-
-// With destructuring we can assign a variable name to a position in the array
-
-let firstCity = 'Seattle';
-let secondCity = 'Boston';
-
-[firstCity, secondCity] = [secondCity, firstCity];
-
-console.log(firstCity);
-console.log(secondCity);
-
 // Set data structure
 
 // Sets are collections of values that can be of any type, but the rule with Sets is that each value must be unique
@@ -48,11 +18,12 @@ books.delete('War and Peace');
 
 console.log(books);
 
+// Sets iterate their elements in their insertion order
 books.forEach(book => console.log(book));
 
 const getArrayWithUniqueElements = array => [...new Set(array)];
 
-const array = [TWO, THREE, FOUR, TWO, FOUR, '8', 8, '8'];
+const array = [2, 3, 4, 2, 4, '8', 8, '8', [8, 8]];
 
 console.log(new Set(array));
 console.log(getArrayWithUniqueElements(array));
@@ -74,7 +45,7 @@ details.set('students', 12);
 console.log(details);
 console.log(details.size);
 
-// Unlike objects, maps iterate its elements in their insertion order
+// Unlike objects, maps iterate their elements in their insertion order
 
 details.forEach(item => console.log(item));
 
@@ -185,6 +156,18 @@ console.log(skier('Sendy', 'woo'));
 console.log(skier('Sendy', 'woo').name);
 skier('Sendy', 'woo').powderYell();
 
+// Destructuring assignment
+
+// With destructuring we can assign a variable name to a position in the array
+
+let firstCity = 'Seattle';
+let secondCity = 'Boston';
+
+[firstCity, secondCity] = [secondCity, firstCity];
+
+console.log(firstCity);
+console.log(secondCity);
+
 // Deep object destructuring
 const getRegroupedObject = obj => {
   const {
@@ -207,6 +190,11 @@ const originalObject = {
 // Shallow object copy with spread operator
 const clonedObject = { ...originalObject };
 
+// Adding or changing a property directly on the shallow copy will only affect the copy, not the original, and vice versa
+clonedObject.city = 'Paris';
+originalObject.surname = 'Dean';
+
+// However, adding or changing a deeply nested property affects both the copy and the original
 originalObject.details.faculty = 'Engineering';
 clonedObject.details.university = 'Berkeley';
 
@@ -284,10 +272,10 @@ const isRequired = arg => {
 const add = (a = isRequired('a'), b = isRequired('b'), c = isRequired('c')) =>
   a + b + c;
 
-console.log(add(TWO, THREE, FIVE));
+console.log(add(2, 3, 5));
 
 // padStart() string method
-const hideNumber = number => number.slice(-FOUR).padStart(number.length, '*');
+const hideNumber = number => number.slice(-4).padStart(number.length, '*');
 
 const phoneNumber = '0123456789';
 
@@ -345,7 +333,7 @@ const getScore = score => {
 console.log(getScore(null));
 console.log(getScore());
 console.log(getScore(0));
-console.log(getScore(FIVE));
+console.log(getScore(5));
 
 // Computed properties
 const initialProp = 'initialScore';
