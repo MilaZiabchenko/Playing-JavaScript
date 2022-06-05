@@ -1,5 +1,5 @@
 // Array => object
-const techArray = ['frontend', 'backend', 'qa'];
+const techArray = ['JavaScript', 'React.js', 'Node.js'];
 
 const techObject1 = Object.assign({}, techArray);
 
@@ -74,16 +74,20 @@ const colorsData = [
   { hue: 360, color: 'red' },
 ];
 
-const getHslColors = colorsData.reduce(
-  (accumulator, cur) => ({
-    ...accumulator,
-    [cur.color]: `hsl(${cur.hue}, 100%, 52%)`,
-  }),
-  {}
-);
+const getHslColors = array => {
+  const hslColors = array.reduce(
+    (accumulator, cur) => ({
+      ...accumulator,
+      [cur.color]: `hsl(${cur.hue}, 100%, 52%)`,
+    }),
+    {}
+  );
 
-console.log(getHslColors);
-console.table(getHslColors);
+  return hslColors;
+};
+
+console.log(getHslColors(colorsData));
+console.table(getHslColors(colorsData));
 
 // Here is how it works:
 
@@ -261,14 +265,14 @@ objectsOfBirdsAndSizes = createObjectWithBirdsAndSizesWithMap();
 
 console.log(objectsOfBirdsAndSizes);
 
-const entries = [
+const financesData = [
   ['buy', 'usd', 50],
   ['sell', 'usd', 100],
   ['sell', 'eur', 200],
 ];
 
 const makeArrayOfTransactionsWithMap = () => {
-  const transactions = entries.map(([operation, currency, amount]) => ({
+  const transactions = financesData.map(([operation, currency, amount]) => ({
     operation,
     currency,
     amount,
@@ -280,7 +284,7 @@ const makeArrayOfTransactionsWithMap = () => {
 console.log(makeArrayOfTransactionsWithMap());
 
 const makeArrayOfTransactionsWithReduce = () => {
-  const transactions = entries.reduce(
+  const transactions = financesData.reduce(
     (accumulator, [operation, currency, amount], index) => {
       accumulator[index] = { operation, currency, amount };
 
@@ -294,23 +298,31 @@ const makeArrayOfTransactionsWithReduce = () => {
 
 console.table(makeArrayOfTransactionsWithReduce());
 
-const budget = entries.reduce((total, [operation, currency, amount], index) => {
-  currency === 'eur' && (amount *= 1.05);
+const calcBudget = () => {
+  const budget = financesData.reduce(
+    (total, [operation, currency, amount], index) => {
+      currency === 'eur' && (amount *= 1.05);
 
-  console.log(
-    `Iteration ${
-      index + 1
-    }: total sum: ${total}$, operation: '${operation}', amount: ${Math.round(
-      amount
-    )}$`
+      console.log({
+        iteration: index + 1,
+        total: `${total}$`,
+        operation,
+        amount: `${amount}$`,
+      });
+
+      operation === 'buy' ? (total -= amount) : (total += amount);
+
+      return total;
+    },
+    1000
   );
 
-  operation === 'buy' ? (total -= amount) : (total += amount);
+  console.log(`Total sum after the last iteration is ${budget}$.`);
 
-  return total;
-}, 1000);
+  return budget;
+};
 
-console.log(`Total sum after the last iteration: ${budget}$`);
+calcBudget();
 
 const vehicles = [
   'bike',
@@ -338,15 +350,7 @@ const transportation = vehicles.reduce((accumulator, item) => {
 
 console.log(transportation);
 
-let typesOfVehicle = Object.assign([], Object.keys(transportation));
-
-console.log(typesOfVehicle);
-
-typesOfVehicle = [...Object.keys(transportation)];
-
-console.log(typesOfVehicle);
-
-typesOfVehicle = { ...Object.keys(transportation) };
+const typesOfVehicle = { ...Object.keys(transportation) };
 
 console.log(typesOfVehicle);
 
@@ -362,8 +366,6 @@ const pancakesGroup = [
   { name: 'Toma', technology: 'React' },
   { name: 'S L a V u N I A', technology: 'React' },
 ];
-
-console.log(pancakesGroup);
 
 const combineNameWithTechVersion1 = () => {
   const object = pancakesGroup.reduce((accumulator, { name, technology }) => {
@@ -395,17 +397,21 @@ pancakesGroupObject = combineNameWithTechVersion2();
 
 console.log(pancakesGroupObject);
 
-const technologies = pancakesGroup.reduce((specialization, pancake) => {
-  const technology = pancake.technology;
+const groupMembersByTechnology = () => {
+  const technologies = pancakesGroup.reduce((specialization, pancake) => {
+    const technology = pancake.technology;
 
-  !specialization[technology] && (specialization[technology] = []);
+    !specialization[technology] && (specialization[technology] = []);
 
-  specialization[technology].push(pancake.name);
+    specialization[technology].push(pancake.name);
 
-  return specialization;
-}, {});
+    return specialization;
+  }, {});
 
-console.log(technologies);
+  return technologies;
+};
+
+console.log(groupMembersByTechnology());
 
 // Updating one object in an array in an immutable way
 const updatedPancakesGroup = pancakesGroup.map(pancake =>
