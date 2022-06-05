@@ -1,50 +1,53 @@
 // Array => object
 const techArray = ['frontend', 'backend', 'qa'];
-let object = Object.assign({}, techArray);
 
-console.log(object);
+const techObject1 = Object.assign({}, techArray);
 
-object = { ...techArray };
+console.log(techObject1);
 
-console.log(object);
+const techObject2 = { ...techArray };
 
-object = techArray.reduce((result, key, index) => {
+console.log(techObject2);
+
+const techObject3 = techArray.reduce((result, key, index) => {
   result[index] = key;
 
   return result;
 }, {});
 
-console.log(object);
+console.log(techObject3);
 
 // Array of arrays => object
-const arrayOfArrays = [
+const personData = [
   ['name', 'Kate'],
   ['city', 'New York'],
 ];
 
-object = arrayOfArrays.reduce(
+const personObject1 = personData.reduce(
   (accumulator, current) =>
     Object.assign(accumulator, { [current[0]]: current[1] }),
   {}
 );
 
-console.log(object);
+console.log(personObject1);
 
-object = arrayOfArrays.reduce(
+const personObject2 = personData.reduce(
   (accumulator, current) => ({ ...accumulator, [current[0]]: current[1] }),
   {}
 );
 
-console.log(object);
+console.log(personObject2);
 
-object = Object.fromEntries(arrayOfArrays);
+const personObject3 = Object.fromEntries(personData);
 
-console.log(object);
+console.log(personObject3);
 
 // Array of arrays => array of objects
-const arrayOfObjects = arrayOfArrays.map(([key, value]) => ({ [key]: value }));
+const arrayOfPersonObjects = personData.map(([key, value]) => ({
+  [key]: value,
+}));
 
-console.log(arrayOfObjects);
+console.log(arrayOfPersonObjects);
 
 // Array of objects => object
 const trafficLightsData = [
@@ -90,8 +93,45 @@ console.table(getHslColors);
 
 // Third iteration: accumulator = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when accumulator is spread inside the object, our function returns the final value
 
-const birds = ['tit', 'catbird', 'rook'];
-const sizes = ['small', 'medium', 'big'];
+const birds = [
+  'chaffinch',
+  'tit',
+  'catbird',
+  'rook',
+  'catbird',
+  'rook',
+  'chaffinch',
+  'chaffinch',
+  'rook',
+];
+
+const sizes = [
+  'small',
+  'small',
+  'medium',
+  'big',
+  'medium',
+  'big',
+  'small',
+  'small',
+  'big',
+];
+
+const calcBirdsOfEachType = () => {
+  const object = birds.reduce((accumulator, bird) => {
+    !accumulator[bird] && (accumulator[bird] = 0);
+
+    accumulator[bird]++;
+
+    return accumulator;
+  }, {});
+
+  return object;
+};
+
+const amountOfBirdsOfEachType = calcBirdsOfEachType();
+
+console.log(amountOfBirdsOfEachType);
 
 const birdsObject = birds.reduce((accumulator, bird, index) => {
   accumulator[index] = bird;
@@ -111,69 +151,115 @@ const newBirdsObject = birds.reduce(
 
 console.log(newBirdsObject);
 
-const arrayOfObjectsWithBirdsAndSizes = birds.reduce(
-  (accumulator, bird, index) => {
-    accumulator[index] = { bird, size: sizes[index] };
+const combineBirdsAndSizesWithMap = () => {
+  const arrayOfObjects = birds.map((bird, index) => ({
+    bird,
+    size: sizes[index],
+  }));
 
-    return accumulator;
-  },
-  []
-);
+  return arrayOfObjects;
+};
+
+let arrayOfObjectsWithBirdsAndSizes = combineBirdsAndSizesWithMap();
 
 console.log(arrayOfObjectsWithBirdsAndSizes);
 
-let objectOfBirdsAndSizes = arrayOfObjectsWithBirdsAndSizes.reduce(
-  (accumulator, { bird, size }) => {
-    accumulator[bird] = size;
+const combineBirdsAndSizesWithReduce = () => {
+  const arrayOfObjects = birds.reduce((accumulator, bird, index) => {
+    accumulator[index] = { bird, size: sizes[index] };
 
     return accumulator;
-  },
-  {}
-);
+  }, []);
 
-console.log(objectOfBirdsAndSizes);
+  return arrayOfObjects;
+};
 
-objectOfBirdsAndSizes = birds.reduce(
-  (accumulator, bird, index) => ({
-    ...accumulator,
-    [bird]: sizes[index],
-  }),
-  {}
-);
+arrayOfObjectsWithBirdsAndSizes = combineBirdsAndSizesWithReduce();
 
-console.log(objectOfBirdsAndSizes);
+console.log(arrayOfObjectsWithBirdsAndSizes);
 
-objectOfBirdsAndSizes = arrayOfObjectsWithBirdsAndSizes.reduce(
-  (accumulator, { bird, size }) => ({
-    ...accumulator,
-    [bird]: size,
-  }),
-  {}
-);
+const createObjectOfBirdsWithSizesVersion1 = () => {
+  const object = birds.reduce(
+    (accumulator, bird, index) => ({
+      ...accumulator,
+      [bird]: sizes[index],
+    }),
+    {}
+  );
 
-console.log(objectOfBirdsAndSizes);
+  return object;
+};
 
-const arraysOfBirdsAndSizes = [...Object.entries(objectOfBirdsAndSizes)];
+let objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion1();
+
+console.log(objectWithBirdsAndSizes);
+
+const createObjectOfBirdsWithSizesVersion2 = () => {
+  const object = arrayOfObjectsWithBirdsAndSizes.reduce(
+    (accumulator, { bird, size }) => ({
+      ...accumulator,
+      [bird]: size,
+    }),
+    {}
+  );
+
+  return object;
+};
+
+objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion2();
+
+console.log(objectWithBirdsAndSizes);
+
+const createObjectOfBirdsWithSizesVersion3 = () => {
+  const object = arrayOfObjectsWithBirdsAndSizes.reduce(
+    (accumulator, { bird, size }) => {
+      accumulator[bird] = size;
+
+      return accumulator;
+    },
+    {}
+  );
+
+  return object;
+};
+
+objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion3();
+
+console.log(objectWithBirdsAndSizes);
+
+const arraysOfBirdsAndSizes = [...Object.entries(objectWithBirdsAndSizes)];
 
 console.log(arraysOfBirdsAndSizes);
 
-const objectsOfBirdsAndSizes = arraysOfBirdsAndSizes.reduce(
-  (accumulator, [bird, size], index) => {
-    accumulator[index] = { bird, size };
+const createObjectWithBirdsAndSizesWithReduce = () => {
+  const arrayOfObjects = arraysOfBirdsAndSizes.reduce(
+    (accumulator, [bird, size], index) => {
+      accumulator[index] = { bird, size };
 
-    return accumulator;
-  },
-  []
-);
+      return accumulator;
+    },
+    []
+  );
+
+  return arrayOfObjects;
+};
+
+let objectsOfBirdsAndSizes = createObjectWithBirdsAndSizesWithReduce();
 
 console.log(objectsOfBirdsAndSizes);
 
-const newObjectOfBirdsAndSizes = arraysOfBirdsAndSizes.map(([bird, size]) => ({
-  bird,
-  size,
-}));
+const createObjectWithBirdsAndSizesWithMap = () => {
+  const arrayOfObjects = arraysOfBirdsAndSizes.map(([bird, size]) => ({
+    bird,
+    size,
+  }));
 
-console.log(newObjectOfBirdsAndSizes);
+  return arrayOfObjects;
+};
+
+objectsOfBirdsAndSizes = createObjectWithBirdsAndSizesWithMap();
+
+console.log(objectsOfBirdsAndSizes);
 
 const entries = [
   ['buy', 'usd', 50],
@@ -239,9 +325,6 @@ const transportation = vehicles.reduce((accumulator, item) => {
 
   accumulator[item]++;
 
-  // Logs the result on each iteration:
-  console.log(accumulator['car']);
-
   return accumulator;
 }, {});
 
@@ -259,7 +342,7 @@ typesOfVehicle = { ...Object.keys(transportation) };
 
 console.log(typesOfVehicle);
 
-const pancakes = [
+const pancakesGroup = [
   { name: 'Vika', technology: 'Angular' },
   { name: 'Valery', technology: 'React' },
   { name: 'Roma', technology: 'React' },
@@ -272,9 +355,39 @@ const pancakes = [
   { name: 'S L a V u N I A', technology: 'React' },
 ];
 
-console.log(pancakes);
+console.log(pancakesGroup);
 
-const technologies = pancakes.reduce((specialization, pancake) => {
+const combineNameWithTechVersion1 = () => {
+  const object = pancakesGroup.reduce((accumulator, { name, technology }) => {
+    accumulator[name] = technology;
+
+    return accumulator;
+  }, {});
+
+  return object;
+};
+
+let pancakesGroupObject = combineNameWithTechVersion1();
+
+console.log(pancakesGroupObject);
+
+const combineNameWithTechVersion2 = () => {
+  const object = pancakesGroup.reduce(
+    (accumulator, { name, technology }) => ({
+      ...accumulator,
+      [name]: technology,
+    }),
+    {}
+  );
+
+  return object;
+};
+
+pancakesGroupObject = combineNameWithTechVersion2();
+
+console.log(pancakesGroupObject);
+
+const technologies = pancakesGroup.reduce((specialization, pancake) => {
   const technology = pancake.technology;
 
   !specialization[technology] && (specialization[technology] = []);
@@ -287,15 +400,18 @@ const technologies = pancakes.reduce((specialization, pancake) => {
 console.log(technologies);
 
 // Updating one object in an array in an immutable way
-const updatedPancakes = pancakes.map(pancake =>
+const updatedPancakesGroup = pancakesGroup.map(pancake =>
   pancake.name === 'Roma'
     ? Object.assign({}, pancake, { technology: 'React Native' })
     : pancake
 );
 
-console.log(updatedPancakes);
+console.log(updatedPancakesGroup);
 
 // Adding new item to the end of the array of objects in an immutable way
-const newPancakes = [...pancakes, { name: 'Bodia', technology: 'Angular' }];
+const newPancakesGroup = [
+  ...pancakesGroup,
+  { name: 'Bodia', technology: 'Angular' },
+];
 
-console.log(newPancakes);
+console.log(newPancakesGroup);

@@ -599,9 +599,17 @@ const objectCopyTwo = Object.assign({}, object);
 const objectCopyThree = JSON.parse(JSON.stringify(object));
 const objectCopyFour = structuredClone(object);
 
+// Changing deeply nested properties affects shallow copies, but doesn't affect deep copies
+object.littleFriends.Peter = 'On his way...';
+
+// Changing direct properties does't affect neither shallow nor deep copies
+object.littleFriends = '4 Little Friends';
+
+console.log(object);
 console.log(objectCopyOne);
-console.log(objectCopyTwo);
-console.log(objectCopyThree);
-console.log(objectCopyFour);
+console.log(objectCopyOne.littleFriends.Peter);
+console.log(objectCopyTwo.littleFriends.Peter);
+console.log(objectCopyThree.littleFriends.Peter);
+console.log(objectCopyFour.littleFriends.Peter);
 
 console.timeEnd('Elapsed');

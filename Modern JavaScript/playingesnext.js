@@ -176,6 +176,7 @@ const getRegroupedObject = obj => {
     name: firstName,
   } = obj;
   const student = { faculty, firstName };
+
   return { university, student };
 };
 
@@ -194,13 +195,14 @@ const clonedObject = { ...originalObject };
 clonedObject.city = 'Paris';
 originalObject.surname = 'Dean';
 
-// However, adding or changing a deeply nested property affects both the copy and the original
+// However, adding or changing a deeply nested property affects both the shallow copy and the original, even if they were 'freezed'
+Object.freeze(originalObject);
+Object.freeze(clonedObject);
 originalObject.details.faculty = 'Engineering';
 clonedObject.details.university = 'Berkeley';
 
 console.log(originalObject);
 console.log(clonedObject);
-console.log(originalObject === clonedObject);
 console.log(getRegroupedObject(originalObject));
 console.log(getRegroupedObject(clonedObject));
 
