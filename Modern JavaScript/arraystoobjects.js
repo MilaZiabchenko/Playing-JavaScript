@@ -267,24 +267,32 @@ const entries = [
   ['sell', 'eur', 200],
 ];
 
-let transactions = entries.map(([operation, currency, amount]) => ({
-  operation,
-  currency,
-  amount,
-}));
+const makeArrayOfTransactionsWithMap = () => {
+  const transactions = entries.map(([operation, currency, amount]) => ({
+    operation,
+    currency,
+    amount,
+  }));
 
-console.table(transactions);
+  return transactions;
+};
 
-transactions = entries.reduce(
-  (accumulator, [operation, currency, amount], index) => {
-    accumulator[index] = { operation, currency, amount };
+console.log(makeArrayOfTransactionsWithMap());
 
-    return accumulator;
-  },
-  []
-);
+const makeArrayOfTransactionsWithReduce = () => {
+  const transactions = entries.reduce(
+    (accumulator, [operation, currency, amount], index) => {
+      accumulator[index] = { operation, currency, amount };
 
-console.log({ transactions });
+      return accumulator;
+    },
+    []
+  );
+
+  return transactions;
+};
+
+console.table(makeArrayOfTransactionsWithReduce());
 
 const budget = entries.reduce((total, [operation, currency, amount], index) => {
   currency === 'eur' && (amount *= 1.05);
