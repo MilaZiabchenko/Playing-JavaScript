@@ -271,7 +271,7 @@ const financesData = [
   ['sell', 'eur', 200],
 ];
 
-const makeArrayOfTransactionsWithMap = () => {
+const makeTableOfTransactionsWithMap = () => {
   const transactions = financesData.map(([operation, currency, amount]) => ({
     operation,
     currency,
@@ -281,9 +281,9 @@ const makeArrayOfTransactionsWithMap = () => {
   return transactions;
 };
 
-console.log(makeArrayOfTransactionsWithMap());
+console.table(makeTableOfTransactionsWithMap());
 
-const makeArrayOfTransactionsWithReduce = () => {
+const makeTableOfTransactionsWithReduce = () => {
   const transactions = financesData.reduce(
     (accumulator, [operation, currency, amount], index) => {
       accumulator[index] = { operation, currency, amount };
@@ -296,7 +296,7 @@ const makeArrayOfTransactionsWithReduce = () => {
   return transactions;
 };
 
-console.table(makeArrayOfTransactionsWithReduce());
+console.table(makeTableOfTransactionsWithReduce());
 
 const calcBudget = () => {
   const budget = financesData.reduce(
