@@ -18,7 +18,7 @@ books.delete('War and Peace');
 
 console.log(books);
 
-// Sets iterate their elements in their insertion order
+// We can iterate through the elements of a Set in insertion order
 books.forEach(book => console.log(book));
 
 const getArrayWithUniqueElements = array => [...new Set(array)];
@@ -30,7 +30,7 @@ console.log(getArrayWithUniqueElements(array));
 
 // Map data structure
 
-// The map object holds 'key - value' pairs. In a map, any value, both objects and primitive values may be used either as a key or a value
+// The Map object holds 'key - value' pairs. In a Map, any value, both objects and primitive values may be used either as a key or a value
 
 let details = new Map([
   [new Date(), 'today'],
@@ -45,8 +45,7 @@ details.set('students', 12);
 console.log(details);
 console.log(details.size);
 
-// Unlike objects, maps iterate their elements in their insertion order
-
+// Unlike objects, Maps can iterate their elements in their insertion order
 details.forEach(item => console.log(item));
 
 let course = new Map();
@@ -57,6 +56,8 @@ course
   .set('started', true);
 
 console.log(course);
+
+// Unlike a standard object in JavaScript, with Map we must use the get() method to access the values.
 console.log(course.get('React'));
 
 for (key of course.keys()) {
@@ -74,6 +75,44 @@ for (item of course) {
 for (entry of course.entries()) {
   console.log(entry);
 }
+
+// Weak references
+
+// Simply put a weak reference is a reference to an object that doesn’t prevent garbage collection if it is the only reference to the object in the memory, and the object is removed.
+
+// WeakSet data structure
+
+// WeakSet is similar to Set, but it can only store objects, it is not enumerable, and there is no way to loop over the items contained within it because there is no list of current objects stored in the collection; they are weakly referenced and may be removed at any point.
+
+const animals = new WeakSet();
+const lion = { name: 'Ray' };
+const turtle = { name: 'Tin-tin' };
+
+animals.add(lion);
+animals.add(turtle);
+
+animals.delete(lion);
+
+console.log(animals);
+console.log(animals.has(lion));
+console.log(animals.has(turtle));
+
+// WeakMap data structure
+
+// In comparison to a Map, with a WeakMap we must use objects as the keys, but the values can be any arbitrary value. Also, WeakMap has the side effect of not being enumerable due to the weak references.
+
+let pets = new WeakMap();
+let dog = { name: 'Charlie' };
+
+pets.set(dog, 'bau');
+
+dog = null; // isn't reachable (garbage collected)
+
+console.log(pets);
+
+// While the strong reference to the original 'dog' object still exists, the 'dog' object persists in the WeakMap, and we can access it with no issues. But, when we overwrite the reference to the original 'dog' object by reassigning the variable to null, the only reference to the original object in memory is the weak reference coming from the WeakMap we created. Because it’s a weak reference, when the JavaScript engine runs a garbage collection process again, the 'dog' object will be removed from memory and from the WeakMap we assigned it to.
+
+// If you need to store additional data temporarily and don’t want to worry about cleaning up the memory or how the objects are removed, then using weak references is an absolute lifesaver, but in the majority of situations, use normal (strong) references.
 
 // Object from entries
 const getObjFrom = entry => Object.fromEntries(entry);
@@ -167,44 +206,6 @@ let secondCity = 'Boston';
 
 console.log(firstCity);
 console.log(secondCity);
-
-// Deep object destructuring
-const getRegroupedObject = obj => {
-  const {
-    details: { university } = university,
-    details: { faculty } = faculty,
-    name: firstName,
-  } = obj;
-  const student = { faculty, firstName };
-
-  return { university, student };
-};
-
-const originalObject = {
-  name: 'Rose',
-  details: {
-    faculty: 'Science and Engineering',
-    university: 'Sorbonne',
-  },
-};
-
-// Shallow object copy with spread operator
-const clonedObject = { ...originalObject };
-
-// Adding or changing a property directly on the shallow copy will only affect the copy, not the original, and vice versa
-clonedObject.city = 'Paris';
-originalObject.surname = 'Dean';
-
-// However, adding or changing a deeply nested property affects both the shallow copy and the original, even if they were 'freezed'
-Object.freeze(originalObject);
-Object.freeze(clonedObject);
-originalObject.details.faculty = 'Engineering';
-clonedObject.details.university = 'Berkeley';
-
-console.log(originalObject);
-console.log(clonedObject);
-console.log(getRegroupedObject(originalObject));
-console.log(getRegroupedObject(clonedObject));
 
 const gang = {
   keyOne: 'Bo',

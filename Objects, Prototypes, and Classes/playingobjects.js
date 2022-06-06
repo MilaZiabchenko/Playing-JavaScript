@@ -204,12 +204,20 @@ function surprise(drink) {
 
 // Copying object
 
+// Copying a value in JavaScript is almost always shallow, as opposed to deep. That means that changes to deeply nested values will be visible in the copy as well as the original.
+
 // Shallow copy
 const h1 = { ...human };
 const h2 = Object.assign({}, human);
 
 // Deep copy
 const h3 = JSON.parse(JSON.stringify(human));
+
+// The expression {...human} iterates over the (enumerable) properties of 'human' using the Spread Operator. It uses the property name and value, and assigns them one by one to a freshly created, empty object. As such, the resulting object is identical in shape, but with its own copy of the list of properties and values. The values are copied, too, but so-called primitive values are handled differently than non-primitive values.
+
+// Non-primitive values are handled as references, meaning that the act of copying the value is really just copying a reference to the same underlying object, resulting in the shallow copy behavior.
+
+// The opposite of a shallow copy is a deep copy. A deep copy algorithm also copies an object’s properties one by one, but invokes itself recursively when it finds a reference to another object, creating a copy of that object as well. This can be very important to make sure that two pieces of code don’t accidentally share an object and unknowingly manipulate each others’ state.
 
 console.log(human);
 console.log(h1);
@@ -367,6 +375,44 @@ const creativeCoder = {
 
 console.log({ creativeCoder });
 
+// Deep object destructuring
+const getRegroupedObject = obj => {
+  const {
+    details: { university } = university,
+    details: { faculty } = faculty,
+    name: firstName,
+  } = obj;
+  const student = { faculty, firstName };
+
+  return { university, student };
+};
+
+const originalObject = {
+  name: 'Rose',
+  details: {
+    faculty: 'Science and Engineering',
+    university: 'Sorbonne',
+  },
+};
+
+// Shallow object copy with spread operator
+const clonedObject = { ...originalObject };
+
+// Adding or changing a property directly on the shallow copy will only affect the copy, not the original, and vice versa
+clonedObject.city = 'Paris';
+originalObject.surname = 'Dean';
+
+// However, adding or changing a deeply nested property affects both the shallow copy and the original, even if they were 'freezed'
+Object.freeze(originalObject);
+Object.freeze(clonedObject);
+originalObject.details.faculty = 'Engineering';
+clonedObject.details.university = 'Berkeley';
+
+console.log(originalObject);
+console.log(clonedObject);
+console.log(getRegroupedObject(originalObject));
+console.log(getRegroupedObject(clonedObject));
+
 const musician = {
   name: 'Nils Oliver Frahm',
   born: 'September 20, 1982',
@@ -456,8 +502,12 @@ const humans = [].concat(human, creativeCoder, musician);
 
 console.log(humans);
 
-const keyboardist = { firstName, pro: false };
+let keyboardist = { firstName, pro: false };
 const bandMember = { ...keyboardist, memberSince: 2022 }; // keyboardist shallow copy, reference is changed
+
+keyboardist = null; //removing the reference to the original object
+
+// We can’t access the object via the 'keyboardist' variable anymore, but there is a strong reference between the 'bandMember' object and the 'keyboardist' object. The original object is kept in memory because the strong reference prevents removing the object from memory via garbage collection.
 
 const updateInfo = member => {
   const updatedMember = { ...member };

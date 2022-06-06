@@ -235,7 +235,7 @@ const arraysOfBirdsAndSizes = [...Object.entries(objectWithBirdsAndSizes)];
 
 console.log(arraysOfBirdsAndSizes);
 
-const createObjectWithBirdsAndSizesWithReduce = () => {
+const createObjectsWithBirdsAndSizesWithReduce = () => {
   const arrayOfObjects = arraysOfBirdsAndSizes.reduce(
     (accumulator, [bird, size], index) => {
       accumulator[index] = { bird, size };
@@ -248,11 +248,11 @@ const createObjectWithBirdsAndSizesWithReduce = () => {
   return arrayOfObjects;
 };
 
-let objectsOfBirdsAndSizes = createObjectWithBirdsAndSizesWithReduce();
+let objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithReduce();
 
 console.log(objectsOfBirdsAndSizes);
 
-const createObjectWithBirdsAndSizesWithMap = () => {
+const createObjectsWithBirdsAndSizesWithMap = () => {
   const arrayOfObjects = arraysOfBirdsAndSizes.map(([bird, size]) => ({
     bird,
     size,
@@ -261,7 +261,7 @@ const createObjectWithBirdsAndSizesWithMap = () => {
   return arrayOfObjects;
 };
 
-objectsOfBirdsAndSizes = createObjectWithBirdsAndSizesWithMap();
+objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithMap();
 
 console.log(objectsOfBirdsAndSizes);
 
@@ -420,12 +420,13 @@ const updatedPancakesGroup = pancakesGroup.map(pancake =>
     : pancake
 );
 
-console.log(updatedPancakesGroup);
-
 // Adding new item to the end of the array of objects in an immutable way
-const newPancakesGroup = [
-  ...pancakesGroup,
+const expandedPancakesGroup = [
+  ...updatedPancakesGroup,
   { name: 'Bodia', technology: 'Angular' },
+  { name: 'Maria', technology: 'React' },
 ];
 
-console.log(newPancakesGroup);
+console.log(pancakesGroup);
+console.log(updatedPancakesGroup);
+console.log(expandedPancakesGroup);
