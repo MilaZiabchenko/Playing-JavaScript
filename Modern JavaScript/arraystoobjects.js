@@ -106,12 +106,12 @@ console.table(getHslColors(colorsData));
 
 const birds = [
   'chaffinch',
+  'chaffinch',
   'tit',
   'catbird',
   'rook',
   'catbird',
   'rook',
-  'chaffinch',
   'chaffinch',
   'rook',
 ];
@@ -119,11 +119,11 @@ const birds = [
 const sizes = [
   'small',
   'small',
-  'medium',
-  'big',
-  'medium',
-  'big',
   'small',
+  'medium',
+  'big',
+  'medium',
+  'big',
   'small',
   'big',
 ];
@@ -467,7 +467,7 @@ const updatedPancakesGroup = pancakesGroup.map(pancake =>
     : pancake
 );
 
-// Adding new item to the end of the array of objects in an immutable way
+// Adding new items to the end of the array of objects in an immutable way
 const expandedPancakesGroup = [
   ...updatedPancakesGroup,
   { name: 'Bodia', technology: 'Angular' },

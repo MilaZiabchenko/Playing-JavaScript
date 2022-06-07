@@ -463,6 +463,23 @@ const outerFn = () => {
 
 console.log(outerFn());
 
+const generateBirds = () => {
+  const birds = ['finch', 'catbird', 'rook'];
+
+  let index = 0;
+
+  return () => birds[index++];
+};
+
+const gen1 = generateBirds();
+const gen2 = generateBirds();
+
+console.log(gen1());
+console.log(gen1());
+console.log(gen2());
+console.log(gen2());
+console.log(gen2());
+
 // We can use closures to return objects from functions that store state. The following makePerson function returns an object that can store and change a name
 let makePerson = name => {
   let _name = name;
