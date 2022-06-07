@@ -46,6 +46,7 @@ console.log(
 
 const calcDaysNum = date => {
   const now = new Date();
+
   date = new Date(date);
 
   return Math.round((date.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
@@ -117,6 +118,7 @@ const findMaxDifference = arr => {
 
 const findMinDifference = arr => {
   let arrCopy = [...arr];
+
   arrCopy.sort((a, b) => a - b);
 
   let diff = Number.MAX_VALUE;
@@ -132,7 +134,7 @@ const findMinDifference = arr => {
 
 function adjacentElementsMaxProduct(array) {
   let newArr = [];
-  
+
   for (let i = 0; i < array.length - 1; i++) {
     newArr.push(array[i] * array[i + 1]);
   }
@@ -159,6 +161,7 @@ function findHighestScoringWord(x) {
 
   words.forEach(w => {
     const chars = w.split('');
+
     const sumOfChars = chars.reduce(
       (count, char) => count + alphabetMap[char.charCodeAt()],
       0
@@ -299,6 +302,7 @@ function toCamelCase(str) {
 
   const createNewStr = sign => {
     const splittedStr = str.split(sign);
+
     splittedStr.map(word => {
       splittedStr.indexOf(word) === 0
         ? newArr.push(word)
@@ -308,9 +312,11 @@ function toCamelCase(str) {
 
   if (str.includes('-')) {
     createNewStr('-');
+
     return newArr.join('');
   } else if (str.includes('_')) {
     createNewStr('_');
+
     return newArr.join('');
   } else {
     return str;
@@ -322,11 +328,22 @@ console.log(toCamelCase('Strange-naming'));
 
 let arr = [3, 5, 7, 9, 7, 3];
 
-const arrOfUniqueValues = [...new Set(arr)];
-const setOfUniqueValues = new Set(arr);
+const makeArrOfUniqueValues = arr => {
+  const arrOfUniqueValuesNewWay = [];
+
+  arr.filter(
+    (el, index) => arr.indexOf(el) === index && arrOfUniqueValuesNewWay.push(el)
+  );
+
+  return arrOfUniqueValuesNewWay;
+};
+
+const arrOfUniqueValuesOldWay = makeArrOfUniqueValues(arr);
+const arrOfUniqueValuesNewWay = [...new Set(arr)];
 
 const findDuplicates = arr => {
   const arrOfDuplicates = [];
+
   arr.filter((el, index) => {
     if (arr.indexOf(el) !== index) {
       arrOfDuplicates.push(el);
@@ -337,12 +354,10 @@ const findDuplicates = arr => {
 };
 
 const arrOfDuplicates = findDuplicates(arr);
-const setOfDuplicates = new Set(arrOfDuplicates);
 
-console.log(arrOfUniqueValues);
+console.log(arrOfUniqueValuesOldWay);
+console.log(arrOfUniqueValuesNewWay);
 console.log(arrOfDuplicates);
-console.log(setOfUniqueValues);
-console.log(setOfDuplicates);
 
 function deleteNth(arr, n) {
   arr.map(el => {
