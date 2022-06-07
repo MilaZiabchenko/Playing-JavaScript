@@ -9,13 +9,20 @@ const techObject2 = { ...techArray };
 
 console.log(techObject2);
 
-const techObject3 = techArray.reduce((result, key, index) => {
-  result[index] = key;
-
-  return result;
-}, {});
+const techObject3 = techArray.reduce(
+  (accumulator, key, index) => ({ ...accumulator, [index + 1]: key }),
+  {}
+);
 
 console.log(techObject3);
+
+const techObject4 = techArray.reduce((accumulator, key, index) => {
+  accumulator[index + 1] = key;
+
+  return accumulator;
+}, {});
+
+console.log(techObject4);
 
 // Array of arrays => object
 const personData = [
@@ -264,6 +271,46 @@ const createObjectsWithBirdsAndSizesWithMap = () => {
 objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithMap();
 
 console.log(objectsOfBirdsAndSizes);
+
+const createArrayOfUniqueBirdsAndSizes = () => {
+  let key = 0;
+
+  const arrayOfObjectsOfUniqueBirdsAndSizes = birds.reduce(
+    (accumulator, bird, index) => {
+      birds.indexOf(bird) === index &&
+        accumulator.push({ key: ++key, bird, size: sizes[index] });
+
+      return accumulator;
+    },
+    []
+  );
+
+  return arrayOfObjectsOfUniqueBirdsAndSizes;
+};
+
+const arrayOfObjectsOfUniqueBirdsAndSizes = createArrayOfUniqueBirdsAndSizes();
+console.log(arrayOfObjectsOfUniqueBirdsAndSizes);
+
+const createDescriptiveBirdsObjects = () => {
+  const descriptiveBirdsObjects = arrayOfObjectsOfUniqueBirdsAndSizes.reduce(
+    (accumulator, { key, bird, size }, index) => {
+      accumulator[index] = {
+        [key]: `${bird.charAt(0).toUpperCase()}${bird.slice(
+          1
+        )} is a ${size} bird.`,
+      };
+
+      return accumulator;
+    },
+    []
+  );
+
+  return descriptiveBirdsObjects;
+};
+
+const arrayOfDescriptiveBirdsObjects = createDescriptiveBirdsObjects();
+
+console.log(arrayOfDescriptiveBirdsObjects);
 
 const financesData = [
   ['buy', 'usd', 50],

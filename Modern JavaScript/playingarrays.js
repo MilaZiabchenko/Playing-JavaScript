@@ -867,28 +867,30 @@ console.log(Object.fromEntries(Object.entries(mixedArray)));
 console.log([...new Set(mixedArray)]);
 
 // Copying arrays
-let arrCopy = mixedArray;
-let arrCopy1 = [...mixedArray];
-let arrCopy2 = mixedArray.slice();
-let arrCopy3 = Object.assign([], mixedArray);
-let arrCopy4 = JSON.parse(JSON.stringify(mixedArray));
+let mixedArrayCopy1 = mixedArray;
+const mixedArrayCopy2 = [...mixedArray];
+const mixedArrayCopy3 = mixedArray.slice();
+const mixedArrayCopy4 = Object.assign([], mixedArray);
+const mixedArrayCopy5 = JSON.parse(JSON.stringify(mixedArray));
 
 // Comparing arrays
-console.log(arrCopy === mixedArray);
-console.log(arrCopy1 == mixedArray);
-console.log(arrCopy2 == mixedArray);
-console.log(arrCopy3 == mixedArray);
-console.log(arrCopy4 == mixedArray);
+console.log(mixedArrayCopy1 === mixedArray);
+console.log(mixedArrayCopy2 == mixedArray);
+console.log(mixedArrayCopy3 == mixedArray);
+console.log(mixedArrayCopy4 == mixedArray);
+console.log(mixedArrayCopy5 == mixedArray);
 console.log([1, 20] == [1, 20]);
 console.log([] == []);
 console.log([] == true);
 console.log(Boolean([]) === true);
 
-console.log(arrCopy.push(999));
-console.log(arrCopy);
+mixedArrayCopy1.unshift('first element');
+mixedArrayCopy1.push('last element');
+
+console.log(mixedArrayCopy1);
 console.log(mixedArray);
 
-arrCopy = ['ha', 'ha', 'ha'];
+mixedArrayCopy1 = ['This', 'array', 'has', 'changed', 'completely', '.'];
 
-console.log(arrCopy);
+console.log(mixedArrayCopy1);
 console.log(mixedArray);
