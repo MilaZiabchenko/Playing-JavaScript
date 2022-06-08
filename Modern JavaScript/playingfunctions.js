@@ -1,4 +1,6 @@
 // Regular functions
+
+// Default params
 function autumnDays(Sep = 30, Oct = 31, Nov = 30) {
   // The return statement
 
@@ -75,12 +77,12 @@ func();
 
 console.log(scope);
 
-var topic = 'JavaScript';
-// let topic = 'JavaScript';
+// var topic = 'JavaScript';
+let topic = 'JavaScript';
 
 if (topic) {
-  var topic = 'EcmaScript'; // functional scope
-  // let topic = 'EcmaScript'; // block scope
+  // var topic = 'EcmaScript'; // functional scope
+  let topic = 'EcmaScript'; // block scope
   console.log(topic);
 }
 
@@ -443,10 +445,10 @@ function outerSpace() {
   return innerSpace;
 }
 
-// ourSpace is a reference to the instance of the function innerSpace that is created when outerSpace is run
+// 'ourSpace' is a reference to the instance of the function 'innerSpace' that is created when outerSpace is run
 const ourSpace = outerSpace();
 
-// When ourSpace is invoked, the variable ourCity remains available for use because the instance of innerSpace maintains a reference to its lexical environment, within which the variable ourCity exists
+// When 'ourSpace' is invoked, the variable 'ourCity' remains available for use because the instance of 'innerSpace' maintains a reference to its lexical environment, within which 'ourCity' exists
 ourSpace();
 
 const outerFn = () => {
@@ -458,27 +460,13 @@ const outerFn = () => {
     return `${myMentor} and ${mi} are talking about ${topic}.`;
   };
 
-  return innerFn();
+  return innerFn;
 };
 
-console.log(outerFn());
+const innerFnInstance = outerFn();
+const techTalk = innerFnInstance();
 
-const generateBirds = () => {
-  const birds = ['finch', 'catbird', 'rook'];
-
-  let index = 0;
-
-  return () => birds[index++];
-};
-
-const gen1 = generateBirds();
-const gen2 = generateBirds();
-
-console.log(gen1());
-console.log(gen1());
-console.log(gen2());
-console.log(gen2());
-console.log(gen2());
+console.log(techTalk);
 
 // We can use closures to return objects from functions that store state. The following makePerson function returns an object that can store and change a name
 let makePerson = name => {
@@ -708,7 +696,9 @@ function* generateFish() {
   yield 'tuna';
   yield 'trout';
   yield 'salmon';
+
   console.log(`Hey, I'm just a line after the checkpoint 'salmon'.`);
+
   yield 'cod';
 }
 
@@ -740,3 +730,34 @@ function* generateMessage() {
 const message = [...generateMessage()].join(' ');
 
 console.log(message);
+
+const birds = ['finch', 'tit', 'catbird', 'rook'];
+
+async function* generate(...items) {
+  for (let item of items) {
+    yield Promise.resolve(item);
+  }
+}
+
+const birdsGen = generate(...birds);
+
+(async () => {
+  for await (let bird of birdsGen) {
+    console.log(bird);
+  }
+})();
+
+const generateBirds = () => {
+  let index = 0;
+
+  return () => birds[index++];
+};
+
+const gen1 = generateBirds();
+const gen2 = generateBirds();
+
+console.log(gen1());
+console.log(gen1());
+console.log(gen2());
+console.log(gen2());
+console.log(gen2());
