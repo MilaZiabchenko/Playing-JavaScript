@@ -343,17 +343,6 @@ Bogdan.splice(9, 0, 'September', '28');
 
 console.log(Bogdan);
 
-const boString = Bogdan.join(', '); //array => string
-
-console.log(boString);
-console.log(`awesome, ${boString}`);
-
-const boArray = boString.split(', '); // string => array
-
-console.log(boArray);
-console.log(Array.isArray(boArray));
-console.log(Array.isArray(boString));
-
 // Array of objects
 const Saturday = [
   {
@@ -466,26 +455,19 @@ const agenda = [
   },
   {
     id: 3,
-    task: 'Connecting with feelings of Bogdan or disconnecting from him',
-    status: false,
-  },
-  {
-    id: 4,
-    task: 'Resolving sleep issues',
-    status: false,
+    task: 'Riding to the forest with Bogdan',
+    status: true,
   },
 ];
 
 const newAgenda = [
   ...agenda,
   {
-    id: 5,
-    task: 'Writing a message to Massimo',
+    id: 4,
+    task: 'Resolving health issues',
     status: false,
   },
 ];
-
-newAgenda[4].status = true;
 
 console.log(newAgenda);
 

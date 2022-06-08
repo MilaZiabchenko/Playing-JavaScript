@@ -117,9 +117,7 @@ const findMaxDifference = arr => {
 };
 
 const findMinDifference = arr => {
-  let arrCopy = [...arr];
-
-  arrCopy.sort((a, b) => a - b);
+  let arrCopy = [...arr].sort((a, b) => a - b);
 
   let diff = Number.MAX_VALUE;
 
@@ -131,6 +129,31 @@ const findMinDifference = arr => {
 
   return diff;
 };
+
+const isSorted1 = arr => {
+  const sortedArr = [...arr].sort((a, b) => a - b);
+
+  let sorted = true;
+
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < sortedArr.length; j++) {
+      arr[i] !== sortedArr[i] && (sorted = false);
+    }
+  }
+
+  return sorted;
+};
+
+const isSorted2 = arr => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] < arr[i - 1]) return false;
+  }
+
+  return true;
+};
+
+const isSorted3 = arr =>
+  arr.slice(1).every((value, index) => arr[index] < value);
 
 function adjacentElementsMaxProduct(array) {
   let newArr = [];
@@ -147,6 +170,9 @@ let array = [1, 55, 17, 77, 709, 95, -10, 100, 205];
 console.log(getBiggestNumber(array));
 console.log(findMaxDifference(array));
 console.log(findMinDifference(array));
+console.log(isSorted1([1, 2, 33, 3]));
+console.log(isSorted2([1, 2, 3, 33]));
+console.log(isSorted3([5, 100, 10]));
 console.log(adjacentElementsMaxProduct(array));
 
 function findHighestScoringWord(x) {
