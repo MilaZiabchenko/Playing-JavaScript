@@ -9,11 +9,11 @@ const calcDays = (prevDate, nextDate) => {
   );
 };
 
-const calcPeriods = arr => {
+const calcPeriods = array => {
   const periods = [];
 
-  for (let i = 0; i < arr.length - 1; i++) {
-    periods.push(calcDays(arr[i], arr[i + 1]));
+  for (let i = 0; i < array.length - 1; i++) {
+    periods.push(calcDays(array[i], array[i + 1]));
   }
 
   return periods;
@@ -88,6 +88,18 @@ function reverseNumber(num) {
 console.log(reverseNumber(-579));
 console.log(reverseNumber(89753));
 
+const getLargestAndSmallestValues = array => {
+  let smallest = array[0];
+  let largest = array[0];
+
+  for (let i = 1; i < array.length; i++) {
+    if (array[i] < smallest) smallest = array[i];
+    if (array[i] > largest) largest = array[i];
+  }
+
+  return `${smallest} and ${largest}  are the smallest and the largest values in the array.`;
+};
+
 const getBiggestNumber = args => {
   if (args.length < 2) {
     throw new Error('Not enough arguments');
@@ -102,13 +114,13 @@ const getBiggestNumber = args => {
   return maxNum;
 };
 
-const findMaxDifference = arr => {
-  let maxDiff = arr[1] - arr[0];
+const findMaxDifference = array => {
+  let maxDiff = array[1] - array[0];
 
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[j] - arr[i] > maxDiff) {
-        maxDiff = arr[j] - arr[i];
+  for (let i = 0; i < array.length; i++) {
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[j] - array[i] > maxDiff) {
+        maxDiff = array[j] - array[i];
       }
     }
   }
@@ -116,262 +128,96 @@ const findMaxDifference = arr => {
   return maxDiff;
 };
 
-const findMinDifference = arr => {
-  let arrCopy = [...arr].sort((a, b) => a - b);
+const findMinDifference = array => {
+  const sortedArr = [...array].sort((a, b) => a - b);
 
-  let diff = Number.MAX_VALUE;
+  let minDiff = Number.MAX_VALUE;
 
-  for (let i = 0; i < arrCopy.length; i++) {
-    if (arrCopy[i] - arrCopy[i - 1] < diff) {
-      diff = arrCopy[i] - arrCopy[i - 1];
+  for (let i = 1; i < sortedArr.length; i++) {
+    if (sortedArr[i] - sortedArr[i - 1] < minDiff) {
+      minDiff = sortedArr[i] - sortedArr[i - 1];
     }
   }
 
-  return diff;
+  return minDiff;
 };
 
-const isSorted1 = arr => {
-  const sortedArr = [...arr].sort((a, b) => a - b);
+const isSorted1 = array => {
+  const sortedArr = [...array].sort((a, b) => a - b);
 
   let sorted = true;
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < sortedArr.length; j++) {
-      arr[i] !== sortedArr[i] && (sorted = false);
+      array[i] !== sortedArr[i] && (sorted = false);
     }
   }
 
   return sorted;
 };
 
-const isSorted2 = arr => {
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] < arr[i - 1]) return false;
+const isSorted2 = array => {
+  for (let i = 1; i < array.length; i++) {
+    if (array[i - 1] > array[i]) return false;
   }
 
   return true;
 };
 
-const isSorted3 = arr =>
-  arr.slice(1).every((value, index) => arr[index] < value);
+const isSorted3 = array =>
+  array.slice(1).every((value, index) => array[index] < value);
+
+const isSorted4 = array =>
+  array.every((value, index) => index === 0 || array[index - 1] < value);
 
 function adjacentElementsMaxProduct(array) {
-  let newArr = [];
+  let productsArr = [];
 
   for (let i = 0; i < array.length - 1; i++) {
-    newArr.push(array[i] * array[i + 1]);
+    productsArr.push(array[i] * array[i + 1]);
   }
 
-  return Math.max(...newArr);
+  return Math.max(...productsArr);
 }
 
-let array = [1, 55, 17, 77, 709, 95, -10, 100, 205];
+const unsortedArray = [1, 55, 17, 77, 709, 95, -10, 100, 205];
+const sortedArray = [0, 1, 10, 500];
 
-console.log(getBiggestNumber(array));
-console.log(findMaxDifference(array));
-console.log(findMinDifference(array));
-console.log(isSorted1([1, 2, 33, 3]));
-console.log(isSorted2([1, 2, 3, 33]));
-console.log(isSorted3([5, 100, 10]));
-console.log(adjacentElementsMaxProduct(array));
+console.log(getLargestAndSmallestValues(unsortedArray));
+console.log(getBiggestNumber(unsortedArray));
+console.log(findMaxDifference(unsortedArray));
+console.log(findMinDifference(unsortedArray));
+console.log(isSorted1(sortedArray));
+console.log(isSorted1(unsortedArray));
+console.log(isSorted2(sortedArray));
+console.log(isSorted2(unsortedArray));
+console.log(isSorted3(sortedArray));
+console.log(isSorted3(unsortedArray));
+console.log(isSorted4(sortedArray));
+console.log(isSorted4(unsortedArray));
+console.log(adjacentElementsMaxProduct(unsortedArray));
 
-function findHighestScoringWord(x) {
-  const words = x.split(' ');
-  const alphabetMap = {};
-
-  for (let i = 'a'.charCodeAt(), j = 1; i <= 'z'.charCodeAt(); i++, j++) {
-    alphabetMap[i] = j;
-  }
-
-  let highestScoringWord = { word: '', score: 0 };
-
-  words.forEach(w => {
-    const chars = w.split('');
-
-    const sumOfChars = chars.reduce(
-      (count, char) => count + alphabetMap[char.charCodeAt()],
-      0
-    );
-
-    if (sumOfChars > highestScoringWord.score) {
-      highestScoringWord = { word: w, score: sumOfChars };
-    }
-  });
-
-  return highestScoringWord.word;
-}
-
-console.log(findHighestScoringWord('man i need a taxi up to ubud'));
-console.log(findHighestScoringWord('what time are we climbing up the volcano'));
-console.log(findHighestScoringWord('take me to semynak'));
-console.log(findHighestScoringWord('bbc z aaaaaaaa'));
-
-function domainName(url) {
-  return url
-    .split('://')[1]
-    .replace('www.', '')
-    .replace('.com', '')
-    .split('/')[0]
-    .split('.')[0];
-}
-
-console.log(domainName('http://google.co.jp'));
-console.log(domainName('http://github.com/carbonfive/raygun'));
-console.log(domainName('http://www.zombie-bites.com'));
-console.log(domainName('https://www.cnet.com'));
-
-function palindrome(string) {
-  const re = /[\W_]/g;
-  const lowRegStr = string.toLowerCase().replace(re, '');
-  const splittedStr = lowRegStr.split('');
-
-  let reversedStrArr = [];
-
-  for (let i = splittedStr.length - 1; i >= 0; i--) {
-    reversedStrArr.push(splittedStr[i]);
-  }
-
-  const reversedStr = reversedStrArr.join('');
-
-  return reversedStr === lowRegStr;
-}
-
-console.log(palindrome('A man, a plan, a canal. Panama'));
-console.log(palindrome('A man, a plan, a canal. Panama!'));
-console.log(palindrome('A man, a plan, a canal. Panamas'));
-
-let word = 'RaceCar';
-
-console.log(palindrome(word));
-console.log(word.toLowerCase().split('').reverse().join(''));
-
-const makeAcronym = fullName => {
-  return fullName
-    .split(' ')
-    .map(name => `${name.charAt(0).toUpperCase()}.`)
-    .join('');
-};
-
-console.log(makeAcronym('teo meo'));
-
-const splitStringIntoPairs = str => {
-  const arr = str.split('');
-
-  if (arr.length % 2 !== 0) {
-    arr.push('_');
-  }
-
-  const subArr = [];
-
-  for (let i = 0; i < arr.length; i += 2) {
-    subArr.push(arr[i] + arr[i + 1]);
-  }
-
-  return subArr;
-};
-
-console.log(splitStringIntoPairs('abcdef12345'));
-
-function validBraces(braces) {
-  let tracer = [];
-
-  for (let brace of braces) {
-    if (brace === '(' || brace === '{' || brace === '[') {
-      tracer.push(brace);
-    } else {
-      if (tracer.length === 0) return false;
-
-      let lastBrace = tracer[tracer.length - 1];
-      if (
-        (brace === ']' && lastBrace === '[') ||
-        (brace === '}' && lastBrace === '{') ||
-        (brace === ')' && lastBrace === '(')
-      ) {
-        tracer.pop();
-      } else {
-        break;
-      }
-    }
-  }
-
-  return tracer.length === 0;
-}
-
-console.log(validBraces('()'));
-console.log(validBraces('(){}[]'));
-console.log(validBraces('([{}])'));
-console.log(validBraces('[({})](]'));
-console.log(validBraces('[(])'));
-console.log(validBraces('(}'));
-
-function swapCase(str) {
-  const arr = str.split('');
-  const newArr = [];
-
-  for (let el of arr) {
-    if (el === el.toLowerCase()) {
-      newArr.push(el.toUpperCase());
-    } else if (el === el.toUpperCase()) {
-      newArr.push(el.toLowerCase());
-    } else {
-      newArr.push(el);
-    }
-  }
-
-  return newArr.join('');
-}
-
-console.log(swapCase(`Hey, how's Michaela?`));
-
-function toCamelCase(str) {
-  const newArr = [];
-
-  const createNewStr = sign => {
-    const splittedStr = str.split(sign);
-
-    splittedStr.map(word => {
-      splittedStr.indexOf(word) === 0
-        ? newArr.push(word)
-        : newArr.push(`${word.charAt(0).toUpperCase()}${word.slice(1)}`);
-    });
-  };
-
-  if (str.includes('-')) {
-    createNewStr('-');
-
-    return newArr.join('');
-  } else if (str.includes('_')) {
-    createNewStr('_');
-
-    return newArr.join('');
-  } else {
-    return str;
-  }
-}
-
-console.log(toCamelCase('_some_variable'));
-console.log(toCamelCase('Strange-naming'));
-
-let arr = [3, 5, 7, 9, 7, 3];
-
-const makeArrOfUniqueValues = arr => {
+const makeArrOfUniqueValues = array => {
   const arrOfUniqueValuesNewWay = [];
 
-  arr.filter(
-    (el, index) => arr.indexOf(el) === index && arrOfUniqueValuesNewWay.push(el)
+  array.filter(
+    (el, index) =>
+      array.indexOf(el) === index && arrOfUniqueValuesNewWay.push(el)
   );
 
   return arrOfUniqueValuesNewWay;
 };
 
-const arrOfUniqueValuesOldWay = makeArrOfUniqueValues(arr);
-const arrOfUniqueValuesNewWay = [...new Set(arr)];
+const array = [37, 5, 7, 9, '9', 5, 7, 37, 3];
 
-const findDuplicates = arr => {
+const arrOfUniqueValuesOldWay = makeArrOfUniqueValues(array);
+const arrOfUniqueValuesNewWay = [...new Set(array)];
+
+const findDuplicates = array => {
   const arrOfDuplicates = [];
 
-  arr.filter((el, index) => {
-    if (arr.indexOf(el) !== index) {
+  array.filter((el, index) => {
+    if (array.indexOf(el) !== index) {
       arrOfDuplicates.push(el);
     }
   });
@@ -379,24 +225,24 @@ const findDuplicates = arr => {
   return arrOfDuplicates;
 };
 
-const arrOfDuplicates = findDuplicates(arr);
+const arrOfDuplicates = findDuplicates(array);
 
 console.log(arrOfUniqueValuesOldWay);
 console.log(arrOfUniqueValuesNewWay);
 console.log(arrOfDuplicates);
 
-function deleteNth(arr, n) {
-  arr.map(el => {
-    let arrOfDuplicates = arr.filter(num => num === el);
+function deleteNth(array, n) {
+  array.map(el => {
+    let arrOfDuplicates = array.filter(num => num === el);
 
     if (arrOfDuplicates.length > n) {
       for (let i = 0; i < arrOfDuplicates.length - n; i++) {
-        arr.splice(arr.lastIndexOf(el), 1);
+        array.splice(array.lastIndexOf(el), 1);
       }
     }
   });
 
-  return arr;
+  return array;
 }
 
 console.log(deleteNth([1, 1, 1, 1, 2], 2));
@@ -404,33 +250,46 @@ console.log(deleteNth([20, 37, 20, 21], 1));
 console.log(deleteNth([10, 17, 10, 18, 2], 1));
 console.log(deleteNth([1, 1, 3, 3, 7, 2, 2, 2, 2], 3));
 
-arr = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
-
-const findAllIndices = (arr, element) => {
+const findAllIndices = (array, element) => {
   let indices = [];
-  let index = arr.indexOf(element);
+  let index = array.indexOf(element);
 
-  for (let el of arr) {
+  for (let el of array) {
     if (el === element) {
       indices.push(index);
-      index = arr.indexOf(el, index + 1);
+      index = array.indexOf(el, index + 1);
     }
   }
 
   return indices;
 };
 
-console.log(findDuplicates(arr));
-console.log(findAllIndices(arr, 9));
-console.log(findAllIndices(arr, 'watermelon'));
+console.log(findDuplicates(array));
+console.log(findAllIndices(array, 37));
 
-const peak = arr => {
+const zipWith = (fn, arr1, arr2) => {
+  const array = [];
+
+  const minLength = Math.min(arr1.length, arr2.length);
+
+  for (let i = 0; i < minLength; i++) {
+    array.push(fn(arr1[i], arr2[i]));
+  }
+
+  return array;
+};
+
+console.log(zipWith(Math.pow, [10, 10, 10, 10], [0, 1, 2, 3]));
+console.log(zipWith(Math.max, [1, 4, 7, 1, 4, 7], [4, 7, 1, 4, 7, 1]));
+console.log(zipWith((a, b) => a + b, [0, 1, 2, 3], [0, 1, 2, 3]));
+
+const peak = array => {
   let index = -1;
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     if (
-      arr.slice(0, i).reduce((total, current) => total + current, 0) ===
-      arr.slice(i + 1).reduce((total, current) => total + current, 0)
+      array.slice(0, i).reduce((total, current) => total + current, 0) ===
+      array.slice(i + 1).reduce((total, current) => total + current, 0)
     ) {
       index = i;
     }
@@ -492,11 +351,11 @@ const calculateTotalSumOfLuckyTickets = digits => {
 
 console.log(calculateTotalSumOfLuckyTickets(999_999));
 
-const moveZerosToTheEnd = arr => {
+const moveZerosToTheEnd = array => {
   const newArr1 = [];
   const newArr2 = [];
 
-  arr.map(num => (num !== 0 ? newArr1.push(num) : newArr2.push(num)));
+  array.map(num => (num !== 0 ? newArr1.push(num) : newArr2.push(num)));
 
   return newArr1.concat(newArr2);
 };
@@ -556,9 +415,7 @@ console.log(countPairs(['red', 'green', 'red', 'blue', 'blue']));
 console.log(countPairs(['red', 'red', 'red', 'red', 'red', 'red']));
 
 const findAllGlovesOfAColor = (gloves, color) =>
-  gloves.reduce((acc, cur) => {
-    return acc + (cur === color ? 1 : 0);
-  }, 0);
+  gloves.reduce((acc, cur) => acc + (cur === color ? 1 : 0), 0);
 
 console.log(
   findAllGlovesOfAColor(
@@ -600,56 +457,101 @@ function likes(names) {
 
 console.log(likes(['Mila', 'Leo']));
 
-array = [1, 0, 3, 4, 5, 650, 7, 8];
-
-let indexL = 0;
-let largest = array[indexL];
-let indexS = 0;
-let smallest = array[indexS];
-
-for (let i = 0; i < array.length; i++) {
-  array[i] > largest && (indexL = i) && (largest = array[i]);
-  array[i] < smallest && (indexS = i) && (smallest = array[i]);
+function domainName(url) {
+  return url
+    .split('://')[1]
+    .replace('www.', '')
+    .replace('.com', '')
+    .split('/')[0]
+    .split('.')[0];
 }
 
-console.log(`${largest} is the largest element at the index ${indexL}`);
-console.log(`${smallest} is the smallest element at the index ${indexS}`);
+console.log(domainName('http://google.co.jp'));
+console.log(domainName('http://github.com/carbonfive/raygun'));
+console.log(domainName('http://www.zombie-bites.com'));
+console.log(domainName('https://www.cnet.com'));
 
-array.length = 10;
+function palindrome(string) {
+  const re = /[\W_]/g;
+  const lowRegStr = string.toLowerCase().replace(re, '');
+  const splittedStr = lowRegStr.split('');
 
-console.log(array);
+  let reversedStrArr = [];
 
-array[12] = '13th element';
-array[10] = function () {
-  return 'Hey there!';
-};
-
-console.log(array);
-
-console.log(array[10]());
-
-const calcAverage = arr => {
-  let total = 0;
-  let count = 0;
-
-  for (let i = 0; i < arr.length; i++) {
-    typeof arr[i] === 'number' && (total += arr[i]) && count++;
+  for (let i = splittedStr.length - 1; i >= 0; i--) {
+    reversedStrArr.push(splittedStr[i]);
   }
 
-  return total / count;
-};
+  const reversedStr = reversedStrArr.join('');
 
-const average = calcAverage(array);
-
-console.log(average);
-
-const denseArray = [];
-
-for (let i = 0; i < array.length; i++) {
-  array[i] && denseArray.push(array[i]);
+  return reversedStr === lowRegStr;
 }
 
-console.log(denseArray);
+console.log(palindrome('A man, a plan, a canal. Panama'));
+console.log(palindrome('A man, a plan, a canal. Panama!'));
+console.log(palindrome('A man, a plan, a canal. Panamas'));
+
+let word = 'RaceCar';
+
+console.log(palindrome(word));
+console.log(word.toLowerCase().split('').reverse().join(''));
+
+const makeAcronym = fullName => {
+  return fullName
+    .split(' ')
+    .map(name => `${name.charAt(0).toUpperCase()}.`)
+    .join('');
+};
+
+console.log(makeAcronym('teo meo'));
+
+function swapCase(str) {
+  const array = str.split('');
+  const newArr = [];
+
+  for (let el of array) {
+    if (el === el.toLowerCase()) {
+      newArr.push(el.toUpperCase());
+    } else if (el === el.toUpperCase()) {
+      newArr.push(el.toLowerCase());
+    } else {
+      newArr.push(el);
+    }
+  }
+
+  return newArr.join('');
+}
+
+console.log(swapCase(`Hey, how's Michaela?`));
+
+function toCamelCase(str) {
+  const newArr = [];
+
+  const createNewStr = sign => {
+    const splittedStr = str.split(sign);
+
+    splittedStr.map(word => {
+      splittedStr.indexOf(word) === 0
+        ? newArr.push(word)
+        : newArr.push(`${word.charAt(0).toUpperCase()}${word.slice(1)}`);
+    });
+  };
+
+  if (str.includes('-')) {
+    createNewStr('-');
+
+    return newArr.join('');
+  } else if (str.includes('_')) {
+    createNewStr('_');
+
+    return newArr.join('');
+  } else {
+    return str;
+  }
+}
+
+console.log(toCamelCase('_some_variable'));
+console.log(toCamelCase('Strange-naming'));
 
 // Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms. In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
 
@@ -674,18 +576,83 @@ const [first, second, third, ...rest] = DNAStrand.name; // string destructuring 
 console.log(first, second, third);
 console.log(...rest);
 
-const zipWith = (fn, a0, a1) => {
-  const arr = [];
+function findHighestScoringWord(x) {
+  const words = x.split(' ');
+  const alphabetMap = {};
 
-  const minLength = Math.min(a0.length, a1.length);
-
-  for (let i = 0; i < minLength; i++) {
-    arr.push(fn(a0[i], a1[i]));
+  for (let i = 'a'.charCodeAt(), j = 1; i <= 'z'.charCodeAt(); i++, j++) {
+    alphabetMap[i] = j;
   }
 
-  return arr;
+  let highestScoringWord = { word: '', score: 0 };
+
+  words.forEach(w => {
+    const chars = w.split('');
+
+    const sumOfChars = chars.reduce(
+      (count, char) => count + alphabetMap[char.charCodeAt()],
+      0
+    );
+
+    if (sumOfChars > highestScoringWord.score) {
+      highestScoringWord = { word: w, score: sumOfChars };
+    }
+  });
+
+  return highestScoringWord.word;
+}
+
+console.log(findHighestScoringWord('man i need a taxi up to ubud'));
+console.log(findHighestScoringWord('what time are we climbing up the volcano'));
+console.log(findHighestScoringWord('take me to semynak'));
+console.log(findHighestScoringWord('bbc z aaaaaaaa'));
+
+const splitStringIntoPairs = str => {
+  const array = str.split('');
+
+  if (array.length % 2 !== 0) {
+    array.push('_');
+  }
+
+  const subArr = [];
+
+  for (let i = 0; i < array.length; i += 2) {
+    subArr.push(array[i] + array[i + 1]);
+  }
+
+  return subArr;
 };
 
-console.log(zipWith(Math.pow, [10, 10, 10, 10], [0, 1, 2, 3]));
-console.log(zipWith(Math.max, [1, 4, 7, 1, 4, 7], [4, 7, 1, 4, 7, 1]));
-console.log(zipWith((a, b) => a + b, [0, 1, 2, 3], [0, 1, 2, 3]));
+console.log(splitStringIntoPairs('abcdef12345'));
+
+function validBraces(braces) {
+  let tracer = [];
+
+  for (let brace of braces) {
+    if (brace === '(' || brace === '{' || brace === '[') {
+      tracer.push(brace);
+    } else {
+      if (tracer.length === 0) return false;
+
+      let lastBrace = tracer[tracer.length - 1];
+      if (
+        (brace === ']' && lastBrace === '[') ||
+        (brace === '}' && lastBrace === '{') ||
+        (brace === ')' && lastBrace === '(')
+      ) {
+        tracer.pop();
+      } else {
+        break;
+      }
+    }
+  }
+
+  return tracer.length === 0;
+}
+
+console.log(validBraces('()'));
+console.log(validBraces('(){}[]'));
+console.log(validBraces('([{}])'));
+console.log(validBraces('[({})](]'));
+console.log(validBraces('[(])'));
+console.log(validBraces('(}'));
