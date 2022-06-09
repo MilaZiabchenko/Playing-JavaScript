@@ -735,13 +735,15 @@ const birds = ['finch', 'tit', 'catbird', 'rook'];
 
 async function* generate(...items) {
   for (let item of items) {
-    yield Promise.resolve(item);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    yield item;
   }
 }
 
-const birdsGen = generate(...birds);
-
 (async () => {
+  const birdsGen = generate(...birds);
+
   for await (let bird of birdsGen) {
     console.log(bird);
   }

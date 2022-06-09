@@ -384,13 +384,15 @@ fruitLoop();
 // Asynchronous generator functions
 async function* generate(...items) {
   for (let item of items) {
-    yield Promise.resolve(item);
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    yield item;
   }
 }
 
-const fruitsGen = generate(...fruits);
-
 (async () => {
+  const fruitsGen = generate(...fruits);
+
   for await (let fruit of fruitsGen) {
     console.log(fruit);
   }
