@@ -24,6 +24,14 @@ const techObject4 = techArray.reduce((accumulator, key, index) => {
 
 console.log(techObject4);
 
+// Array => array of objects
+const arrayOfTechObjects = techArray.map((technology, index) => ({
+  id: index + 1,
+  technology: technology,
+}));
+
+console.log(arrayOfTechObjects);
+
 // Array of arrays => object
 const personData = [
   ['name', 'Kate'],

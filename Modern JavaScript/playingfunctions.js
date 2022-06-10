@@ -428,6 +428,7 @@ const outerFunc = () => {
 
 outerFunc();
 
+// Using closures to return functions from functions
 const ourNames = ['Mila', 'Leo'];
 
 function outerSpace() {
@@ -448,27 +449,22 @@ function outerSpace() {
 // 'ourSpace' is a reference to the instance of the function 'innerSpace' that is created when outerSpace is run
 const ourSpace = outerSpace();
 
+console.log(ourSpace);
+
 // When 'ourSpace' is invoked, the variable 'ourCity' remains available for use because the instance of 'innerSpace' maintains a reference to its lexical environment, within which 'ourCity' exists
 ourSpace();
 
-const outerFn = () => {
-  const myMentor = 'Andrii';
+const parentFn = mentor => topic =>
+  `${mentor} and ${mi} are talking about ${topic}.`;
 
-  const innerFn = () => {
-    const topic = 'matrices';
-
-    return `${myMentor} and ${mi} are talking about ${topic}.`;
-  };
-
-  return innerFn;
-};
-
-const innerFnInstance = outerFn();
-const techTalk = innerFnInstance();
+const returnedFnInstance = parentFn('Andrii');
+const techTalk = returnedFnInstance('matrices');
 
 console.log(techTalk);
 
-// We can use closures to return objects from functions that store state. The following makePerson function returns an object that can store and change a name
+// Using closures to return objects from functions that store state.
+
+// The following makePerson function returns an object that can store and change a name
 let makePerson = name => {
   let _name = name;
 
@@ -480,7 +476,7 @@ let makePerson = name => {
 
 const me = makePerson('Mila');
 
-console.log(me === me.getName());
+console.log(me);
 console.log(me.getName());
 
 me.setName('Mila Ziablick');
