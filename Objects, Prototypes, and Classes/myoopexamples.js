@@ -156,8 +156,9 @@ console.log(
 );
 console.log(superCat.say());
 console.log(superCat.__proto__);
-console.log(superCat.__proto__ === Object.getPrototypeOf(superCat));
+console.log(Object.getPrototypeOf(superCat));
 console.log(Object.prototype.__proto__);
+
 console.log(
   `${turtleMan.getFullName()} has been dark and grumpy recently. Hopefully ${turtleMan.firstName.slice(
     0,
@@ -170,10 +171,8 @@ console.log(turtleMan.dob.getFullYear());
 console.log(turtleMan.dob.getMonth() + 1);
 console.log(turtleMan.dob.getDate());
 console.log(turtleMan.dob.getDay());
-// static method
-console.log(Object.hasOwn(turtleMan, 'dob'));
-// non-static method
-console.log(turtleMan.hasOwnProperty('dob'));
+console.log(Object.hasOwn(turtleMan, 'dob')); //static method
+console.log(turtleMan.hasOwnProperty('dob')); // non-static method
 console.log(Object.hasOwn(superHuman, 'dob'));
 console.log(superHuman.hasOwnProperty('dob'));
 console.log(superHuman.addBook('Permanent Record', '9-17-2019'));
