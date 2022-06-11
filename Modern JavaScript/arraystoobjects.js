@@ -214,6 +214,20 @@ let objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion1();
 console.log(objectWithBirdsAndSizes);
 
 const createObjectOfBirdsWithSizesVersion2 = () => {
+  const object = birds.reduce((accumulator, bird, index) => {
+    accumulator[bird] = sizes[index];
+
+    return accumulator;
+  }, {});
+
+  return object;
+};
+
+objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion2();
+
+console.log(objectWithBirdsAndSizes);
+
+const createObjectOfBirdsWithSizesVersion3 = () => {
   const object = arrayOfObjectsWithBirdsAndSizes.reduce(
     (accumulator, { bird, size }) => ({
       ...accumulator,
@@ -225,11 +239,11 @@ const createObjectOfBirdsWithSizesVersion2 = () => {
   return object;
 };
 
-objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion2();
+objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion3();
 
 console.log(objectWithBirdsAndSizes);
 
-const createObjectOfBirdsWithSizesVersion3 = () => {
+const createObjectOfBirdsWithSizesVersion4 = () => {
   const object = arrayOfObjectsWithBirdsAndSizes.reduce(
     (accumulator, { bird, size }) => {
       accumulator[bird] = size;
@@ -242,7 +256,7 @@ const createObjectOfBirdsWithSizesVersion3 = () => {
   return object;
 };
 
-objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion3();
+objectWithBirdsAndSizes = createObjectOfBirdsWithSizesVersion4();
 
 console.log(objectWithBirdsAndSizes);
 
