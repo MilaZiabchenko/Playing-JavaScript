@@ -466,8 +466,11 @@ console.info(user);
 console.info(user.validate());
 console.info(user.__proto__);
 console.info(UserDataValidationBlueprint.isPrototypeOf(user));
-console.info(user.hasOwnProperty('_password'));
+console.info(Object.getPrototypeOf(user));
+console.info(Object.hasOwn(user, 'password'));
 console.info(user.hasOwnProperty('password'));
+console.info(Object.hasOwn(user, '_password'));
+console.info(user.hasOwnProperty('_password'));
 
 class AdminUser extends ProtectedUser {
   _workingHours = 0; // protected field;

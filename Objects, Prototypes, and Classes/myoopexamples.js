@@ -2,6 +2,8 @@
 
 // 1. Prototype model
 
+// Prototypes are the mechanism by which JavaScript objects inherit features from one another.
+
 // Constructor function
 const Person = function (firstName, lastName, dob) {
   this.firstName = firstName;
@@ -41,7 +43,20 @@ function Director(firstName, lastName, dob, movies) {
   this.movies = movies;
 }
 
+// Ways of setting a prototype
+
+// Using Object.create()
+
+// The Object.create() method creates a new object and allows you to specify an object that will be used as the new object's prototype.
+
 Director.prototype = Object.create(Person.prototype);
+
+// Using a constructor
+
+// In JavaScript, all functions have a property named prototype. When you call a function as a constructor, this property is set as the prototype of the newly constructed object.
+
+// So if we set the prototype of a constructor, we can ensure that all objects created with that constructor are given that prototype
+
 Director.prototype.constructor = Director;
 
 // 2. Classes
@@ -75,6 +90,7 @@ class Programmer extends Personality {
     // We must call super constructor in derived class before accessing 'this' or returning from derived constructor
 
     // Since the super() operator is actually the parent class constructor, passing here its arguments will also initialize the parent class properties in our sub-class, thereby inheriting it
+
     super(firstName, lastName, dob);
     this.language = language;
   }
@@ -99,7 +115,7 @@ class Programmer extends Personality {
   }
 }
 
-// A constructor in JS is a function that happens to be called with the new operator.
+// A constructor in JS is a function that happens to be called with the new operator
 const turtleMan = new Person('Bogdan', 'Starynets', '9-28-1982');
 const superHuman = new Author('Edward', 'Snowden', '6-21-1983');
 const director = new Director(
@@ -126,15 +142,16 @@ console.log(matrixBoy.validateLanguage());
 console.log(catWoman.getLanguage());
 console.log(catWoman.validateLanguage());
 
+console.log(Object.hasOwn(catWoman, 'firstName'));
 console.log(catWoman.hasOwnProperty('firstName'));
 console.log('firstName' in catWoman);
 
 console.log(catWoman instanceof Personality);
 console.log(catWoman instanceof Programmer);
 console.log(catWoman instanceof Object);
-console.log(typeof catWoman);
 console.log(Programmer instanceof Object);
 console.log(typeof Programmer);
+console.log(typeof catWoman);
 
 // Static methods are not attached to any individual object, but instead are invoked on the class itself
 Programmer.countCoders();
@@ -154,10 +171,41 @@ console.log(
     catWoman.firstName
   }'s home and life.`
 );
-console.log(superCat.say());
-console.log(superCat.__proto__);
-console.log(Object.getPrototypeOf(superCat));
+
+// Every object in JavaScript has a built-in property, which is called its prototype. The prototype is itself an object, so the prototype will have its own prototype, making what's called a prototype chain. The chain ends when we reach a prototype that has null for its own prototype
+
+// An object called Object.prototype is the most basic prototype, that all objects have by default. The prototype of Object.prototype is null, so it's at the end of the prototype chain
+
+// The property of an object that points to its prototype is called __proto__
+
 console.log(Object.prototype.__proto__);
+console.log(Object.prototype);
+
+console.log(superCat.__proto__);
+console.log(superCat.__proto__ === Object.getPrototypeOf(superCat));
+console.log(Object.prototype.isPrototypeOf(superCat));
+
+let object = superCat;
+
+do {
+  object = Object.getPrototypeOf(object);
+
+  console.log(object);
+} while (object);
+
+// instanceof
+
+// The instanceof operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object.
+
+console.log(superCat instanceof Object);
+console.log(Personality instanceof Object);
+console.log(superCat instanceof Personality);
+
+// When you try to access a property of an object: if the property can't be found in the object itself, the prototype is searched for the property. If the property still can't be found, then the prototype's prototype is searched, and so on until either the property is found, or the end of the chain is reached, in which case undefined is returned
+
+console.log(superCat.meow);
+console.log(superCat.say);
+console.log(superCat.say());
 
 console.log(
   `${turtleMan.getFullName()} has been dark and grumpy recently. Hopefully ${turtleMan.firstName.slice(
@@ -173,8 +221,7 @@ console.log(turtleMan.dob.getDate());
 console.log(turtleMan.dob.getDay());
 console.log(Object.hasOwn(turtleMan, 'dob')); //static method
 console.log(turtleMan.hasOwnProperty('dob')); // non-static method
-console.log(Object.hasOwn(superHuman, 'dob'));
-console.log(superHuman.hasOwnProperty('dob'));
+
 console.log(superHuman.addBook('Permanent Record', '9-17-2019'));
 
 const basics = [
@@ -386,7 +433,7 @@ class Vampire {
     return age;
   }
 
-  // In contrast with regular functions, the method defined using an arrow binds this lexically to the class instance.
+  // In contrast with regular functions, the method defined using an arrow binds this lexically to the class instance
   logWeaknesses = () => console.log(this.weaknesses);
 }
 
@@ -399,15 +446,15 @@ const Dracula = new Vampire({
 });
 
 console.log(Dracula);
-console.log(Dracula.age); // invoking a getter (getting its value)
 console.log(Dracula instanceof Vampire);
 
-console.log(Promise.resolve('I am Vlad'));
-Promise.resolve(Dracula.logWeaknesses());
+console.log(Dracula.age); // invoking a getter (getting its value)
 
-// When we use Dracula.calcAge (method of a Class defined with a regular func) as a callback, we bind 'this' value manually:
+Promise.resolve('I am Vlad').then(console.log);
+
+// When we use Dracula.calcAge (method of a Class defined with a regular func) as a callback, we bind 'this' value manually
 setTimeout(Dracula.calcAge.bind(Dracula), 0);
 
-// We use Dracula.logWeaknesses (method of a Class defined with an arrow func) as a callback without any manual binding of 'this':
-setTimeout(Dracula.logWeaknesses, 1000);
-setTimeout(() => Dracula.logWeaknesses(), 2000);
+// We use Dracula.logWeaknesses (method of a Class defined with an arrow func) as a callback without any manual binding of 'this'
+setTimeout(() => Dracula.logWeaknesses(), 1000);
+setTimeout(Dracula.logWeaknesses, 2000);

@@ -428,7 +428,9 @@ const outerFunc = () => {
 
 outerFunc();
 
-// Using closures to return functions from functions
+// Returning functions from functions
+
+// Thanks to closures, the returned function has access to the data of the parent function, even after the parent is run
 const ourNames = ['Mila', 'Leo'];
 
 function outerSpace() {
@@ -458,19 +460,22 @@ const parentFn = mentor => topic =>
   `${mentor} and ${mi} are talking about ${topic}.`;
 
 const returnedFnInstance = parentFn('Andrii');
+
+console.log(returnedFnInstance);
+
 const techTalk = returnedFnInstance('matrices');
 
 console.log(techTalk);
 
-// Using closures to return objects from functions that store state.
+// Returning objects from functions that store state thanks to closures
 
 // The following makePerson function returns an object that can store and change a name
-let makePerson = name => {
-  let _name = name;
+const makePerson = name => {
+  let _name = name; // '_name' private variable is not accessible from the outside
 
   return {
     setName: newName => (_name = newName),
-    getName: () => _name,
+    getName: () => _name, // the only way to get the '_name' value is through the returned from the function object's method
   };
 };
 
@@ -484,26 +489,27 @@ me.setName('Mila Ziablick');
 console.log(me.getName());
 
 // The previous example closely resembles a class that stores private state and exposes public getter and setter methods. We can extend this object-oriented parallel further by using closures to implement private methods
-makePerson = name => {
+const Person = ({ name, job }) => {
   let _name = name;
+  let _job = job;
 
-  const privateSetName = newName => (_name = newName);
-
-  // privateSetName is not directly accessible to consumers and it can access the private state variable _name through a closure
+  const privateSetJob = newJob => (_job = newJob); // 'privateSetJob' is not directly accessible to consumers and it can access the private state variable '_job' through a closure
 
   return {
-    setName: newName => privateSetName(newName),
     getName: () => _name,
+    getJob: () => _job,
+    setJob: newJob => privateSetJob(newJob),
   };
 };
 
-const president = makePerson('Volodymyr');
+const president = Person({ name: 'Volodymyr Zelensky', job: 'Comedian' });
 
 console.log(president.getName());
+console.log(president.getJob());
 
-president.setName('Volodymyr Zelensky');
+president.setJob('President');
 
-console.log(president.getName());
+console.log(president.getJob());
 
 const nums = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 

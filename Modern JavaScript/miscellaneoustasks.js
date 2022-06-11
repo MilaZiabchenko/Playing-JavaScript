@@ -69,7 +69,7 @@ const showFormattedDate = date => {
 console.log(showFormattedDate(new Date('2021-12-29T01:00:00')));
 console.log(showFormattedDate(new Date()), new Date());
 
-function reverseNumber(num) {
+const reverseNumber = num => {
   let numStr = num + ''; // number => string
   let numArr = numStr.split('');
   let reversedNum = [];
@@ -83,7 +83,7 @@ function reverseNumber(num) {
   reversedNum = parseInt(reversedNum) * Math.sign(num);
 
   return reversedNum;
-}
+};
 
 console.log(reverseNumber(-579));
 console.log(reverseNumber(89753));
@@ -170,7 +170,7 @@ const isSorted3 = array =>
 const isSorted4 = array =>
   array.every((value, index) => index === 0 || array[index - 1] < value);
 
-function adjacentElementsMaxProduct(array) {
+const adjacentElementsMaxProduct = array => {
   let productsArr = [];
 
   for (let i = 0; i < array.length - 1; i++) {
@@ -178,7 +178,7 @@ function adjacentElementsMaxProduct(array) {
   }
 
   return Math.max(...productsArr);
-}
+};
 
 const unsortedArray = [1, 55, 17, 77, 709, 95, -10, 100, 205];
 const sortedArray = [0, 1, 10, 500];
@@ -231,7 +231,7 @@ console.log(arrOfUniqueValuesOldWay);
 console.log(arrOfUniqueValuesNewWay);
 console.log(arrOfDuplicates);
 
-function deleteNth(array, n) {
+const deleteNth = (array, n) => {
   array.map(el => {
     let arrOfDuplicates = array.filter(num => num === el);
 
@@ -243,7 +243,7 @@ function deleteNth(array, n) {
   });
 
   return array;
-}
+};
 
 console.log(deleteNth([1, 1, 1, 1, 2], 2));
 console.log(deleteNth([20, 37, 20, 21], 1));
@@ -436,7 +436,7 @@ const buildASquare = num => ('+'.repeat(num) + '\n').repeat(num).trim();
 console.log(buildASquare(3));
 console.log(buildASquare(5));
 
-function likes(names) {
+const likes = names => {
   if (!Array.isArray(names) || names.length <= 0) return;
 
   switch (names.length) {
@@ -453,25 +453,24 @@ function likes(names) {
         names.length - 2
       } others like this`;
   }
-}
+};
 
 console.log(likes(['Mila', 'Leo']));
 
-function domainName(url) {
-  return url
+const domainName = url =>
+  url
     .split('://')[1]
     .replace('www.', '')
     .replace('.com', '')
     .split('/')[0]
     .split('.')[0];
-}
 
 console.log(domainName('http://google.co.jp'));
 console.log(domainName('http://github.com/carbonfive/raygun'));
 console.log(domainName('http://www.zombie-bites.com'));
 console.log(domainName('https://www.cnet.com'));
 
-function palindrome(string) {
+const palindrome = string => {
   const re = /[\W_]/g;
   const lowRegStr = string.toLowerCase().replace(re, '');
   const splittedStr = lowRegStr.split('');
@@ -485,7 +484,7 @@ function palindrome(string) {
   const reversedStr = reversedStrArr.join('');
 
   return reversedStr === lowRegStr;
-}
+};
 
 console.log(palindrome('A man, a plan, a canal. Panama'));
 console.log(palindrome('A man, a plan, a canal. Panama!'));
@@ -505,7 +504,7 @@ const makeAcronym = fullName => {
 
 console.log(makeAcronym('teo meo'));
 
-function swapCase(str) {
+const swapCase = str => {
   const array = str.split('');
   const newArr = [];
 
@@ -520,11 +519,11 @@ function swapCase(str) {
   }
 
   return newArr.join('');
-}
+};
 
 console.log(swapCase(`Hey, how's Michaela?`));
 
-function toCamelCase(str) {
+const toCamelCase = str => {
   const newArr = [];
 
   const createNewStr = sign => {
@@ -548,7 +547,7 @@ function toCamelCase(str) {
   } else {
     return str;
   }
-}
+};
 
 console.log(toCamelCase('_some_variable'));
 console.log(toCamelCase('Strange-naming'));
@@ -576,7 +575,7 @@ const [first, second, third, ...rest] = DNAStrand.name; // string destructuring 
 console.log(first, second, third);
 console.log(...rest);
 
-function findHighestScoringWord(x) {
+const findHighestScoringWord = x => {
   const words = x.split(' ');
   const alphabetMap = {};
 
@@ -600,7 +599,7 @@ function findHighestScoringWord(x) {
   });
 
   return highestScoringWord.word;
-}
+};
 
 console.log(findHighestScoringWord('man i need a taxi up to ubud'));
 console.log(findHighestScoringWord('what time are we climbing up the volcano'));
@@ -625,7 +624,7 @@ const splitStringIntoPairs = str => {
 
 console.log(splitStringIntoPairs('abcdef12345'));
 
-function validBraces(braces) {
+const validBraces = braces => {
   let tracer = [];
 
   for (let brace of braces) {
@@ -648,7 +647,7 @@ function validBraces(braces) {
   }
 
   return tracer.length === 0;
-}
+};
 
 console.log(validBraces('()'));
 console.log(validBraces('(){}[]'));
