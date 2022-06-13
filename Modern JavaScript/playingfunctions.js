@@ -475,7 +475,7 @@ const makePerson = name => {
 
   return {
     setName: newName => (_name = newName),
-    getName: () => _name, // the only way to get the '_name' value is through the returned from the function object's method
+    getName: () => _name, // the only way to get the '_name' value is through the method of the object returned from the function
   };
 };
 

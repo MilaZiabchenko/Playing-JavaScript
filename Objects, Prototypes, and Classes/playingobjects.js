@@ -530,7 +530,7 @@ const schedule = {};
 console.log(isEmpty(schedule));
 
 // Dynamic object keys (aka computed properties)
-let time = ['morning_', 'night_'];
+const time = ['morning_', 'night_'];
 
 schedule[time[0] + '7:30'] = 'Get up, greet Leo, and have a cup of coffee :)';
 schedule[time[0] + '9:00'] = 'Go for a walk :)';

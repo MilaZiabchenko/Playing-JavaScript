@@ -5,59 +5,62 @@
 // Prototypes are the mechanism by which JavaScript objects inherit features from one another.
 
 // Constructor function
-const Person = function (firstName, lastName, dob) {
+function Person(firstName, lastName, dob) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.dob = new Date(dob);
-};
+}
 
 // Attaching methods to the prototype
 Person.prototype.getBirthYear = function () {
   return this.dob.getFullYear();
 };
 
-Object.prototype.getFullName = function () {
+Person.prototype.getFullName = function () {
   return `${this.firstName} ${this.lastName}`;
 };
 
+Object.prototype.logInfo = function () {
+  return `This info can be logged for every object in this prototype chain.`;
+};
+
 // Prototype inheritance
-const Author = function (...args) {
-  // Inheriting properties
-  Person.apply(this, args);
-};
-
-// Inheriting methods
-Author.prototype = Object.create(Person.prototype);
-
-Author.prototype.addBook = function (title, publicationDate) {
-  publicationDate = new Date(publicationDate);
-
-  const years = new Date().getFullYear() - publicationDate.getFullYear();
-
-  return `${this.getFullName()} wrote a memoir called ${title}. It was published ${years} years ago on ${publicationDate}.`;
-};
 
 function Director(firstName, lastName, dob, movies) {
+  // Inheriting properties
   Person.call(this, firstName, lastName, dob);
   delete this.dob;
   this.movies = movies;
 }
+
+const Author = function (...args) {
+  // Inheriting properties
+  Person.apply(this, args);
+};
 
 // Ways of setting a prototype
 
 // Using Object.create()
 
 // The Object.create() method creates a new object and allows you to specify an object that will be used as the new object's prototype.
-
 Director.prototype = Object.create(Person.prototype);
 
 // Using a constructor
 
-// In JavaScript, all functions have a property named prototype. When you call a function as a constructor, this property is set as the prototype of the newly constructed object.
-
-// So if we set the prototype of a constructor, we can ensure that all objects created with that constructor are given that prototype
-
+// If we set the prototype of a constructor, we can ensure that all objects created with that constructor are given that prototype
 Director.prototype.constructor = Director;
+
+// Inheriting methods
+Author.prototype = Object.create(Person.prototype);
+
+// Own methods
+Author.prototype.addBook = function (title, publicationDate) {
+  publicationDate = new Date(publicationDate);
+
+  const bookAge = new Date().getFullYear() - publicationDate.getFullYear();
+
+  return `${this.getFullName()} wrote a memoir called ${title}. It was published ${bookAge} years ago on ${publicationDate}.`;
+};
 
 // 2. Classes
 
@@ -71,12 +74,16 @@ class Personality {
     this.dob = new Date(dob);
   }
 
-  getBirthYear() {
-    return this.dob.getFullYear();
+  get name() {
+    return this.firstName;
   }
 
   getFullName() {
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  getBirthYear() {
+    return this.dob.getFullYear();
   }
 }
 
@@ -101,10 +108,10 @@ class Programmer extends Personality {
 
   validateLanguage() {
     if (this.language !== 'JavaScript' && this.language !== 'Python') {
-      return `Sorry, ${this.firstName}, we don't work with ${this.language} at the moment.`;
-    } else {
-      return `Welcome, ${this.firstName}! Let's create some cool stuff with ${this.language}!`;
+      return `Sorry, ${this.firstName}, we are not hiring ${this.language} programmers at the moment.`;
     }
+
+    return `Welcome, ${this.firstName}! Let's create some cool stuff with ${this.language}!`;
   }
 
   // Static method
@@ -135,10 +142,13 @@ console.log(superCat);
 console.log(catWoman);
 console.log(matrixBoy);
 
+console.log(Object.logInfo());
+
 console.log(
   `${matrixBoy.getFullName()} is pretty good at ${matrixBoy.language}.`
 );
 console.log(matrixBoy.validateLanguage());
+
 console.log(catWoman.getLanguage());
 console.log(catWoman.validateLanguage());
 
@@ -164,6 +174,7 @@ console.log(
   } and other web technologies.`
 );
 
+console.log(superCat.name);
 console.log(
   `${superCat.getFullName()} was born in spring of ${superCat.getBirthYear()}. ${
     superCat.firstName
@@ -180,6 +191,8 @@ console.log(
 
 console.log(Object.prototype.__proto__);
 console.log(Object.prototype);
+console.log(Date.prototype);
+console.log(Date.prototype.__proto__ === Object.prototype);
 
 console.log(superCat.__proto__);
 console.log(superCat.__proto__ === Object.getPrototypeOf(superCat));
@@ -195,7 +208,7 @@ do {
 
 // instanceof
 
-// The instanceof operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object.
+// The instanceof operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object
 
 console.log(superCat instanceof Object);
 console.log(Personality instanceof Object);
@@ -206,6 +219,8 @@ console.log(superCat instanceof Personality);
 console.log(superCat.meow);
 console.log(superCat.say);
 console.log(superCat.say());
+console.log(Object.hasOwn(superCat, 'say'));
+console.log(Object.hasOwn(superCat, 'firstName'));
 
 console.log(
   `${turtleMan.getFullName()} has been dark and grumpy recently. Hopefully ${turtleMan.firstName.slice(
@@ -426,15 +441,12 @@ class Vampire {
 
   // The regular functions are the usual way to define methods on classes
   calcAge() {
-    const age = this.deathDate - this.birthDate;
-
-    console.log(age);
-
-    return age;
+    return this.deathDate - this.birthDate;
   }
 
   // In contrast with regular functions, the method defined using an arrow binds this lexically to the class instance
   logWeaknesses = () => console.log(this.weaknesses);
+  getName = () => Promise.resolve(this.name);
 }
 
 const Dracula = new Vampire({
@@ -446,11 +458,8 @@ const Dracula = new Vampire({
 });
 
 console.log(Dracula);
+console.log(Dracula.age);
 console.log(Dracula instanceof Vampire);
-
-console.log(Dracula.age); // invoking a getter (getting its value)
-
-Promise.resolve('I am Vlad').then(console.log);
 
 // When we use Dracula.calcAge (method of a Class defined with a regular func) as a callback, we bind 'this' value manually
 setTimeout(Dracula.calcAge.bind(Dracula), 0);
@@ -458,3 +467,4 @@ setTimeout(Dracula.calcAge.bind(Dracula), 0);
 // We use Dracula.logWeaknesses (method of a Class defined with an arrow func) as a callback without any manual binding of 'this'
 setTimeout(() => Dracula.logWeaknesses(), 1000);
 setTimeout(Dracula.logWeaknesses, 2000);
+Dracula.getName().then(console.log);
