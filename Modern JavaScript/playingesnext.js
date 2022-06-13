@@ -267,13 +267,12 @@ const generateString = [...generateIterableSequence()].join(' ');
 
 console.log(generateString);
 
-// Required function arguments
-const isRequired = arg => {
-  throw new Error(`${arg} is required`);
+// Required parameters (default params)
+const isRequired = () => {
+  throw new Error(`Param is required`);
 };
 
-const add = (a = isRequired('a'), b = isRequired('b'), c = isRequired('c')) =>
-  a + b + c;
+const add = (a = isRequired(), b = isRequired(), c = isRequired()) => a + b + c;
 
 console.log(add(2, 3, 5));
 
