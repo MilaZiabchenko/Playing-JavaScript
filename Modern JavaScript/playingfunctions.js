@@ -430,7 +430,7 @@ outerFunc();
 
 // Returning functions from functions
 
-// Thanks to closures, the returned function has access to the data of the parent function, even after the parent is run
+// Thanks to closures, the returned function has access to the data of the parent function, even after the parent function is run
 const ourNames = ['Mila', 'Leo'];
 
 function outerSpace() {
@@ -467,9 +467,9 @@ const techTalk = returnedFnInstance('matrices');
 
 console.log(techTalk);
 
-// Returning objects from functions that store state thanks to closures
+// Returning objects from functions
 
-// The following makePerson function returns an object that can store and change a name
+// The following makePerson function returns an object that can store and change a name thanks to closures
 const makePerson = name => {
   let _name = name; // '_name' private variable is not accessible from the outside
 
@@ -493,7 +493,7 @@ const Person = ({ name, job }) => {
   let _name = name;
   let _job = job;
 
-  const privateSetJob = newJob => (_job = newJob); // 'privateSetJob' is not directly accessible to consumers and it can access the private state variable '_job' through a closure
+  const privateSetJob = newJob => (_job = newJob); // 'privateSetJob' has access to the private state variable '_job' through a closure, and it is not directly accessible to consumers
 
   return {
     getName: () => _name,
