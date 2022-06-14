@@ -457,15 +457,17 @@ console.log(ourSpace);
 ourSpace();
 
 const parentFn = mentor => topic =>
-  `${mentor} and ${mi} are talking about ${topic}.`;
+  console.log(`${mentor} and ${mi} are talking about ${topic}.`);
 
+// There are two ways to call the inner function:
+
+// 1. Call the returned function using a variable
 const returnedFnInstance = parentFn('Andrii');
 
-console.log(returnedFnInstance);
+returnedFnInstance('matrices');
 
-const techTalk = returnedFnInstance('matrices');
-
-console.log(techTalk);
+// 2. Call the returned function using double parentheses
+parentFn('Andrii')('matrices');
 
 // Returning objects from functions
 
@@ -607,12 +609,13 @@ const curryAMessage = greeting => name => message =>
 console.log(curryAMessage(`Hey`)(`Beth`)(`What's up`));
 
 // Composition
-a = x => x + 5;
-b = x => x * 2;
 
-console.log(a(b(5)));
-console.log(a(a(5)));
-console.log(b(a(5)));
+const plusFive = x => x + 5;
+const byTwo = x => x * 2;
+
+console.log(plusFive(byTwo(25)));
+console.log(plusFive(plusFive(25)));
+console.log(byTwo(plusFive(25)));
 
 // Regular function vs arrow function
 

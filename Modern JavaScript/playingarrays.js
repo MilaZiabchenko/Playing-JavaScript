@@ -611,7 +611,7 @@ console.log(myMapFunc(arrOfNums, double));
 console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
 console.log(
   arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
-);
+); // function chaining
 console.log(myMapFunc(arrOfNums, element => element + 5));
 console.log(myMapFunc(newAgenda, todo => todo.task));
 
