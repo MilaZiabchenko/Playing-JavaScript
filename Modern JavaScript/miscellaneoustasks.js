@@ -1,6 +1,6 @@
 import { recentDates } from './constants.js';
 
-const calcDays = (prevDate, nextDate) => {
+const calcDaysDiffBetweenDates = (prevDate, nextDate) => {
   const date1 = new Date(prevDate);
   const date2 = new Date(nextDate);
 
@@ -13,7 +13,7 @@ const calcPeriods = array => {
   const periods = [];
 
   for (let i = 0; i < array.length - 1; i++) {
-    periods.push(calcDays(array[i], array[i + 1]));
+    periods.push(calcDaysDiffBetweenDates(array[i], array[i + 1]));
   }
 
   return periods;
@@ -181,7 +181,7 @@ const adjacentElementsMaxProduct = array => {
 };
 
 const unsortedArray = [1, 55, 17, 77, 709, 95, -10, 100, 205];
-const sortedArray = [0, 1, 10, 500];
+const sortedArray = [-10, 0, 1, 10, 77, 500, 709];
 
 console.log(getLargestAndSmallestValues(unsortedArray));
 console.log(getBiggestNumber(unsortedArray));
@@ -197,7 +197,23 @@ console.log(isSorted4(sortedArray));
 console.log(isSorted4(unsortedArray));
 console.log(adjacentElementsMaxProduct(unsortedArray));
 
-const makeArrOfUniqueValues = array => {
+const removeFalsy = array => array.filter(Boolean);
+
+console.log(removeFalsy(sortedArray));
+
+const makeArrayOfMatches = (array1, array2) =>
+  array1.filter(el => array2.includes(el));
+
+const makeArrayOfDifferences = (array1, array2) => {
+  const set = new Set(array2);
+
+  return array1.filter(el => !set.has(el));
+};
+
+console.log(makeArrayOfMatches(sortedArray, unsortedArray));
+console.log(makeArrayOfDifferences(sortedArray, unsortedArray));
+
+const makeArrayOfUniqueValues = array => {
   const arrOfUniqueValuesNewWay = [];
 
   array.filter(
@@ -210,7 +226,7 @@ const makeArrOfUniqueValues = array => {
 
 const array = [37, 5, 7, 9, '9', 5, 7, 37, 3];
 
-const arrOfUniqueValuesOldWay = makeArrOfUniqueValues(array);
+const arrOfUniqueValuesOldWay = makeArrayOfUniqueValues(array);
 const arrOfUniqueValuesNewWay = [...new Set(array)];
 
 const findDuplicates = array => {
@@ -230,6 +246,12 @@ const arrOfDuplicates = findDuplicates(array);
 console.log(arrOfUniqueValuesOldWay);
 console.log(arrOfUniqueValuesNewWay);
 console.log(arrOfDuplicates);
+
+const countOccurrences = (arr, targetValue) =>
+  arr.reduce((acc, value) => (value === targetValue ? acc + 1 : acc), 0);
+
+console.log(countOccurrences(array, 5));
+console.log(countOccurrences([5, 5, 2, 1, 2, 3, 5], 5));
 
 const deleteNth = (array, n) => {
   array.map(el => {
@@ -495,6 +517,10 @@ let word = 'RaceCar';
 console.log(palindrome(word));
 console.log(word.toLowerCase().split('').reverse().join(''));
 
+const capitalize = ([first, ...rest]) => first.toUpperCase() + rest.join('');
+
+console.log(capitalize('oops'));
+
 const makeAcronym = fullName => {
   return fullName
     .split(' ')
@@ -552,6 +578,18 @@ const toCamelCase = str => {
 console.log(toCamelCase('_some_variable'));
 console.log(toCamelCase('Strange-naming'));
 
+const isValidJSON = str => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+console.log(isValidJSON('{"name":"Danny","id":12345}'));
+console.log(isValidJSON('{"name":"Danny",id:12345}'));
+
 // Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms. In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
 
 const DNAStrand = dna => dna.replace(/./g, char => DNAStrand.pairs[char]);
@@ -567,13 +605,6 @@ console.log(DNAStrand(''));
 console.log(DNAStrand('ATGC'));
 console.log(DNAStrand('GTAT'));
 console.log(DNAStrand('AAAA'));
-
-console.log(DNAStrand.name); // getting function name property
-
-const [first, second, third, ...rest] = DNAStrand.name; // string destructuring with rest
-
-console.log(first, second, third);
-console.log(...rest);
 
 const findHighestScoringWord = x => {
   const words = x.split(' ');

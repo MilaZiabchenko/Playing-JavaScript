@@ -394,34 +394,93 @@ const calcBudget = () => {
 calcBudget();
 
 const vehicles = [
-  'bike',
-  'bike',
   'van',
+  'bike',
+  'bike',
   'car',
   'truck',
-  'car',
   'bike',
-  'car',
   'bike',
+  'truck',
   'truck',
   'bike',
   'car',
 ];
 
-// Sum up the instances of each vehicle
-const transportation = vehicles.reduce((accumulator, item) => {
-  !accumulator[item] && (accumulator[item] = 0);
+const countInstances = array => {
+  const objectOfInstances = array.reduce((accumulator, item) => {
+    !accumulator[item] && (accumulator[item] = 0);
 
-  accumulator[item]++;
+    accumulator[item]++;
 
-  return accumulator;
-}, {});
+    return accumulator;
+  }, {});
 
-console.log(transportation);
+  return objectOfInstances;
+};
 
-const typesOfVehicle = { ...Object.keys(transportation) };
+const objectOfCountedVehicleInstances = countInstances(vehicles);
 
-console.log(typesOfVehicle);
+console.log(objectOfCountedVehicleInstances);
+
+// Sorting object properties by values
+
+// 1. using Object.keys(), sort(), and reduce()
+const sortObjectOfVehiclesByFrequencyOfInstancesVersion1 = object => {
+  const sortedObject = Object.keys(object)
+    .sort((key1, key2) => object[key2] - object[key1])
+    .reduce((accumulator, key) => ({ ...accumulator, [key]: object[key] }), {});
+
+  return sortedObject;
+};
+
+let objectOfSortedVehicleInstances =
+  sortObjectOfVehiclesByFrequencyOfInstancesVersion1(
+    objectOfCountedVehicleInstances
+  );
+
+console.log(objectOfSortedVehicleInstances);
+
+// 2. using Object.entries(), sort(), and reduce()
+const sortObjectOfVehiclesByFrequencyOfInstancesVersion2 = object => {
+  const sortedObject = Object.entries(object)
+    .sort(([, a], [, b]) => b - a)
+    .reduce(
+      (accumulator, [key, value]) => ({ ...accumulator, [key]: value }),
+      {}
+    );
+
+  return sortedObject;
+};
+
+objectOfSortedVehicleInstances =
+  sortObjectOfVehiclesByFrequencyOfInstancesVersion2(
+    objectOfCountedVehicleInstances
+  );
+
+console.log(objectOfSortedVehicleInstances);
+
+// 3. using Object.fromEntries(), Object.entries(), and sort()
+const sortObjectOfVehiclesByFrequencyOfInstancesVersion3 = object => {
+  const sortedObject = Object.fromEntries(
+    Object.entries(object).sort(([, a], [, b]) => b - a)
+  );
+
+  return sortedObject;
+};
+
+objectOfSortedVehicleInstances =
+  sortObjectOfVehiclesByFrequencyOfInstancesVersion3(
+    objectOfCountedVehicleInstances
+  );
+
+console.log(objectOfSortedVehicleInstances);
+
+const arrayOfVehicleInstancesSortedByFrequency = [
+  ...Object.keys(objectOfSortedVehicleInstances),
+];
+
+console.log(arrayOfVehicleInstancesSortedByFrequency);
 
 const pancakesGroup = [
   { name: 'Vika', technology: 'Angular' },

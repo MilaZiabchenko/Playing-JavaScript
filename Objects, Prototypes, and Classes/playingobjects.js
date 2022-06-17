@@ -239,7 +239,7 @@ console.log(h3.address.city);
 
 // Setting/updating object members
 
-// 1) using dot notation:
+// 1. using dot notation
 human.interests = [...human.interests, 'riding a bicycle', 'playing with Leo'];
 
 console.log(human.interests);
@@ -247,13 +247,21 @@ console.log(h1.interests);
 console.log(h2.interests);
 console.log(h3.interests);
 
-// 2) using bracket notation:
+// 2. using bracket notation
 human['hair'] = 'long curly';
 
 console.log(human.hasOwnProperty('hair'));
 console.log(h1.hasOwnProperty('hair'));
 console.log(h2.hasOwnProperty('hair'));
 console.log(h3.hasOwnProperty('hair'));
+
+// 3. using Object.defineProperty()
+Object.defineProperty(human, 'eyes', { value: 'dark' });
+
+console.log(human.hasOwnProperty('eyes'));
+console.log(h1.hasOwnProperty('eyes'));
+console.log(h2.hasOwnProperty('eyes'));
+console.log(h3.hasOwnProperty('eyes'));
 
 human['address'] = { ...human['address'], country: 'Ukraine' };
 
@@ -453,6 +461,7 @@ Object.defineProperty(musician, 'genres', {
 
 console.log(Object.getOwnPropertyNames(musician));
 
+console.log(Object.hasOwn(musician, 'genres'));
 console.log(musician.hasOwnProperty('genres'));
 console.log('genres' in musician);
 

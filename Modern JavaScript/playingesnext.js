@@ -276,6 +276,14 @@ const add = (a = isRequired(), b = isRequired(), c = isRequired()) => a + b + c;
 
 console.log(add(2, 3, 5));
 
+// String destructuring with rest
+const [first, second, ...rest] = isRequired.name;
+
+console.log(first, second);
+console.log(...rest);
+
+console.log([...rest].join(''));
+
 // padStart() string method
 const hideNumber = number => number.slice(-4).padStart(number.length, '*');
 
