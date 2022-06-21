@@ -661,14 +661,15 @@ const validBraces = braces => {
   for (let brace of braces) {
     if (brace === '(' || brace === '{' || brace === '[') {
       tracer.push(brace);
-    } else {
+      
       if (tracer.length === 0) return false;
-
+    } else {
       let lastBrace = tracer[tracer.length - 1];
+
       if (
-        (brace === ']' && lastBrace === '[') ||
-        (brace === '}' && lastBrace === '{') ||
-        (brace === ')' && lastBrace === '(')
+        (lastBrace === '[' && brace === ']') ||
+        (lastBrace === '{' && brace === '}') ||
+        (lastBrace === '(' && brace === ')')
       ) {
         tracer.pop();
       } else {

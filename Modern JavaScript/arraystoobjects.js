@@ -112,6 +112,96 @@ console.table(getHslColors(colorsData));
 
 // Third iteration: accumulator = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when accumulator is spread inside the object, our function returns the final value
 
+const vehicles = [
+  'van',
+  'bike',
+  'bike',
+  'car',
+  'truck',
+  'bike',
+  'bike',
+  'truck',
+  'truck',
+  'bike',
+  'car',
+];
+
+// Counting all occurrences of array elements => object
+const countInstances = array => {
+  const objectOfInstances = array.reduce((accumulator, item) => {
+    !accumulator[item] && (accumulator[item] = 0);
+
+    accumulator[item]++;
+
+    return accumulator;
+  }, {});
+
+  return objectOfInstances;
+};
+
+const objectOfCountedVehicleInstances = countInstances(vehicles);
+
+console.log(objectOfCountedVehicleInstances);
+
+// Sorting object properties by values
+
+// 1. using Object.keys(), sort(), and reduce()
+const sortObjectOfVehiclesByFrequencyOfInstancesVersion1 = object => {
+  const sortedObject = Object.keys(object)
+    .sort((key1, key2) => object[key2] - object[key1])
+    .reduce((accumulator, key) => ({ ...accumulator, [key]: object[key] }), {});
+
+  return sortedObject;
+};
+
+let objectOfSortedVehicleInstances =
+  sortObjectOfVehiclesByFrequencyOfInstancesVersion1(
+    objectOfCountedVehicleInstances
+  );
+
+console.log(objectOfSortedVehicleInstances);
+
+// 2. using Object.entries(), sort(), and reduce()
+const sortObjectOfVehiclesByFrequencyOfInstancesVersion2 = object => {
+  const sortedObject = Object.entries(object)
+    .sort(([, a], [, b]) => b - a)
+    .reduce(
+      (accumulator, [key, value]) => ({ ...accumulator, [key]: value }),
+      {}
+    );
+
+  return sortedObject;
+};
+
+objectOfSortedVehicleInstances =
+  sortObjectOfVehiclesByFrequencyOfInstancesVersion2(
+    objectOfCountedVehicleInstances
+  );
+
+console.log(objectOfSortedVehicleInstances);
+
+// 3. using Object.fromEntries(), Object.entries(), and sort()
+const sortObjectOfVehiclesByFrequencyOfInstancesVersion3 = object => {
+  const sortedObject = Object.fromEntries(
+    Object.entries(object).sort(([, a], [, b]) => b - a)
+  );
+
+  return sortedObject;
+};
+
+objectOfSortedVehicleInstances =
+  sortObjectOfVehiclesByFrequencyOfInstancesVersion3(
+    objectOfCountedVehicleInstances
+  );
+
+console.log(objectOfSortedVehicleInstances);
+
+const arrayOfVehicleInstancesSortedByFrequency = [
+  ...Object.keys(objectOfSortedVehicleInstances),
+];
+
+console.log(arrayOfVehicleInstancesSortedByFrequency);
+
 const birds = [
   'chaffinch',
   'chaffinch',
@@ -152,8 +242,22 @@ const amountOfBirdsOfEachType = calcBirdsOfEachType();
 
 console.log(amountOfBirdsOfEachType);
 
+const sortBirdsByQuantity = object => {
+  const sortedObject = Object.fromEntries(
+    Object.entries(object).sort(
+      ([, prevValue], [, nextValue]) => nextValue - prevValue
+    )
+  );
+
+  return sortedObject;
+};
+
+const birdsSortedByQuantity = sortBirdsByQuantity(amountOfBirdsOfEachType);
+
+console.log(birdsSortedByQuantity);
+
 const birdsObject = birds.reduce((accumulator, bird, index) => {
-  accumulator[index] = bird;
+  accumulator[index + 1] = bird;
 
   return accumulator;
 }, {});
@@ -163,7 +267,7 @@ console.log(birdsObject);
 const newBirdsObject = birds.reduce(
   (accumulator, bird, index) => ({
     ...accumulator,
-    [index + 1]: bird,
+    [`bird_${index + 1}`]: bird,
   }),
   {}
 );
@@ -264,6 +368,19 @@ const arraysOfBirdsAndSizes = [...Object.entries(objectWithBirdsAndSizes)];
 
 console.log(arraysOfBirdsAndSizes);
 
+const createObjectsWithBirdsAndSizesWithMap = () => {
+  const arrayOfObjects = arraysOfBirdsAndSizes.map(([bird, size]) => ({
+    bird,
+    size,
+  }));
+
+  return arrayOfObjects;
+};
+
+let objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithMap();
+
+console.log(objectsOfBirdsAndSizes);
+
 const createObjectsWithBirdsAndSizesWithReduce = () => {
   const arrayOfObjects = arraysOfBirdsAndSizes.reduce(
     (accumulator, [bird, size], index) => {
@@ -277,24 +394,11 @@ const createObjectsWithBirdsAndSizesWithReduce = () => {
   return arrayOfObjects;
 };
 
-let objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithReduce();
+objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithReduce();
 
 console.log(objectsOfBirdsAndSizes);
 
-const createObjectsWithBirdsAndSizesWithMap = () => {
-  const arrayOfObjects = arraysOfBirdsAndSizes.map(([bird, size]) => ({
-    bird,
-    size,
-  }));
-
-  return arrayOfObjects;
-};
-
-objectsOfBirdsAndSizes = createObjectsWithBirdsAndSizesWithMap();
-
-console.log(objectsOfBirdsAndSizes);
-
-const createArrayOfUniqueBirdsAndSizes = () => {
+const createArrayOfObjectsOfUniqueBirds = () => {
   let key = 0;
 
   const arrayOfObjectsOfUniqueBirdsAndSizes = birds.reduce(
@@ -310,14 +414,14 @@ const createArrayOfUniqueBirdsAndSizes = () => {
   return arrayOfObjectsOfUniqueBirdsAndSizes;
 };
 
-const arrayOfObjectsOfUniqueBirdsAndSizes = createArrayOfUniqueBirdsAndSizes();
+const arrayOfObjectsOfUniqueBirdsAndSizes = createArrayOfObjectsOfUniqueBirds();
 console.log(arrayOfObjectsOfUniqueBirdsAndSizes);
 
 const createDescriptiveBirdsObjects = () => {
   const descriptiveBirdsObjects = arrayOfObjectsOfUniqueBirdsAndSizes.reduce(
     (accumulator, { key, bird, size }, index) => {
       accumulator[index] = {
-        [key]: `${bird.charAt(0).toUpperCase()}${bird.slice(
+        [`Description_${key}`]: `${bird.charAt(0).toUpperCase()}${bird.slice(
           1
         )} is a ${size} bird.`,
       };
@@ -372,7 +476,7 @@ const calcBudget = () => {
     (total, [operation, currency, amount], index) => {
       currency === 'eur' && (amount *= 1.05);
 
-      console.log({
+      console.info({
         iteration: index + 1,
         total: `${total}$`,
         operation,
@@ -386,101 +490,12 @@ const calcBudget = () => {
     1000
   );
 
-  console.log(`Total sum after the last iteration is ${budget}$.`);
+  console.info(`Total sum after the last iteration is ${budget}$.`);
 
   return budget;
 };
 
 calcBudget();
-
-const vehicles = [
-  'van',
-  'bike',
-  'bike',
-  'car',
-  'truck',
-  'bike',
-  'bike',
-  'truck',
-  'truck',
-  'bike',
-  'car',
-];
-
-const countInstances = array => {
-  const objectOfInstances = array.reduce((accumulator, item) => {
-    !accumulator[item] && (accumulator[item] = 0);
-
-    accumulator[item]++;
-
-    return accumulator;
-  }, {});
-
-  return objectOfInstances;
-};
-
-const objectOfCountedVehicleInstances = countInstances(vehicles);
-
-console.log(objectOfCountedVehicleInstances);
-
-// Sorting object properties by values
-
-// 1. using Object.keys(), sort(), and reduce()
-const sortObjectOfVehiclesByFrequencyOfInstancesVersion1 = object => {
-  const sortedObject = Object.keys(object)
-    .sort((key1, key2) => object[key2] - object[key1])
-    .reduce((accumulator, key) => ({ ...accumulator, [key]: object[key] }), {});
-
-  return sortedObject;
-};
-
-let objectOfSortedVehicleInstances =
-  sortObjectOfVehiclesByFrequencyOfInstancesVersion1(
-    objectOfCountedVehicleInstances
-  );
-
-console.log(objectOfSortedVehicleInstances);
-
-// 2. using Object.entries(), sort(), and reduce()
-const sortObjectOfVehiclesByFrequencyOfInstancesVersion2 = object => {
-  const sortedObject = Object.entries(object)
-    .sort(([, a], [, b]) => b - a)
-    .reduce(
-      (accumulator, [key, value]) => ({ ...accumulator, [key]: value }),
-      {}
-    );
-
-  return sortedObject;
-};
-
-objectOfSortedVehicleInstances =
-  sortObjectOfVehiclesByFrequencyOfInstancesVersion2(
-    objectOfCountedVehicleInstances
-  );
-
-console.log(objectOfSortedVehicleInstances);
-
-// 3. using Object.fromEntries(), Object.entries(), and sort()
-const sortObjectOfVehiclesByFrequencyOfInstancesVersion3 = object => {
-  const sortedObject = Object.fromEntries(
-    Object.entries(object).sort(([, a], [, b]) => b - a)
-  );
-
-  return sortedObject;
-};
-
-objectOfSortedVehicleInstances =
-  sortObjectOfVehiclesByFrequencyOfInstancesVersion3(
-    objectOfCountedVehicleInstances
-  );
-
-console.log(objectOfSortedVehicleInstances);
-
-const arrayOfVehicleInstancesSortedByFrequency = [
-  ...Object.keys(objectOfSortedVehicleInstances),
-];
-
-console.log(arrayOfVehicleInstancesSortedByFrequency);
 
 const pancakesGroup = [
   { name: 'Vika', technology: 'Angular' },
@@ -526,15 +541,16 @@ pancakesGroupObject = combineNameWithTechVersion2();
 console.log(pancakesGroupObject);
 
 const groupMembersByTechnology = () => {
-  const technologies = pancakesGroup.reduce((specialization, pancake) => {
-    const technology = pancake.technology;
+  const technologies = pancakesGroup.reduce(
+    (specialization, { technology, name }) => {
+      !specialization[technology] && (specialization[technology] = []);
 
-    !specialization[technology] && (specialization[technology] = []);
+      specialization[technology].push(name);
 
-    specialization[technology].push(pancake.name);
-
-    return specialization;
-  }, {});
+      return specialization;
+    },
+    {}
+  );
 
   return technologies;
 };
