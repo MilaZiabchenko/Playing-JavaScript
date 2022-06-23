@@ -44,31 +44,6 @@ console.log(
   )}.`
 );
 
-const calcDaysNum = date => {
-  const now = new Date();
-
-  date = new Date(date);
-
-  return Math.round((date.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-};
-
-console.log(`${calcDaysNum('07/03/2021')} days`);
-console.log(`${calcDaysNum('09/28/2021')} days`);
-console.log(`${calcDaysNum('01/01/2022')} days`);
-
-const showFormattedDate = date => {
-  let stringDate = date + '';
-  let day = stringDate.slice(8, 10);
-  let month = stringDate.slice(4, 7);
-  let year = stringDate.slice(11, 15);
-  let formattedDate = `'The date is ${day} of ${month}, ${year}'`;
-
-  return formattedDate;
-};
-
-console.log(showFormattedDate(new Date('2021-12-29T01:00:00')));
-console.log(showFormattedDate(new Date()), new Date());
-
 const reverseNumber = num => {
   let numStr = num + ''; // number => string
   let numArr = numStr.split('');
@@ -661,7 +636,7 @@ const validBraces = braces => {
   for (let brace of braces) {
     if (brace === '(' || brace === '{' || brace === '[') {
       tracer.push(brace);
-      
+
       if (tracer.length === 0) return false;
     } else {
       let lastBrace = tracer[tracer.length - 1];

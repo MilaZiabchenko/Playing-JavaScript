@@ -97,6 +97,18 @@ getToDoWithAsync()
   .then(data => console.log(data))
   .catch(err => console.log(err.message));
 
+const showAwaitedValue = async (value, fallback) => {
+  const promise = new Promise((resolve, reject) => reject(value)).catch(
+    () => fallback
+  );
+
+  const awaitedValue = await promise;
+
+  console.log(awaitedValue);
+};
+
+showAwaitedValue('Real value', 'Fallback value');
+
 const delay = seconds =>
   new Promise((resolve, reject) => {
     if (typeof seconds !== 'number') {

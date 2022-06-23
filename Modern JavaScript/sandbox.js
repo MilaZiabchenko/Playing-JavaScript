@@ -8,6 +8,10 @@ console.log(55 > '53');
 console.log(55 === 55 / 1);
 console.log('leo' > 'Milu');
 
+// Object.is()
+console.log(Object.is(NaN, NaN));
+console.log(Object.is(55, '55'));
+
 // isNaN()
 
 // isNaN() converts the argument to a Number and returns true if the resulting value is NaN
@@ -438,16 +442,12 @@ heading.textContent = ``;
 heading.append(span, `, Pussycats!`);
 
 // Setting/removing attributes
-
-// Method 1:
 span.setAttribute('title', 'Hey!');
 span.removeAttribute('title');
-
-// Method 2:
 span.title = 'Yo, gang!';
 span.id = 'greeting';
 
-// Manipulating custom data attributes:
+// Manipulating custom data attributes
 span.dataset.longGreeting = span.title;
 span.dataset.longGreeting = 'Hello there!';
 console.log(span.dataset);
@@ -498,3 +498,71 @@ body.removeChild(copyright);
 body.append(copyright);
 copyright.remove();
 body.append(copyright);
+
+// Browser Object Model
+
+// BOM is the core of JavaScript on the web. It refers to all the objects exposed by the web browser that allow JavaScript to interact with it
+
+// 1. Window Object
+
+// The object of window represents a browser window and all its corresponding features. A window object is created automatically by the browser itself
+
+console.log(this);
+console.log(window.innerWidth);
+// window.alert('Yo, coder!');
+console.log(typeof alert);
+console.log(typeof window.addEventListener === 'function');
+
+// 2. Location Object
+
+// As well as other window objects, it can be written with or without the window or document prefix
+
+console.log(window.location);
+console.log(location.pathname);
+console.log(document.location.host);
+console.log(location.protocol);
+console.log(location.href);
+
+// 3. Navigator Object
+
+// The Navigator object has properties that convey the browser’s information. For example, the userAgent is a property of the window.navigator object. It is a long string that identifies the web browser
+
+console.log(window.navigator);
+console.log(typeof navigator);
+console.log(navigator.vendor);
+console.log(navigator.userAgent);
+console.log(navigator.geolocation);
+console.log(navigator.connection);
+console.log(navigator.language);
+
+console.log(navigator.getBattery()); // => Promise
+navigator.getBattery().then(battery => console.log(battery));
+
+// 4. Screen object
+
+// It contains the information about the user's screen.
+
+// Usually, 24 bit or 32 bit hardware is used for color resolution.
+
+// 24 bits = 16, 777, 216 different (True Colors)
+// 32 bits = 4, 294, 967, 296 different (Deep Colors)
+
+console.log(screen.width); //returned in pixels
+console.log(screen.availWidth); // screen width, excluding the interface features
+console.log(screen.height);
+console.log(screen.availHeight);
+console.log(screen.colorDepth); // the bits used to display one color
+console.log(screen.pixelDepth);
+
+// 5. History Object
+
+// The window.history object allows you to access the history stack of the browser
+console.log(window.history);
+
+// To navigate to a URL in the history, you use the back(), forward(), and go() methods
+console.log(window.history.back());
+console.log(history.go(-1));
+console.log(history.forward());
+
+// The history.length returns the number of URLs in the history stack
+console.log(history.length);

@@ -210,12 +210,12 @@ console.log(getAverageValue(years));
 
 // Merging arrays:
 
-// - using the spread syntax (and combining them with normal values)
+// 1. using the spread syntax (and combining them with normal values)
 const myBikeActivity = [...array, '18-30 km/h', ...years, 2021];
 
 console.log(myBikeActivity);
 
-// - using concat()
+// 2. using concat()
 const joyride = array.concat(['highway', 'forest', 'lake', 'freedom', 'joy']);
 
 console.log(joyride.slice(-5));
@@ -392,10 +392,10 @@ for (let todo of Saturday) {
 Saturday.forEach(todo => console.log(todo));
 
 // map()
-const todoTask = Saturday.map(todo => console.log(todo.task));
+const todoTask = Saturday.map(todo => console.log(todo.task)); // performs a function for each todo and returns a transformed array of the same length
 
 // filter()
-const todoDone = Saturday.filter(todo => console.log(todo.done)); // returns a subset of the array
+const todoDone = Saturday.filter(todo => console.log(todo.done)); // returns a subset of the original array with elements that fit the condition
 
 // Higher-order array methods with predicate functions
 

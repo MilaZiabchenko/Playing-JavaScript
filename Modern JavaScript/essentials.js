@@ -46,7 +46,7 @@ let area = pi * radius ** 2;
 
 console.log(area);
 
-// Order of math operations is known as B I D M A S
+// Order of math operations is known as B E D M A S
 result = 5 * (10 - 3) ** 2;
 
 console.log(result);
