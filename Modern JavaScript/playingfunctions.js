@@ -608,15 +608,6 @@ const curryAMessage = greeting => name => message =>
 
 console.log(curryAMessage(`Hey`)(`Beth`)(`What's up`));
 
-// Composition
-
-const plusFive = x => x + 5;
-const byTwo = x => x * 2;
-
-console.log(plusFive(byTwo(25)));
-console.log(plusFive(plusFive(25)));
-console.log(byTwo(plusFive(25)));
-
 // Regular function vs arrow function
 
 // 1. 'this' value

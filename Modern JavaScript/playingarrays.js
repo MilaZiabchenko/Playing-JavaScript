@@ -511,16 +511,12 @@ const sortedTasks = newAgenda.map(todo => todo.task).sort(); //map().sort()
 
 console.log(sortedTasks);
 
-const isEveryAgendaTaskEndsWithLeo = newAgenda.every(todo =>
-  todo.task.endsWith('Leo')
-);
+const endsWithLeo = todo => todo.task.endsWith('Leo');
+
+const isEveryAgendaTaskEndsWithLeo = newAgenda.every(endsWithLeo);
+const isAnyAgendaTaskEndsWithLeo = newAgenda.some(endsWithLeo);
 
 console.log(isEveryAgendaTaskEndsWithLeo);
-
-const isAnyAgendaTaskEndsWithLeo = newAgenda.some(todo =>
-  todo.task.endsWith('Leo')
-);
-
 console.log(isAnyAgendaTaskEndsWithLeo);
 
 const arrOfNums = [1, 2, 3, 4, 5, 6, 7];
@@ -598,13 +594,8 @@ function myMapFunc(array, transform) {
   return mapped;
 }
 
-function double(num) {
-  return num + num;
-}
-
-function raiseToThePowerOfTwo(num) {
-  return num * num;
-}
+const double = num => num + num;
+const raiseToThePowerOfTwo = num => num * num;
 
 console.log(arrOfNums.myMapPolyfill(double));
 console.log(myMapFunc(arrOfNums, double));
@@ -641,9 +632,7 @@ function myFilterFunc(array, test) {
   return passed;
 }
 
-function greaterThanThree(num) {
-  return num > 3;
-}
+const greaterThanThree = num => num > 3;
 
 console.log(newAgenda.myFilterPolyfill(todo => !todo.status));
 console.log(
@@ -670,14 +659,10 @@ const filterReversedNums = (array, test) => {
 
 const mixedArray = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
 
-const numbers = myFilterFunc(
-  mixedArray,
-  element => typeof element === 'number'
-);
-const reversedNumbers = filterReversedNums(
-  mixedArray,
-  element => typeof element === 'number'
-);
+const isNumber = element => typeof element === 'number';
+
+const numbers = myFilterFunc(mixedArray, isNumber);
+const reversedNumbers = filterReversedNums(mixedArray, isNumber);
 
 console.log(numbers);
 console.log(reversedNumbers);
@@ -720,19 +705,22 @@ function myReduceFunc(array, combine, initialValue) {
   return accumulator;
 }
 
-console.log(arrOfNums.reduce((prev, cur) => prev + cur, 0));
-console.log(arrOfNums.reduce((prev, cur) => prev + cur));
-console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur, 0));
-console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur));
-console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur, 0));
-console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur));
+const addAllNumbers = (prev, cur) => prev + cur;
+const addAllNumbersTimesTen = (prev, cur) => prev + cur * 10;
 
-console.log(arrOfNums.reduce((prev, cur) => prev + cur * 10, 0));
-console.log(arrOfNums.reduce((prev, cur) => prev + cur * 10));
-console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur * 10, 0));
-console.log(arrOfNums.myReducePolyfill((prev, cur) => prev + cur * 10));
-console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur * 10, 0));
-console.log(myReduceFunc(arrOfNums, (prev, cur) => prev + cur * 10));
+console.log(arrOfNums.reduce(addAllNumbers, 0));
+console.log(arrOfNums.reduce(addAllNumbers));
+console.log(arrOfNums.myReducePolyfill(addAllNumbers, 0));
+console.log(arrOfNums.myReducePolyfill(addAllNumbers));
+console.log(myReduceFunc(arrOfNums, addAllNumbers, 0));
+console.log(myReduceFunc(arrOfNums, addAllNumbers));
+
+console.log(arrOfNums.reduce(addAllNumbersTimesTen, 0));
+console.log(arrOfNums.reduce(addAllNumbersTimesTen));
+console.log(arrOfNums.myReducePolyfill(addAllNumbersTimesTen, 0));
+console.log(arrOfNums.myReducePolyfill(addAllNumbersTimesTen));
+console.log(myReduceFunc(arrOfNums, addAllNumbersTimesTen, 0));
+console.log(myReduceFunc(arrOfNums, addAllNumbersTimesTen));
 
 function mySomeFunc(array, cb) {
   for (let element of array) {
@@ -756,7 +744,7 @@ function myEveryFunc(array, cb) {
 
 console.log(myEveryFunc(arrOfNums, greaterThanThree));
 console.log(myEveryFunc(arrOfNums, element => element === 7));
-console.log(myEveryFunc(arrOfNums, element => typeof element === 'number'));
+console.log(myEveryFunc(arrOfNums, isNumber));
 
 function myFindLastFunc(array, cb) {
   for (let i = array.length - 1; i >= 0; i--) {
