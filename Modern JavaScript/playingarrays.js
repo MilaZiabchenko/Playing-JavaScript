@@ -395,7 +395,7 @@ Saturday.forEach(todo => console.log(todo));
 const todoTask = Saturday.map(todo => console.log(todo.task)); // performs a function for each todo and returns a transformed array of the same length
 
 // filter()
-const todoDone = Saturday.filter(todo => console.log(todo.done)); // returns a subset of the original array with elements that fit the condition
+const todoDone = Saturday.filter(todo => console.log(todo.done)); // returns a subset of the original array with elements that meet the condition
 
 // Higher-order array methods with predicate functions
 
