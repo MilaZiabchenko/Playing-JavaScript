@@ -1,11 +1,11 @@
 // Array creation
 
-// 1. Array literal:
+// 1. Array literal
 let planets = ['Earth', 'Saturn', 'Jupiter'];
 
 console.log(planets);
 
-// 2. Array constructor:
+// 2. Array constructor
 planets = new Array('Earth', 'Saturn', 'Jupiter');
 
 console.log(planets);
@@ -95,35 +95,44 @@ let years = [2021, 2020, 2015, 2018, 2017, 2016, 2019];
 console.log(years);
 
 // splice()
-years.splice(0, 1); // removing one item and modifying the original array
 
+// removing one item and modifying the original array
+years.splice(0, 1);
 // years.splice(years.indexOf(2020), 1);
 
 console.log(years);
 
 // slice()
-let slicedYear = years.slice(0, 1); // returning a shallow copy of a portion of an array without modifying the original array
+
+// returning a shallow copy of a portion of an array without modifying the original array
+let slicedYear = years.slice(0, 1);
 
 console.log(years);
 console.log(slicedYear);
 
-// sort()
-
-// years = years.sort((a, b) => (a > b ? 1 : -1));
-years.sort((a, b) => a - b); // ascending array values
-
-console.log(years);
-
-years.sort((a, b) => b - a); // descending array values
-
-console.log(years);
-
 // reverse()
+
+// reversing without modifying the original
+console.log(years.slice().reverse());
+console.log(years);
+
+// reversing and modifying the original array
 years.reverse();
 
 console.log(years);
 
 years.sort(() => 0.5 - Math.random());
+
+console.log(years);
+
+// sort()
+years.sort((a, b) => (a > b ? 1 : -1));
+// or
+years.sort((a, b) => a - b); // ascending array values
+
+console.log(years);
+
+years.sort((a, b) => b - a); // descending array values
 
 console.log(years);
 
@@ -147,7 +156,7 @@ const nestYears = ([y1, y2, y3, ...restOfTheYears]) => [
   y1,
   y2,
   y3,
-  restOfTheYears,
+  ...restOfTheYears,
 ];
 
 console.log(nestYears(years));
@@ -208,9 +217,9 @@ console.log(minYear);
 console.log(maxYear);
 console.log(getAverageValue(years));
 
-// Merging arrays:
+// Merging arrays
 
-// 1. using the spread syntax (and combining them with normal values)
+// 1. using the spread syntax
 const myBikeActivity = [...array, '18-30 km/h', ...years, 2021];
 
 console.log(myBikeActivity);
@@ -233,8 +242,8 @@ let linkToArray = original;
 console.log(original);
 console.log(linkToArray);
 
-// linkToArray.length = 0;
 linkToArray.splice(0, linkToArray.length);
+// linkToArray.length = 0;
 
 console.log(linkToArray);
 console.log(original);
@@ -392,17 +401,26 @@ for (let todo of Saturday) {
 Saturday.forEach(todo => console.log(todo));
 
 // map()
-const todoTask = Saturday.map(todo => console.log(todo.task)); // performs a function for each todo and returns a transformed array of the same length
+
+// performs a function for each todo and returns a transformed array of the same length
+
+const todoTask = Saturday.map(todo => console.log(todo.task));
 
 // filter()
-const todoDone = Saturday.filter(todo => console.log(todo.done)); // returns a subset of the original array with elements that meet the condition
+
+// returns a subset of the original array with elements that meet the condition
+
+const todoDone = Saturday.filter(todo => console.log(todo.done));
 
 // Higher-order array methods with predicate functions
 
 // A predicate function is a function that takes one value as input and returns true or false based on whether the value satisfies the condition.
 
 // find()
-const foundTask = Saturday.find(todo => todo.task === 'Coding'); // returns the value of the first element in the array where predicate is true, and undefined otherwise.
+
+// returns the value of the first element in the array where predicate is true, and undefined otherwise.
+
+const foundTask = Saturday.find(todo => todo.task === 'Coding');
 
 console.log({ foundTask });
 console.log(foundTask);
@@ -844,6 +862,7 @@ const mixedArrayCopy4 = Object.assign([], mixedArray);
 const mixedArrayCopy5 = JSON.parse(JSON.stringify(mixedArray));
 
 // Comparing arrays
+console.log(Object.is(mixedArrayCopy1, mixedArray));
 console.log(mixedArrayCopy1 === mixedArray);
 console.log(mixedArrayCopy2 == mixedArray);
 console.log(mixedArrayCopy3 == mixedArray);
