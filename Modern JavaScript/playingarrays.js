@@ -94,21 +94,15 @@ let years = [2021, 2020, 2015, 2018, 2017, 2016, 2019];
 
 console.log(years);
 
-// splice()
-
-// removing one item and modifying the original array
-years.splice(0, 1);
-// years.splice(years.indexOf(2020), 1);
-
-console.log(years);
-
 // slice()
 
-// returning a shallow copy of a portion of an array without modifying the original array
-let slicedYear = years.slice(0, 1);
+// slice() returns a shallow copy of a portion of an array without modifying the original array
 
-console.log(years);
-console.log(slicedYear);
+const firstYearInTheArray = years.slice(0, 1);
+const lastThreeYearsInTheArray = years.slice(years.length - 3);
+
+console.log(firstYearInTheArray);
+console.log(lastThreeYearsInTheArray);
 
 // reverse()
 
@@ -121,24 +115,31 @@ years.reverse();
 
 console.log(years);
 
-years.sort(() => 0.5 - Math.random());
-
-console.log(years);
-
 // sort()
-years.sort((a, b) => (a > b ? 1 : -1));
+
+// sort() takes in a Comparator function with two arguments. The return value of this function for any two elements determines the order in which these elements will appear in relation to each other in the final array.
+
+const ascendingYears = years
+  .slice()
+  .sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
 // or
-years.sort((a, b) => a - b); // ascending array values
+years.slice().sort((a, b) => a - b);
+// or
+years.slice().sort();
 
-console.log(years);
+console.log(ascendingYears);
 
-years.sort((a, b) => b - a); // descending array values
+const descendingYears = years
+  .slice()
+  .sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
+// or
+years.slice().sort((a, b) => b - a);
 
-console.log(years);
+console.log(descendingYears);
 
-years.sort();
+const yearsSortedRandomly = years.slice().sort(() => 0.5 - Math.random());
 
-console.log(years);
+console.log(yearsSortedRandomly);
 
 // When we see "..." in the code, it is either rest parameters or the spread syntax. There’s an easy way to distinguish between them:
 
@@ -159,7 +160,7 @@ const nestYears = ([y1, y2, y3, ...restOfTheYears]) => [
   ...restOfTheYears,
 ];
 
-console.log(nestYears(years));
+console.log(nestYears(ascendingYears));
 
 let sumOfYears = (...args) => {
   let sum = 0;
@@ -176,8 +177,8 @@ let sumOfYears = (...args) => {
 // The spread operator turns the elements of an iterable (array, string) into elements of an array literal or into arguments of a function call
 
 console.log([...'Leo']);
-console.log(sumOfYears(...years));
-console.log(sumOfYears(...years, 2021, 2022, 2023));
+console.log(sumOfYears(...ascendingYears));
+console.log(sumOfYears(...ascendingYears, 2021, 2022, 2023));
 
 // reduce()
 
@@ -187,26 +188,26 @@ console.log(sumOfYears(...years, 2021, 2022, 2023));
 
 let counter = 0;
 
-sumOfYears = years.reduce((total, val) => {
+sumOfYears = ascendingYears.reduce((total, val) => {
   ++counter;
   return total + val;
 }, 0);
 
-console.log(years, sumOfYears, counter);
+console.log(ascendingYears, sumOfYears, counter);
 
 counter = 0;
 
-sumOfYears = years.reduce((total, val) => {
+sumOfYears = ascendingYears.reduce((total, val) => {
   ++counter;
   return total + val;
 });
 
-console.log(years, sumOfYears, counter);
+console.log(ascendingYears, sumOfYears, counter);
 
-const minYear = years.reduce((prevYear, curYear) =>
+const minYear = ascendingYears.reduce((prevYear, curYear) =>
   prevYear < curYear ? prevYear : curYear
 );
-const maxYear = years.reduce((prevYear, curYear) =>
+const maxYear = ascendingYears.reduce((prevYear, curYear) =>
   prevYear > curYear ? prevYear : curYear
 );
 
@@ -215,12 +216,12 @@ const getAverageValue = nums =>
 
 console.log(minYear);
 console.log(maxYear);
-console.log(getAverageValue(years));
+console.log(getAverageValue(ascendingYears));
 
 // Merging arrays
 
 // 1. using the spread syntax
-const myBikeActivity = [...array, '18-30 km/h', ...years, 2021];
+const myBikeActivity = [...array, '18-30 km/h', ...ascendingYears, 2021];
 
 console.log(myBikeActivity);
 
@@ -235,25 +236,13 @@ joyride.sort();
 
 console.log(joyride);
 
-// Deleting all elements of the array
-let original = ['Delete', 'all', 'elements'];
-let linkToArray = original;
-
-console.log(original);
-console.log(linkToArray);
-
-linkToArray.splice(0, linkToArray.length);
-// linkToArray.length = 0;
-
-console.log(linkToArray);
-console.log(original);
-
 const darkSide = ['fearful', 'depressive', 'passive'];
 const brightSide = ['kind', 'smiling', 'gregarious', 'funny'];
 
 console.log(darkSide[0]);
 console.table(brightSide);
 
+// splice()
 brightSide.splice(2, 1, 'intelligent', 'strong', 'brave', 'happy'); // removing and adding items, modifying the array
 
 console.table(brightSide);
@@ -440,7 +429,7 @@ const hasTask = Saturday.some(todo => todo.task === 'Coding');
 console.log({ hasTask });
 
 // every()
-const allPastYears = years.every(year => {
+const allPastYears = ascendingYears.every(year => {
   const currentYear = new Date().getFullYear();
   return currentYear - year > 0;
 });
