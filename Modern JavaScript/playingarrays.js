@@ -46,7 +46,7 @@ emptyArr[3] = 'Venus';
 console.log(emptyArr);
 console.log(filledArr);
 
-// Array initialization is an usual task when dealing with collections. JavaScript allows a decent number of ways and flexibility to achieve that.
+// Array initialization is a usual task when dealing with collections. JavaScript allows a decent number of ways and flexibility to achieve that.
 
 // The array constructor has a number of situations when its behavior may be surprising. So the array literal is a better and simpler solution to initialize array instances.
 

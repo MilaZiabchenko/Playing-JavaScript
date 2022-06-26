@@ -499,70 +499,74 @@ body.append(copyright);
 copyright.remove();
 body.append(copyright);
 
-// Browser Object Model
+// Window object
+
+// Every JavaScript environment has a global object. In a browser environment the global object is the window object, which represents the browser window that contains a web page and all its corresponding features. A window object is created automatically by the browser itself
+
+console.log(window);
+
+// Any variables that are created without using the const, let or var keywords in the global scope are actually properties of this object, and any functions, such as parseInt() and isNaN(), are methods of it.
+
+// The Browser Object Model
 
 // BOM is the core of JavaScript on the web. It refers to all the objects exposed by the web browser that allow JavaScript to interact with it
 
-// 1. Window Object
+// BOM is a collection of properties and methods that contain information about the browser and computer screen. For example, we can find out which browser is being used to view a page (though, this method is unreliable). We can also find out the dimensions of the screen it is viewed on, and which pages have been visited before the current page. It can also be used for the rather dubious practice of creating pop-up windows, if you’re into annoying your users.
 
-// The object of window represents a browser window and all its corresponding features. A window object is created automatically by the browser itself
+// Navigator object
 
-console.log(this);
-console.log(window.innerWidth);
-// window.alert('Yo, coder!');
-console.log(typeof alert);
-console.log(typeof window.addEventListener === 'function');
+// The window object has a navigator property that returns a reference to the Navigator object. The Navigator object contains information about the browser being used. Its userAgent property will return information about the browser and operating system being used.
 
-// 2. Location Object
-
-// As well as other window objects, it can be written with or without the window or document prefix
-
-console.log(window.location);
-console.log(location.pathname);
-console.log(document.location.host);
-console.log(location.protocol);
-console.log(location.href);
-
-// 3. Navigator Object
-
-// The Navigator object has properties that convey the browser’s information. For example, the userAgent is a property of the window.navigator object. It is a long string that identifies the web browser
+// As well as other window objects, it can be written with or without the window prefix
 
 console.log(window.navigator);
-console.log(typeof navigator);
 console.log(navigator.vendor);
 console.log(navigator.userAgent);
 console.log(navigator.geolocation);
 console.log(navigator.connection);
 console.log(navigator.language);
-
 console.log(navigator.getBattery()); // => Promise
 navigator.getBattery().then(battery => console.log(battery));
 
-// 4. Screen object
+// Location object
+
+// The window.location property is an object that contains information about the URL of the current page. It contains a number of properties that provide information about different fragments of the URL.
+
+console.log(window.location);
+console.log(window.location.href);
+console.log(window.location.origin);
+console.log(location.protocol);
+console.log(location.hostname);
+console.log(location.port);
+console.log(location.pathname);
+
+// History object
+
+// The window.history property can be used to access information about any previously visited pages in the current browser session.
+
+console.log(window.history);
+
+// To navigate to a URL in the history, you use the back(), forward(), and go() methods
+
+// The history.length returns the number of URLs in the history stack
+
+console.log(history.length);
+
+// Screen object
 
 // It contains the information about the user's screen.
+
+console.log(screen.width);
+console.log(screen.height);
+
+// excluding the operating system menus
+console.log(screen.availWidth);
+console.log(screen.availHeight);
 
 // Usually, 24 bit or 32 bit hardware is used for color resolution.
 
 // 24 bits = 16, 777, 216 different (True Colors)
 // 32 bits = 4, 294, 967, 296 different (Deep Colors)
 
-console.log(screen.width); //returned in pixels
-console.log(screen.availWidth); // screen width, excluding the interface features
-console.log(screen.height);
-console.log(screen.availHeight);
-console.log(screen.colorDepth); // the bits used to display one color
+console.log(screen.colorDepth);
 console.log(screen.pixelDepth);
-
-// 5. History Object
-
-// The window.history object allows you to access the history stack of the browser
-console.log(window.history);
-
-// To navigate to a URL in the history, you use the back(), forward(), and go() methods
-console.log(window.history.back());
-console.log(history.go(-1));
-console.log(history.forward());
-
-// The history.length returns the number of URLs in the history stack
-console.log(history.length);
