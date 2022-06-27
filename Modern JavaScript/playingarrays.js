@@ -568,11 +568,11 @@ Array.prototype.myForEachPolyfill = function (cb) {
   }
 };
 
-function myForEachFunc(array, cb) {
+const myForEachFunc = (array, cb) => {
   for (let element of array) {
     cb(element);
   }
-}
+};
 
 console.log(Array.prototype);
 console.log(typeof Array.prototype);
@@ -591,7 +591,7 @@ Array.prototype.myMapPolyfill = function (cb) {
   return newArray;
 };
 
-function myMapFunc(array, transform) {
+const myMapFuncOne = (array, transform) => {
   const mapped = [];
 
   for (let element of array) {
@@ -599,19 +599,32 @@ function myMapFunc(array, transform) {
   }
 
   return mapped;
-}
+};
+
+const myMapFuncTwo = (array, transform) => {
+  const mapped = array.reduce((acc, cur) => {
+    acc.push(transform(cur));
+
+    return acc;
+  }, []);
+
+  return mapped;
+};
+
+const myMapFuncThree = (array, transform) =>
+  array.reduce((acc, cur) => [...acc, transform(cur)], []);
 
 const double = num => num + num;
 const raiseToThePowerOfTwo = num => num * num;
 
 console.log(arrOfNums.myMapPolyfill(double));
-console.log(myMapFunc(arrOfNums, double));
 console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
 console.log(
   arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
-); // function chaining
-console.log(myMapFunc(arrOfNums, element => element + 5));
-console.log(myMapFunc(newAgenda, todo => todo.task));
+);
+console.log(myMapFuncOne(arrOfNums, double));
+console.log(myMapFuncTwo(arrOfNums, element => element + 5));
+console.log(myMapFuncThree(newAgenda, todo => todo.task));
 
 Array.prototype.myFilterPolyfill = function (cb) {
   if (!Array.isArray(this) || !this.length || typeof cb !== 'function') return;
@@ -627,7 +640,7 @@ Array.prototype.myFilterPolyfill = function (cb) {
   return output;
 };
 
-function myFilterFunc(array, test) {
+const myFilterFunc = (array, test) => {
   const passed = [];
 
   for (let element of array) {
@@ -637,7 +650,7 @@ function myFilterFunc(array, test) {
   }
 
   return passed;
-}
+};
 
 const greaterThanThree = num => num > 3;
 
@@ -696,7 +709,7 @@ Array.prototype.myReducePolyfill = function (combine, initialValue) {
   return accumulator;
 };
 
-function myReduceFunc(array, combine, initialValue) {
+const myReduceFunc = (array, combine, initialValue) => {
   let accumulator = initialValue;
   let index = 0;
 
@@ -710,7 +723,7 @@ function myReduceFunc(array, combine, initialValue) {
   }
 
   return accumulator;
-}
+};
 
 const addAllNumbers = (prev, cur) => prev + cur;
 const addAllNumbersTimesTen = (prev, cur) => prev + cur * 10;
@@ -729,35 +742,35 @@ console.log(arrOfNums.myReducePolyfill(addAllNumbersTimesTen));
 console.log(myReduceFunc(arrOfNums, addAllNumbersTimesTen, 0));
 console.log(myReduceFunc(arrOfNums, addAllNumbersTimesTen));
 
-function mySomeFunc(array, cb) {
+const mySomeFunc = (array, cb) => {
   for (let element of array) {
     if (cb(element)) return true;
   }
 
   return false;
-}
+};
 
 console.log(mySomeFunc(arrOfNums, greaterThanThree));
 console.log(mySomeFunc(arrOfNums, element => element === 7));
 console.log(mySomeFunc(arrOfNums, element => element === 8));
 
-function myEveryFunc(array, cb) {
+const myEveryFunc = (array, cb) => {
   for (let element of array) {
     if (!cb(element)) return false;
   }
 
   return true;
-}
+};
 
 console.log(myEveryFunc(arrOfNums, greaterThanThree));
 console.log(myEveryFunc(arrOfNums, element => element === 7));
 console.log(myEveryFunc(arrOfNums, isNumber));
 
-function myFindLastFunc(array, cb) {
+const myFindLastFunc = (array, cb) => {
   for (let i = array.length - 1; i >= 0; i--) {
     if (cb(array[i], i, array)) return array[i];
   }
-}
+};
 
 // findLast()
 console.log(arrOfNums.findLast(greaterThanThree));
@@ -778,7 +791,7 @@ const flattenedTwoDArray = twoDArray.reduce(
 
 console.log(flattenedTwoDArray);
 
-function myFlatFunc(array, depth = 1) {
+const myFlatFunc = (array, depth = 1) => {
   const flattenedArray = [];
 
   for (let element of array) {
@@ -790,7 +803,7 @@ function myFlatFunc(array, depth = 1) {
   }
 
   return flattenedArray;
-}
+};
 
 console.log(myFlatFunc(twoDArray));
 console.log(myFlatFunc([1, 2, 3, [4, 5, [6, 7, [8, 9, 10]]]], 3));

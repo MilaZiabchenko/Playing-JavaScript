@@ -101,27 +101,22 @@ console.log(void 1);
 console.log(void { name: 'Banksy' });
 
 // Order of math operations/operators
-let e;
 let m = 60;
 const c = 1080000000;
-e = m * c ** 2;
+const e = m * c ** 2;
 
 console.log(e);
 
-let day = 25;
+const day = 25;
 
 // Modulus
 if (day % 2 === 0) {
-  console.log('This is an even number');
+  console.log(`${day} is an even day of the month.`);
 } else {
-  console.log('This is an odd number');
+  console.log(`${day} is an odd day of the month.`);
 }
 
-let evenOrOdd = day % 2 === 0 ? 'even' : 'odd';
-
-console.log(evenOrOdd);
-
-evenOrOdd = day % 2 ? 'odd' : 'even';
+const evenOrOdd = day % 2 ? 'odd' : 'even';
 
 console.log(evenOrOdd);
 
@@ -190,7 +185,7 @@ console.log(line.indexOf('I'));
 console.log(line.indexOf('I', 1));
 console.log(line.lastIndexOf('I'));
 console.log(line.slice(0, 16).toUpperCase());
-console.log(`${line.substring(0, 16)} anymore.`);
+console.log(`${line.substring(0, 16)} anymore`);
 console.log(line.split(' you '));
 console.log(line.split(' '));
 console.log(line.split(' ', 4));
@@ -283,19 +278,13 @@ do {
 } while (j === 'You wright me back.');
 
 // 'for-of' statement
-const salaries = [1000, 2000, 3000];
-salaries[0] += 500;
+const bonuses = [1000, 2000, 3000];
 
-console.log(`Last year's Zzz company's minimum salaries were equal to:`);
-console.log(`${salaries[0]}`);
-console.log(`${salaries[1]}`);
-console.log(`${salaries[2]}`);
+console.log(`This year's Zzz company's bonuses are equal to:`);
 
-console.log(`This year's Zzz company's minimum salaries are equal to:`);
-
-for (let salary of salaries) {
-  salary += 500;
-  console.log(salary);
+for (let bonus of bonuses) {
+  bonus += 500;
+  console.log(bonus);
 }
 
 // Logical operators
@@ -472,8 +461,8 @@ error.innerText += `...`;
 error.style.fontStyle = 'italic';
 error.style.marginLeft = '5rem';
 
-let paras = document.querySelectorAll('.challenge > p');
-paras.forEach(p => {
+const paragraphs = document.querySelectorAll('.challenge > p');
+paragraphs.forEach(p => {
   if (p.textContent.includes('error')) {
     p.classList.add('error');
   }
@@ -505,17 +494,17 @@ body.append(copyright);
 
 console.log(window);
 
-// Any variables that are created without using the const, let or var keywords in the global scope are actually properties of this object, and any functions, such as parseInt() and isNaN(), are methods of it.
+// Any variables that are created without using the const, let or var keywords in the global scope are actually properties of this object, and any functions, such as parseInt() or isNaN(), are methods of it.
 
 // The Browser Object Model
 
 // BOM is the core of JavaScript on the web. It refers to all the objects exposed by the web browser that allow JavaScript to interact with it
 
-// BOM is a collection of properties and methods that contain information about the browser and computer screen. For example, we can find out which browser is being used to view a page (though, this method is unreliable). We can also find out the dimensions of the screen it is viewed on, and which pages have been visited before the current page. It can also be used for the rather dubious practice of creating pop-up windows, if you’re into annoying your users.
+// BOM is a collection of properties and methods related to the information about the browser and screen. For example, we can find out which browser is being used to view a page. We can also find out the dimensions of the screen it is viewed on, and which pages have been visited before the current page. It can also be used for the rather dubious practice of creating pop-up windows, if you’re into annoying your users.
 
 // Navigator object
 
-// The window object has a navigator property that returns a reference to the Navigator object. The Navigator object contains information about the browser being used. Its userAgent property will return information about the browser and operating system being used.
+// The window object has a navigator property that returns a reference to the Navigator object. The Navigator object contains information about the browser being used. Its userAgent property will return information about the browser and operating system being used (though, this method is unreliable).
 
 // As well as other window objects, it can be written with or without the window prefix
 
@@ -530,7 +519,7 @@ navigator.getBattery().then(battery => console.log(battery));
 
 // Location object
 
-// The window.location property is an object that contains information about the URL of the current page. It contains a number of properties that provide information about different fragments of the URL.
+// The window.location property points to the object that contains information about the URL of the current page. It contains a number of properties that provide information about different fragments of the URL.
 
 console.log(window.location);
 console.log(window.location.href);
@@ -546,7 +535,7 @@ console.log(location.pathname);
 
 console.log(window.history);
 
-// To navigate to a URL in the history, you use the back(), forward(), and go() methods
+// To navigate to a URL in the history, you can use the back(), forward(), and go() methods
 
 // The history.length returns the number of URLs in the history stack
 
@@ -559,7 +548,7 @@ console.log(history.length);
 console.log(screen.width);
 console.log(screen.height);
 
-// excluding the operating system menus
+// Screen width and height, excluding the operating system menus
 console.log(screen.availWidth);
 console.log(screen.availHeight);
 
