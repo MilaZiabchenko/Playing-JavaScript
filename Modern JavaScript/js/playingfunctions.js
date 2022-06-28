@@ -579,11 +579,11 @@ console.log(sum.apply(null, [1, 3, 5]));
 const curryAMessage = greeting => name => message =>
   `${greeting}, ${name}! ${message}?`;
 
-console.log(curryAMessage(`Hey`)(me.getName())(`What's up`));
+console.log(curryAMessage(`Hey`)(mi)(`What's up`));
 
 // Partial application
 
-// Partial Application is having a function with a certain number of arguments and fixing some of them to a set value. This gives us a function with less arguments.
+// Partial application is having a function with a certain number of arguments and fixing some of them to a set value. This gives us a function with less arguments.
 
 // general function
 const makeMultiplier = a => b => a * b;
@@ -591,11 +591,11 @@ const makeMultiplier = a => b => a * b;
 // specific function
 const triple = makeMultiplier(3);
 
-// This function with fixed arguments can then be called from anywhere else in code, and it will be as if we had called the original function with all of its arguments
+// This function with fixed arguments can then be called from anywhere else in our code, and it will be as if we had called the original function with all of its arguments
 
 console.log(makeMultiplier(3)(33) === triple(33));
 
-// In general, if there is a function that we use often in our code, where one or more arguments are the same, this is a good candidate for using partial application
+// In general, if there is a function that we use often in our code, where one or more arguments are the same, it is a good candidate for using partial application
 
 const getAllFriends = (friend_1, friend_2, friend_3) =>
   `${friend_1} is a faithful friend of ${friend_2} & ${friend_3} 🤗💖`;
@@ -603,10 +603,10 @@ const getAllFriends = (friend_1, friend_2, friend_3) =>
 const getFriendsPartially = friend_1 => (friend_2, friend_3) =>
   getAllFriends(friend_1, friend_2, friend_3);
 
-const getFriendsOfMila = getFriendsPartially(me.getName());
+const getFriendsOfMila = getFriendsPartially(mi);
 
-console.log(getAllFriends(`${me.getName()}`, `Leo`, `Bogdan`));
-console.log(getFriendsPartially(`${me.getName()}`)(`Ania`, `Oksana`));
+console.log(getAllFriends(mi, 'Leo', 'Bogdan'));
+console.log(getFriendsPartially(mi)('Ania', 'Oksana'));
 console.log(getFriendsOfMila(`Suzan`, `Andrea`));
 
 // Regular function vs arrow function
