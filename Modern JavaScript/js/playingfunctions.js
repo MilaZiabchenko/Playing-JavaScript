@@ -560,11 +560,9 @@ btn.addEventListener(
 
 // Currying, an important concept of functional programming, is also possible thanks to closures.
 
-// Currying is a function that takes one argument at a time and returns a new function expecting the next argument. Currying is when a function — instead of taking all arguments at one time — takes the first one and returns a new function, which takes the second one and returns a new function, which takes the third one, etc. until all arguments are completed.
+// Currying is when a function — instead of taking all arguments at one time — takes the first one and returns a new function, which takes the second one and returns a new function, which takes the third one, etc. until all arguments are completed. This technique allows us to work with unary functions (functions with a single argument)
 
 // Currying is a transformation of functions that translates a function from callable as f(a, b, c) into callable as f(a)(b)(c).
-
-// Currying doesn’t call a function. It just transforms it.
 
 const curry = f => a => b => c => f(a, b, c);
 const sum = (a, b, c) => a + b + c;
@@ -572,41 +570,44 @@ const curriedResult = curry(sum);
 
 console.log(curriedResult(3)(5)(7));
 
-const subtract = a => b => c => a - b - c;
-
-console.log(subtract(5)(15)(0));
-console.log(subtract(15)(5)(0));
-
+console.log(curry.length);
 console.log(sum.length);
-console.log(subtract.length);
 
 console.log(sum.call(null, 1, 3, 5));
 console.log(sum.apply(null, [1, 3, 5]));
 
-const makeMultiplier = a => b => a * b;
-
-console.log(makeMultiplier(2)(350));
-console.log(makeMultiplier(3)(33));
-
-const double = makeMultiplier(2);
-
-console.log(double(350));
-
-const triple = makeMultiplier(3);
-
-console.log(triple(33));
-
-const bo = 'Bogdan';
-const and = '&';
-
-const curryUs = you => and => me => `${you} ${and} ${me}`;
-
-console.log(curryUs(bo)(and)(mi));
-
 const curryAMessage = greeting => name => message =>
   `${greeting}, ${name}! ${message}?`;
 
-console.log(curryAMessage(`Hey`)(`Beth`)(`What's up`));
+console.log(curryAMessage(`Hey`)(me.getName())(`What's up`));
+
+// Partial application
+
+// Partial Application is having a function with a certain number of arguments and fixing some of them to a set value. This gives us a function with less arguments.
+
+// general function
+const makeMultiplier = a => b => a * b;
+
+// specific function
+const triple = makeMultiplier(3);
+
+// This function with fixed arguments can then be called from anywhere else in code, and it will be as if we had called the original function with all of its arguments
+
+console.log(makeMultiplier(3)(33) === triple(33));
+
+// In general, if there is a function that we use often in our code, where one or more arguments are the same, this is a good candidate for using partial application
+
+const getAllFriends = (friend_1, friend_2, friend_3) =>
+  `${friend_1} is a faithful friend of ${friend_2} & ${friend_3} 🤗💖`;
+
+const getFriendsPartially = friend_1 => (friend_2, friend_3) =>
+  getAllFriends(friend_1, friend_2, friend_3);
+
+const getFriendsOfMila = getFriendsPartially(me.getName());
+
+console.log(getAllFriends(`${me.getName()}`, `Leo`, `Bogdan`));
+console.log(getFriendsPartially(`${me.getName()}`)(`Ania`, `Oksana`));
+console.log(getFriendsOfMila(`Suzan`, `Andrea`));
 
 // Regular function vs arrow function
 
