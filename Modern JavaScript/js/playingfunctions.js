@@ -609,12 +609,17 @@ console.log(getAllFriends(mi, 'Leo', 'Bogdan'));
 console.log(getFriendsPartially(mi)('Ania', 'Oksana'));
 console.log(getFriendsOfMila('Suzan', 'Andrea'));
 
-const f1 = y => x => x * y;
-const f2 = y => x => x + y;
-const f3 = y => x => x / y;
-const f4 = y => x => x - y;
+const func_1 = x => y => y ** x;
+const func_2 = x => y => y * x;
+const func_3 = x => y => y + x;
+const func_4 = x => y => y / x;
+const func_5 = x => y => y - x;
 
-const arrayOfFunctions = [f1(5), f2(5), f3(5), f4(5), Math.abs];
+const partialFunctionsOf5 = [func_1, func_2, func_3, func_4, func_5].map(func =>
+  func(5)
+);
+
+const arrayOfFunctions = [...partialFunctionsOf5, Math.abs];
 
 const resultOfAllOperations = arrayOfFunctions.reduce(
   (acc, func) => func(acc),
@@ -622,7 +627,7 @@ const resultOfAllOperations = arrayOfFunctions.reduce(
 );
 
 console.log(
-  `The final result of all functions' operations is ${resultOfAllOperations}.`
+  `The cumulative result of all functions' operations is ${resultOfAllOperations}.`
 );
 
 // Regular function vs arrow function
