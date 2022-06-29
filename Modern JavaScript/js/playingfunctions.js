@@ -607,7 +607,23 @@ const getFriendsOfMila = getFriendsPartially(mi);
 
 console.log(getAllFriends(mi, 'Leo', 'Bogdan'));
 console.log(getFriendsPartially(mi)('Ania', 'Oksana'));
-console.log(getFriendsOfMila(`Suzan`, `Andrea`));
+console.log(getFriendsOfMila('Suzan', 'Andrea'));
+
+const f1 = y => x => x * y;
+const f2 = y => x => x + y;
+const f3 = y => x => x / y;
+const f4 = y => x => x - y;
+
+const arrayOfFunctions = [f1(5), f2(5), f3(5), f4(5), Math.abs];
+
+const resultOfAllOperations = arrayOfFunctions.reduce(
+  (acc, func) => func(acc),
+  1
+);
+
+console.log(
+  `The final result of all functions' operations is ${resultOfAllOperations}.`
+);
 
 // Regular function vs arrow function
 
