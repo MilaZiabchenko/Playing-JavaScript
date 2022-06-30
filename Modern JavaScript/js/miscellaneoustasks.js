@@ -117,7 +117,7 @@ const findMinDifference = array => {
   return minDiff;
 };
 
-const isSorted1 = array => {
+const isSorted_1 = array => {
   const sortedArr = [...array].sort((a, b) => a - b);
 
   let sorted = true;
@@ -131,7 +131,7 @@ const isSorted1 = array => {
   return sorted;
 };
 
-const isSorted2 = array => {
+const isSorted_2 = array => {
   for (let i = 1; i < array.length; i++) {
     if (array[i - 1] > array[i]) return false;
   }
@@ -139,10 +139,10 @@ const isSorted2 = array => {
   return true;
 };
 
-const isSorted3 = array =>
+const isSorted_3 = array =>
   array.slice(1).every((value, index) => array[index] < value);
 
-const isSorted4 = array =>
+const isSorted_4 = array =>
   array.every((value, index) => index === 0 || array[index - 1] < value);
 
 const adjacentElementsMaxProduct = array => {
@@ -162,14 +162,14 @@ console.log(getLargestAndSmallestValues(unsortedArray));
 console.log(getBiggestNumber(unsortedArray));
 console.log(findMaxDifference(unsortedArray));
 console.log(findMinDifference(unsortedArray));
-console.log(isSorted1(sortedArray));
-console.log(isSorted1(unsortedArray));
-console.log(isSorted2(sortedArray));
-console.log(isSorted2(unsortedArray));
-console.log(isSorted3(sortedArray));
-console.log(isSorted3(unsortedArray));
-console.log(isSorted4(sortedArray));
-console.log(isSorted4(unsortedArray));
+console.log(isSorted_1(sortedArray));
+console.log(isSorted_1(unsortedArray));
+console.log(isSorted_2(sortedArray));
+console.log(isSorted_2(unsortedArray));
+console.log(isSorted_3(sortedArray));
+console.log(isSorted_3(unsortedArray));
+console.log(isSorted_4(sortedArray));
+console.log(isSorted_4(unsortedArray));
 console.log(adjacentElementsMaxProduct(unsortedArray));
 
 const removeFalsy = array => array.filter(Boolean);
@@ -454,6 +454,18 @@ const likes = names => {
 
 console.log(likes(['Mila', 'Leo']));
 
+const isValidJSON = str => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
+
+console.log(isValidJSON('{"name":"Danny","id":12345}'));
+console.log(isValidJSON('{"name":"Danny",id:12345}'));
+
 const domainName = url =>
   url
     .split('://')[1]
@@ -553,34 +565,6 @@ const toCamelCase = str => {
 console.log(toCamelCase('_some_variable'));
 console.log(toCamelCase('Strange-naming'));
 
-const isValidJSON = str => {
-  try {
-    JSON.parse(str);
-    return true;
-  } catch (err) {
-    return false;
-  }
-};
-
-console.log(isValidJSON('{"name":"Danny","id":12345}'));
-console.log(isValidJSON('{"name":"Danny",id:12345}'));
-
-// Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms. In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
-
-const DNAStrand = dna => dna.replace(/./g, char => DNAStrand.pairs[char]);
-
-DNAStrand.pairs = {
-  A: 'T',
-  T: 'A',
-  C: 'G',
-  G: 'C',
-}; // assigning property to a function
-
-console.log(DNAStrand(''));
-console.log(DNAStrand('ATGC'));
-console.log(DNAStrand('GTAT'));
-console.log(DNAStrand('AAAA'));
-
 const findHighestScoringWord = x => {
   const words = x.split(' ');
   const alphabetMap = {};
@@ -607,10 +591,8 @@ const findHighestScoringWord = x => {
   return highestScoringWord.word;
 };
 
-console.log(findHighestScoringWord('man i need a taxi up to ubud'));
-console.log(findHighestScoringWord('what time are we climbing up the volcano'));
-console.log(findHighestScoringWord('take me to semynak'));
-console.log(findHighestScoringWord('bbc z aaaaaaaa'));
+console.log(findHighestScoringWord('Man, I need a taxi up to the hills'));
+console.log(findHighestScoringWord('We are climbing up the volcano'));
 
 const splitStringIntoPairs = str => {
   const array = str.split('');
@@ -629,6 +611,23 @@ const splitStringIntoPairs = str => {
 };
 
 console.log(splitStringIntoPairs('abcdef12345'));
+
+// Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms. In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
+
+const DNAStrand = dna => dna.replace(/./g, char => DNAStrand.pairs[char]);
+
+// assigning property to a function
+DNAStrand.pairs = {
+  A: 'T',
+  T: 'A',
+  C: 'G',
+  G: 'C',
+};
+
+console.log(DNAStrand(''));
+console.log(DNAStrand('ATGC'));
+console.log(DNAStrand('GTAT'));
+console.log(DNAStrand('AAAA'));
 
 const validBraces = braces => {
   let tracer = [];
@@ -662,3 +661,59 @@ console.log(validBraces('([{}])'));
 console.log(validBraces('[({})](]'));
 console.log(validBraces('[(])'));
 console.log(validBraces('(}'));
+
+// Fibonacci numbers or Fibonacci sequence is a sequence of numbers that is calculated by adding values of two preceding numbers. It’s also known as the golden ratio and it’s widely found in nature.
+
+// Getting Fibonacci sequence with iterative algorithm
+const fibonacciSequence_1 = index => {
+  const sequence = [0, 1];
+
+  for (let i = 2; i <= index; i++) {
+    sequence.push(sequence[i - 2] + sequence[i - 1]);
+  }
+
+  return sequence;
+};
+
+// Getting Fibonacci sequence, using iterative algorithm and destructuring
+const fibonacciSequence_2 = index => {
+  let current = 0;
+  let next = 1;
+  const sequence = [];
+
+  for (let i = 0; i <= index; i++) {
+    sequence.push(current);
+    [current, next] = [next, current + next];
+  }
+
+  return sequence;
+};
+
+console.log(fibonacciSequence_1(10));
+console.log(fibonacciSequence_2(10));
+
+const productFib = prod => {
+  const res = [];
+  const sequence = [0, 1];
+
+  for (let i = 2; i <= Math.sqrt(prod); i++) {
+    sequence.push(sequence[i - 2] + sequence[i - 1]);
+  }
+
+  for (let j = 0; j < sequence.length; j++) {
+    if (sequence[j] * sequence[j + 1] === prod) {
+      res.push(sequence[j], sequence[j + 1], true);
+    }
+    if (
+      sequence[j - 1] * sequence[j] < prod &&
+      sequence[j] * sequence[j + 1] > prod
+    ) {
+      res.push(sequence[j], sequence[j + 1], false);
+    }
+  }
+
+  return res;
+};
+
+console.log(productFib(714));
+console.log(productFib(800));

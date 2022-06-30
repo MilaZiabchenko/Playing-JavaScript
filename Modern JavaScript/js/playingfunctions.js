@@ -201,26 +201,6 @@ const personality = {
 console.log(typeof assign);
 console.log(typeof y);
 
-const getRoles = () => {
-  const roles = [];
-
-  for (member in getRoles.team) {
-    roles.push(getRoles.team[member]);
-  }
-
-  return roles;
-};
-
-// Assigning properties to a function
-getRoles.team = {
-  Hanna: 'QA Engineer',
-  Mila: 'Software Engineer',
-};
-
-console.log(getRoles.name);
-console.log(getRoles.team);
-console.log(getRoles());
-
 // Pure functions
 
 // Pure functions are functions that accept an input and return a value without modifying any data outside its scope (no side effects). A pure function only works with its internal data. For the same input it always returns the same output
@@ -243,159 +223,6 @@ const calcResult3 = calc2(defaultValue);
 console.log(calcResult1);
 console.log(calcResult2);
 console.log(calcResult3);
-
-// Fibonacci numbers or Fibonacci sequence is a sequence of numbers that is calculated by adding values of two preceding numbers. It’s also known as the golden ratio and it’s widely found in nature.
-
-// Getting Fibonacci sequence with iterative algorithm
-let fibonacciSequence = index => {
-  const sequence = [0, 1];
-
-  for (let i = 2; i <= index; i++) {
-    sequence.push(sequence[i - 2] + sequence[i - 1]);
-  }
-
-  return sequence;
-};
-
-console.log(fibonacciSequence(10));
-
-// Getting Fibonacci sequence, using iterative algorithm and destructuring
-fibonacciSequence = index => {
-  let current = 0;
-  let next = 1;
-  const sequence = [];
-
-  for (let i = 0; i <= index; i++) {
-    sequence.push(current);
-    [current, next] = [next, current + next];
-  }
-
-  return sequence;
-};
-
-console.log(fibonacciSequence(10));
-
-// Binet’s formula is the fastest as it doesn’t rely on previous Fibonacci numbers.
-
-// Calculating Fibonacci numbers with Binet formula
-const binet = index =>
-  Math.round(
-    (Math.pow((1 + Math.sqrt(5)) / 2, index) -
-      Math.pow((1 - Math.sqrt(5)) / 2, index)) /
-      Math.sqrt(5)
-  );
-
-console.log(binet(10));
-
-// Recursive functions
-
-// The simplest and easiest algorithm is the recursive algorithm. All recursive algorithms work on the same principle. The function calls itself and passes results from the previous calculation
-
-const fibonacciValue = index =>
-  index < 2 ? index : fibonacciValue(index - 2) + fibonacciValue(index - 1);
-
-console.log(fibonacciValue(10));
-
-const productFib = prod => {
-  const res = [];
-  const sequence = [0, 1];
-
-  for (let i = 2; i <= Math.sqrt(prod); i++) {
-    sequence.push(sequence[i - 2] + sequence[i - 1]);
-  }
-
-  for (let j = 0; j < sequence.length; j++) {
-    if (sequence[j] * sequence[j + 1] === prod) {
-      res.push(sequence[j], sequence[j + 1], true);
-    }
-    if (
-      sequence[j - 1] * sequence[j] < prod &&
-      sequence[j] * sequence[j + 1] > prod
-    ) {
-      res.push(sequence[j], sequence[j + 1], false);
-    }
-  }
-
-  return res;
-};
-
-console.log(productFib(714));
-console.log(productFib(800));
-
-const recursiveSum = num => (num <= 1 ? num : num + recursiveSum(num - 1));
-
-console.log(recursiveSum(-5));
-console.log(recursiveSum(5));
-
-// Factorializing a number with recursion
-let factorialize = num =>
-  num === 0 || num === 1 ? 1 : num * factorialize(num - 1);
-
-console.log(factorialize(5));
-console.log(factorialize(10));
-
-// The downside of a recursive algorithm is that it needs to recalculate all previous values each time. Thus, it’s not very effective and time complexity is exponential: O(2^N).
-
-// While recursive algorithm with memoization works it’s still slow. Therefore, we can refactor our code and use the iterative algorithm.
-
-// Factorializing a number with a for loop
-factorialize = num => {
-  if (num === 0 || num === 1) return 1;
-  for (let i = num - 1; i >= 1; i--) num *= i;
-  return num;
-};
-
-console.log(factorialize(5));
-console.log(factorialize(10));
-
-// Factorializing a number with a while loop
-factorialize = num => {
-  let result = num;
-
-  if (num === 0 || num === 1) return 1;
-
-  while (num > 1) {
-    num--;
-    result = result *= num;
-  }
-
-  return result;
-};
-
-console.log(factorialize(5));
-console.log(factorialize(10));
-
-const countDownFrom = num => {
-  if (num === 0) return;
-  console.log(num);
-  countDownFrom(num - 1);
-};
-
-countDownFrom(3);
-
-const categories = [
-  { id: 'animals', parent: null },
-  { id: 'mammals', parent: 'animals' },
-  { id: 'cats', parent: 'mammals' },
-  { id: 'dogs', parent: 'mammals' },
-  { id: 'Siberian Husky', parent: 'dogs' },
-  { id: 'Akita Inu', parent: 'dogs' },
-  { id: 'Persian', parent: 'cats' },
-  { id: 'Norwegian Forest', parent: 'cats' },
-  { id: 'Scottish Fold', parent: 'cats' },
-];
-
-const makeTree = (categories, parent) => {
-  const node = {};
-  categories
-    .filter(c => c.parent === parent)
-    .forEach(c => (node[c.id] = makeTree(categories, c.id)));
-
-  return node;
-};
-
-console.log(JSON.stringify(makeTree(categories, null), null, 2));
-console.log(makeTree(categories, null));
 
 // Closures
 
@@ -560,7 +387,7 @@ btn.addEventListener(
 
 // Currying, an important concept of functional programming, is also possible thanks to closures.
 
-// Currying is when a function — instead of taking all arguments at one time — takes the first one and returns a new function, which takes the second one and returns a new function, which takes the third one, etc. until all arguments are completed. This technique allows us to work with unary functions (functions with a single argument)
+// Currying is when a function — instead of taking all arguments at one time — takes the first one and returns a new function, which takes the second one and returns a new function, which takes the third one, etc. until all arguments are completed. This technique allows us to work with unary functions.
 
 // Currying is a transformation of functions that translates a function from callable as f(a, b, c) into callable as f(a)(b)(c).
 
@@ -570,11 +397,26 @@ const curriedResult = curry(sum);
 
 console.log(curriedResult(3)(5)(7));
 
+// Functions as objects
+
+// Properties and methods of the functions
+console.log(curry.toString());
+console.log(curry.name);
 console.log(curry.length);
 console.log(sum.length);
 
 console.log(sum.call(null, 1, 3, 5));
 console.log(sum.apply(null, [1, 3, 5]));
+
+const sum1 = sum.bind(null, 1);
+
+console.log(sum1(3, 5));
+
+const args = [1, 3, 5];
+
+console.log(sum(1, 3, 5) === sum.call(null, ...args));
+console.log(sum(...args) === sum.apply(null, [1, 3, 5]));
+console.log(curriedResult(1)(3)(5) === sum1(3, 5));
 
 const curryAMessage = greeting => name => message =>
   `${greeting}, ${name}! ${message}?`;
@@ -619,6 +461,7 @@ const partialFunctionsOf5 = [func_1, func_2, func_3, func_4, func_5].map(func =>
   func(5)
 );
 
+// array of functions
 const arrayOfFunctions = [...partialFunctionsOf5, Math.abs];
 
 const resultOfAllOperations = arrayOfFunctions.reduce(
@@ -629,6 +472,102 @@ const resultOfAllOperations = arrayOfFunctions.reduce(
 console.log(
   `The cumulative result of all functions' operations is ${resultOfAllOperations}.`
 );
+
+const getRoles = () => Object.entries(getRoles.team).map(([, role]) => role);
+
+// Assigning properties to functions
+getRoles.team = {
+  Hanna: 'QA Engineer',
+  Mila: 'Software Engineer',
+};
+
+console.log(getRoles.team);
+console.log(getRoles());
+
+// Recursive functions
+
+// All recursive algorithms work on the same principle. The function calls itself and passes results from the previous calculation.
+
+// In recursion, we always have to tell our function when to stop. Without a stop condition any recursive function will go on infinitely
+
+const countUpTo = (num, max) => {
+  if (num > max) return;
+
+  console.log(num);
+
+  countUpTo(num + 1, max);
+};
+
+countUpTo(1, 3);
+
+const recursiveSum = num => (num <= 1 ? num : num + recursiveSum(num - 1));
+
+console.log(recursiveSum(5));
+
+const fibonacciValue = index =>
+  index < 2 ? index : fibonacciValue(index - 2) + fibonacciValue(index - 1);
+
+console.log(fibonacciValue(10));
+
+const factorial_1 = num =>
+  num === 0 || num === 1 ? 1 : num * factorial_1(num - 1);
+
+console.log(factorial_1(5));
+console.log(factorial_1(10));
+
+// The downside of a recursive algorithm is that it needs to recalculate all previous values each time. Thus, it’s not very effective and time complexity is exponential: O(2^N). Therefore, we can refactor our code, using the iterative algorithm
+
+const factorial_2 = num => {
+  if (num === 0 || num === 1) return 1;
+
+  for (let i = num - 1; i > 1; i--) num *= i;
+
+  return num;
+};
+
+console.log(factorial_2(5));
+console.log(factorial_2(10));
+
+const factorial_3 = num => {
+  let result = num;
+
+  if (num === 0 || num === 1) return 1;
+
+  while (num > 1) {
+    num--;
+    result = result *= num;
+  }
+
+  return result;
+};
+
+console.log(factorial_3(5));
+console.log(factorial_3(10));
+
+const categories = [
+  { id: 'animals', parent: null },
+  { id: 'mammals', parent: 'animals' },
+  { id: 'cats', parent: 'mammals' },
+  { id: 'dogs', parent: 'mammals' },
+  { id: 'Siberian Husky', parent: 'dogs' },
+  { id: 'Akita Inu', parent: 'dogs' },
+  { id: 'Abyssinian', parent: 'cats' },
+  { id: 'Norwegian Forest', parent: 'cats' },
+  { id: 'Scottish Fold', parent: 'cats' },
+];
+
+const makeTree = (categories, parent) => {
+  const node = {};
+
+  categories
+    .filter(c => c.parent === parent)
+    .forEach(c => (node[c.id] = makeTree(categories, c.id)));
+
+  return node;
+};
+
+console.log(JSON.stringify(makeTree(categories, null), null, 2));
+console.log(makeTree(categories, null));
 
 // Regular function vs arrow function
 
