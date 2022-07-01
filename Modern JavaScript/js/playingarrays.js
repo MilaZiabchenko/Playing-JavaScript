@@ -182,7 +182,7 @@ console.log(sumOfYears(...ascendingYears, 2021, 2022, 2023));
 
 // reduce()
 
-// 'reduce' method reduces the array to a single value. It loops over and executes a function for each value of the array. The return value of the function is stored in an accumulator (result/total). This method is doing some operation(s) on the array and returns a result of all the operations
+// 'reduce' method reduces the array to a single value. It loops over and executes a function for each value of the array. The return value of the function is stored in an acc (result/total). This method is doing some operation(s) on the array and returns a result of all the operations
 
 // syntax: array.reduce(function(total, currentValue, currentIndex, array), initialValue);
 
@@ -531,15 +531,14 @@ const arrOfNums = [1, 2, 3, 4, 5, 6, 7];
 // reduceRight()
 let sumOfSquareRootsOfEvenNums = arrOfNums
   .filter(element => !(element % 2))
-  .reduceRight((accumulator, element) => accumulator + Math.sqrt(element), 0); // filter().reduceRight()
+  .reduceRight((acc, element) => acc + Math.sqrt(element), 0); // filter().reduceRight()
 
 console.log(sumOfSquareRootsOfEvenNums);
 
 // filtering inside reduce() or reduceRight() makes calculations faster
 const getSumOfSquareRootsOfEvenNums = array => {
   const sum = array.reduce(
-    (accumulator, element) =>
-      accumulator + (element % 2 ? 0 : Math.sqrt(element)),
+    (acc, element) => acc + (element % 2 ? 0 : Math.sqrt(element)),
     0
   );
 
@@ -549,8 +548,8 @@ const getSumOfSquareRootsOfEvenNums = array => {
 console.log(getSumOfSquareRootsOfEvenNums(arrOfNums));
 
 const getMaxOddElement = array => {
-  const maxEvenNumber = array.reduce((accumulator, value) =>
-    Math.max(accumulator, value % 2 ? value : 0)
+  const maxEvenNumber = array.reduce((acc, value) =>
+    Math.max(acc, value % 2 ? value : 0)
   );
 
   return maxEvenNumber;
@@ -697,32 +696,32 @@ console.log(mixedArray.indexOf(9, 3));
 console.log(mixedArray.lastIndexOf(9));
 
 Array.prototype.myReducePolyfill = function (combine, initialValue) {
-  let accumulator = initialValue;
+  let acc = initialValue;
   let index = 0;
 
-  typeof accumulator == 'undefined' && (accumulator = this[index++]);
+  typeof acc == 'undefined' && (acc = this[index++]);
 
   for (; index < this.length; index++) {
-    accumulator = combine(accumulator, this[index], index, this);
+    acc = combine(acc, this[index], index, this);
   }
 
-  return accumulator;
+  return acc;
 };
 
 const myReduceFunc = (array, combine, initialValue) => {
-  let accumulator = initialValue;
+  let acc = initialValue;
   let index = 0;
 
-  if (typeof accumulator == 'undefined') {
-    accumulator = array[index++];
+  if (typeof acc == 'undefined') {
+    acc = array[index++];
   }
 
   while (index < array.length) {
-    accumulator = combine(accumulator, array[index]);
+    acc = combine(acc, array[index]);
     index++;
   }
 
-  return accumulator;
+  return acc;
 };
 
 const addAllNumbers = (prev, cur) => prev + cur;
@@ -781,32 +780,40 @@ console.log(arrOfNums);
 
 // flat()
 const twoDArray = [1, [2, 3], [4, 5]];
+const multiDArray = [1, 2, 3, [4, 5, [6, 7, [8, 9, 10]]]];
 
 console.log(twoDArray.flat());
+console.log(multiDArray.flat(2));
+console.log(multiDArray.flat(3));
 
-const flattenedTwoDArray = twoDArray.reduce(
-  (prev, cur) => prev.concat(cur),
-  []
-);
+const myFlatTwoDArrayFunc = array =>
+  array.reduce((prev, cur) => prev.concat(cur), []);
 
-console.log(flattenedTwoDArray);
+console.log(myFlatTwoDArrayFunc(twoDArray));
 
-const myFlatFunc = (array, depth = 1) => {
-  const flattenedArray = [];
+const myFlatArrayOfAnyDepthFunc = (array, depth = 1) =>
+  array.reduce((acc, element) => {
+    Array.isArray(element) && depth > 0
+      ? acc.push(...myFlatArrayOfAnyDepthFunc(element, depth - 1))
+      : acc.push(element);
 
-  for (let element of array) {
-    if (Array.isArray(element) && depth > 0) {
-      flattenedArray.push(...myFlatFunc(element, depth - 1));
-    } else {
-      flattenedArray.push(element);
-    }
-  }
+    return acc;
+  }, []);
 
-  return flattenedArray;
-};
+console.log(myFlatArrayOfAnyDepthFunc(twoDArray));
+console.log(myFlatArrayOfAnyDepthFunc(multiDArray, 3));
 
-console.log(myFlatFunc(twoDArray));
-console.log(myFlatFunc([1, 2, 3, [4, 5, [6, 7, [8, 9, 10]]]], 3));
+const sumOfElementsOfTheArrayFlattenedRecursively = array =>
+  array.reduce(
+    (acc, element) =>
+      Array.isArray(element)
+        ? (acc += sumOfElementsOfTheArrayFlattenedRecursively(element))
+        : (acc += element),
+    0
+  );
+
+console.log(sumOfElementsOfTheArrayFlattenedRecursively(twoDArray));
+console.log(sumOfElementsOfTheArrayFlattenedRecursively(multiDArray));
 
 const arrOfUndef = [...Array(3)];
 const numbers1 = Array.of(1000, 2000, 3000);

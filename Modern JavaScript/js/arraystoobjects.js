@@ -10,16 +10,16 @@ const techObject_2 = { ...techArray };
 console.log(techObject_2);
 
 const techObject_3 = techArray.reduce(
-  (accumulator, key, index) => ({ ...accumulator, [index + 1]: key }),
+  (acc, key, index) => ({ ...acc, [index + 1]: key }),
   {}
 );
 
 console.log(techObject_3);
 
-const techObject_4 = techArray.reduce((accumulator, key, index) => {
-  accumulator[index + 1] = key;
+const techObject_4 = techArray.reduce((acc, key, index) => {
+  acc[index + 1] = key;
 
-  return accumulator;
+  return acc;
 }, {});
 
 console.log(techObject_4);
@@ -39,15 +39,14 @@ const personData = [
 ];
 
 const personObject_1 = personData.reduce(
-  (accumulator, current) =>
-    Object.assign(accumulator, { [current[0]]: current[1] }),
+  (acc, cur) => Object.assign(acc, { [cur[0]]: cur[1] }),
   {}
 );
 
 console.log(personObject_1);
 
 const personObject_2 = personData.reduce(
-  (accumulator, current) => ({ ...accumulator, [current[0]]: current[1] }),
+  (acc, cur) => ({ ...acc, [cur[0]]: cur[1] }),
   {}
 );
 
@@ -72,10 +71,10 @@ const trafficLightsData = [
 ];
 
 const assembleTrafficLight = array => {
-  const lights = array.reduce((accumulator, obj) => {
-    accumulator[obj.key] = obj.value;
+  const lights = array.reduce((acc, obj) => {
+    acc[obj.key] = obj.value;
 
-    return accumulator;
+    return acc;
   }, {});
 
   return lights;
@@ -91,8 +90,8 @@ const colorsData = [
 
 const getHslColors = array => {
   const hslColors = array.reduce(
-    (accumulator, cur) => ({
-      ...accumulator,
+    (acc, cur) => ({
+      ...acc,
       [cur.color]: `hsl(${cur.hue}, 100%, 52%)`,
     }),
     {}
@@ -106,11 +105,11 @@ console.table(getHslColors(colorsData));
 
 // Here is how it works:
 
-// reduce is initialized with an empty object ({} at the end), therefore first iteration variables are accumulator = {}, cur = { hue: 120, color: 'green' }. This function returns an object - this is why its body is wrapped in parentheses => ({ ... }). Spread operator doesn't do anything on the first iteration, so 'green: hsl(120, 100%, 52%)' is set as the first item.
+// reduce is initialized with an empty object ({} at the end), therefore first iteration variables are acc = {}, cur = { hue: 120, color: 'green' }. This function returns an object - this is why its body is wrapped in parentheses => ({ ... }). Spread operator doesn't do anything on the first iteration, so 'green: hsl(120, 100%, 52%)' is set as the first item.
 
-// On the second iteration variables are accumulator = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands accumulator and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
+// On the second iteration variables are acc = { green: hsl(120, 100%, 52%) }, cur = { hue: 240, color: 'blue' }. Here the spread operator expands acc and the function returns { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }.
 
-// Third iteration: accumulator = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when accumulator is spread inside the object, our function returns the final value
+// Third iteration: acc = { green: 'hsl(120, 100%, 52%)', blue: 'hsl(120, 100%, 52%)' }, cur = { hue: 360, color: 'red' }, so when acc is spread inside the object, our function returns the final value
 
 const vehicles = [
   'van',
@@ -128,12 +127,12 @@ const vehicles = [
 
 // Counting all occurrences of array elements => object
 const countInstances = array => {
-  const objectOfInstances = array.reduce((accumulator, item) => {
-    !accumulator[item] && (accumulator[item] = 0);
+  const objectOfInstances = array.reduce((acc, item) => {
+    !acc[item] && (acc[item] = 0);
 
-    accumulator[item]++;
+    acc[item]++;
 
-    return accumulator;
+    return acc;
   }, {});
 
   return objectOfInstances;
@@ -149,7 +148,7 @@ console.log(objectOfCountedVehicleInstances);
 const sortObjectOfVehiclesByFrequencyOfInstances_1 = object => {
   const sortedObject = Object.keys(object)
     .sort((key1, key2) => object[key2] - object[key1])
-    .reduce((accumulator, key) => ({ ...accumulator, [key]: object[key] }), {});
+    .reduce((acc, key) => ({ ...acc, [key]: object[key] }), {});
 
   return sortedObject;
 };
@@ -163,10 +162,7 @@ console.log(objectOfSortedVehicleInstances);
 const sortObjectOfVehiclesByFrequencyOfInstances_2 = object => {
   const sortedObject = Object.entries(object)
     .sort(([, a], [, b]) => b - a)
-    .reduce(
-      (accumulator, [key, value]) => ({ ...accumulator, [key]: value }),
-      {}
-    );
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
   return sortedObject;
 };
@@ -223,12 +219,12 @@ const sizes = [
 ];
 
 const calcBirdsOfEachType = () => {
-  const object = birds.reduce((accumulator, bird) => {
-    !accumulator[bird] && (accumulator[bird] = 0);
+  const object = birds.reduce((acc, bird) => {
+    !acc[bird] && (acc[bird] = 0);
 
-    accumulator[bird]++;
+    acc[bird]++;
 
-    return accumulator;
+    return acc;
   }, {});
 
   return object;
@@ -252,17 +248,17 @@ const birdsSortedByQuantity = sortBirdsByQuantity(amountOfBirdsOfEachType);
 
 console.log(birdsSortedByQuantity);
 
-const birdsObject = birds.reduce((accumulator, bird, index) => {
-  accumulator[index + 1] = bird;
+const birdsObject = birds.reduce((acc, bird, index) => {
+  acc[index + 1] = bird;
 
-  return accumulator;
+  return acc;
 }, {});
 
 console.log(birdsObject);
 
 const newBirdsObject = birds.reduce(
-  (accumulator, bird, index) => ({
-    ...accumulator,
+  (acc, bird, index) => ({
+    ...acc,
     [`bird_${index + 1}`]: bird,
   }),
   {}
@@ -284,10 +280,10 @@ let arrayOfObjectsWithBirdsAndSizes = combineBirdsAndSizesWithMap();
 console.log(arrayOfObjectsWithBirdsAndSizes);
 
 const combineBirdsAndSizesWithReduce = () => {
-  const arrayOfObjects = birds.reduce((accumulator, bird, index) => {
-    accumulator[index] = { bird, size: sizes[index] };
+  const arrayOfObjects = birds.reduce((acc, bird, index) => {
+    acc[index] = { bird, size: sizes[index] };
 
-    return accumulator;
+    return acc;
   }, []);
 
   return arrayOfObjects;
@@ -299,8 +295,8 @@ console.log(arrayOfObjectsWithBirdsAndSizes);
 
 const createObjectOfBirdsWithSizes_1 = () => {
   const object = birds.reduce(
-    (accumulator, bird, index) => ({
-      ...accumulator,
+    (acc, bird, index) => ({
+      ...acc,
       [bird]: sizes[index],
     }),
     {}
@@ -314,10 +310,10 @@ let objectWithBirdsAndSizes = createObjectOfBirdsWithSizes_1();
 console.log(objectWithBirdsAndSizes);
 
 const createObjectOfBirdsWithSizes_2 = () => {
-  const object = birds.reduce((accumulator, bird, index) => {
-    accumulator[bird] = sizes[index];
+  const object = birds.reduce((acc, bird, index) => {
+    acc[bird] = sizes[index];
 
-    return accumulator;
+    return acc;
   }, {});
 
   return object;
@@ -329,8 +325,8 @@ console.log(objectWithBirdsAndSizes);
 
 const createObjectOfBirdsWithSizes_3 = () => {
   const object = arrayOfObjectsWithBirdsAndSizes.reduce(
-    (accumulator, { bird, size }) => ({
-      ...accumulator,
+    (acc, { bird, size }) => ({
+      ...acc,
       [bird]: size,
     }),
     {}
@@ -345,10 +341,10 @@ console.log(objectWithBirdsAndSizes);
 
 const createObjectOfBirdsWithSizes_4 = () => {
   const object = arrayOfObjectsWithBirdsAndSizes.reduce(
-    (accumulator, { bird, size }) => {
-      accumulator[bird] = size;
+    (acc, { bird, size }) => {
+      acc[bird] = size;
 
-      return accumulator;
+      return acc;
     },
     {}
   );
@@ -379,10 +375,10 @@ console.log(objectsOfBirdsAndSizes);
 
 const createObjectsWithBirdsAndSizesWithReduce = () => {
   const arrayOfObjects = arraysOfBirdsAndSizes.reduce(
-    (accumulator, [bird, size], index) => {
-      accumulator[index] = { bird, size };
+    (acc, [bird, size], index) => {
+      acc[index] = { bird, size };
 
-      return accumulator;
+      return acc;
     },
     []
   );
@@ -398,11 +394,11 @@ const createArrayOfObjectsOfUniqueBirds = () => {
   let key = 0;
 
   const arrayOfObjectsOfUniqueBirdsAndSizes = birds.reduce(
-    (accumulator, bird, index) => {
+    (acc, bird, index) => {
       birds.indexOf(bird) === index &&
-        accumulator.push({ key: ++key, bird, size: sizes[index] });
+        acc.push({ key: ++key, bird, size: sizes[index] });
 
-      return accumulator;
+      return acc;
     },
     []
   );
@@ -415,14 +411,14 @@ console.log(arrayOfObjectsOfUniqueBirdsAndSizes);
 
 const createDescriptiveBirdsObjects = () => {
   const descriptiveBirdsObjects = arrayOfObjectsOfUniqueBirdsAndSizes.reduce(
-    (accumulator, { key, bird, size }, index) => {
-      accumulator[index] = {
+    (acc, { key, bird, size }, index) => {
+      acc[index] = {
         [`Description_${key}`]: `${bird.charAt(0).toUpperCase()}${bird.slice(
           1
         )} is a ${size} bird.`,
       };
 
-      return accumulator;
+      return acc;
     },
     []
   );
@@ -454,10 +450,10 @@ console.table(makeTableOfTransactionsWithMap());
 
 const makeTableOfTransactionsWithReduce = () => {
   const transactions = financesData.reduce(
-    (accumulator, [operation, currency, amount], index) => {
-      accumulator[index] = { operation, currency, amount };
+    (acc, [operation, currency, amount], index) => {
+      acc[index] = { operation, currency, amount };
 
-      return accumulator;
+      return acc;
     },
     []
   );
@@ -507,10 +503,10 @@ const pancakesGroup = [
 ];
 
 const combineNameWithTech_1 = () => {
-  const object = pancakesGroup.reduce((accumulator, { name, technology }) => {
-    accumulator[name] = technology;
+  const object = pancakesGroup.reduce((acc, { name, technology }) => {
+    acc[name] = technology;
 
-    return accumulator;
+    return acc;
   }, {});
 
   return object;
@@ -522,8 +518,8 @@ console.log(pancakesGroupObject);
 
 const combineNameWithTech_2 = () => {
   const object = pancakesGroup.reduce(
-    (accumulator, { name, technology }) => ({
-      ...accumulator,
+    (acc, { name, technology }) => ({
+      ...acc,
       [name]: technology,
     }),
     {}

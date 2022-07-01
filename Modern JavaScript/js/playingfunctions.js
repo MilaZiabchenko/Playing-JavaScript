@@ -399,7 +399,8 @@ console.log(curriedResult(3)(5)(7));
 
 // Functions as objects
 
-// Properties and methods of the functions
+// Being an object, functions have built-in properties and methods
+
 console.log(curry.toString());
 console.log(curry.name);
 console.log(curry.length);

@@ -616,7 +616,6 @@ console.log(splitStringIntoPairs('abcdef12345'));
 
 const DNAStrand = dna => dna.replace(/./g, char => DNAStrand.pairs[char]);
 
-// assigning property to a function
 DNAStrand.pairs = {
   A: 'T',
   T: 'A',
