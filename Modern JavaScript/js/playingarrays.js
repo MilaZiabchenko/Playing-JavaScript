@@ -787,7 +787,7 @@ console.log(multiDArray.flat(2));
 console.log(multiDArray.flat(3));
 
 const myFlatTwoDArrayFunc = array =>
-  array.reduce((prev, cur) => prev.concat(cur), []);
+  array.reduce((prev, next) => prev.concat(next), []);
 
 console.log(myFlatTwoDArrayFunc(twoDArray));
 
@@ -803,17 +803,17 @@ const myFlatArrayOfAnyDepthFunc = (array, depth = 1) =>
 console.log(myFlatArrayOfAnyDepthFunc(twoDArray));
 console.log(myFlatArrayOfAnyDepthFunc(multiDArray, 3));
 
-const sumOfElementsOfTheArrayFlattenedRecursively = array =>
+const addUpElementsOfMultiDArray = array =>
   array.reduce(
     (acc, element) =>
       Array.isArray(element)
-        ? (acc += sumOfElementsOfTheArrayFlattenedRecursively(element))
+        ? (acc += addUpElementsOfMultiDArray(element))
         : (acc += element),
     0
   );
 
-console.log(sumOfElementsOfTheArrayFlattenedRecursively(twoDArray));
-console.log(sumOfElementsOfTheArrayFlattenedRecursively(multiDArray));
+console.log(addUpElementsOfMultiDArray(twoDArray));
+console.log(addUpElementsOfMultiDArray(multiDArray));
 
 const arrOfUndef = [...Array(3)];
 const numbers1 = Array.of(1000, 2000, 3000);

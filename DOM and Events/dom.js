@@ -74,6 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
     .querySelector('.subs-up-arrow')
     .addEventListener('click', sortSubsDescend);
 
+  // DOM
+
+  // Once the HTML document is loaded in the browser, the browser creates an object which models this document, and this object is called the document object. Programmatically, the document seen on the web page is modelled by this document object created by the browser, and inside our JavaScript code we have access to that document object and we can use it to interact with our HTML pages using document object's properties and methods
+
+  // Tree of nodes
+
+  // The DOM sees our HTML page as hierarchical tree of nodes with html tag (root node) at the top (root) of the page, and everything else is inside it. Each one of the elements is considered a node in the DOM, and some of the element nodes have text nodes inside. The idea is that if we want to interact with a web page, we'd use the DOM to reach into this tree of nodes, select a particular element (node) and get a reference to it, and this action is known as querying the DOM
+
   // Querying & traversing
   console.log(tbody.nodeType);
   console.log(tbody.nodeName);

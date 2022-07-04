@@ -406,6 +406,8 @@ for (let creature of awesomeCreatures) {
 awesomeCreatures.forEach(console.log);
 
 // DOM
+document.querySelector('.hidden').classList.remove('hidden');
+
 const ul = document.querySelector('.awesome-creatures');
 
 awesomeCreatures.forEach(creature => {
@@ -419,14 +421,15 @@ awesomeCreatures.forEach(creature => {
   ul.appendChild(li);
 });
 
-let heading = document.querySelector('h1');
+const heading = document.querySelector('h1');
+
 heading.style.margin = '5rem 0';
 heading.style.color = 'limegreen';
 heading.classList.toggle('spacing', true);
 
-let substring = heading.textContent.slice(0, 5);
-let span = document.createElement('span');
-span.textContent = substring;
+const span = document.createElement('span');
+
+span.textContent = heading.textContent.slice(0, 5);
 heading.textContent = ``;
 heading.append(span, `, Pussycats!`);
 
@@ -442,51 +445,20 @@ span.dataset.longGreeting = 'Hello there!';
 console.log(span.dataset);
 console.log(span.dataset.longGreeting);
 
-heading = document.querySelector('h2');
-heading.classList.toggle('spacing', true);
-heading.classList.toggle('spacing', false);
-heading.classList.toggle('spacing', true);
-heading.style.fontVariant = 'small-caps';
-heading.style.marginTop = '5rem';
+const content = document.querySelector('.content');
 
-let error = document.querySelector('p.error > span');
-error.style.display = 'none';
-
-error = document.querySelector('div.error');
-error.innerText = `Everything can be changed with JavaScript:`;
-error.innerHTML += `<p>-elements and content,</p>`;
-error.innerHTML += `<p>-attributes,</p>`;
-error.innerHTML += `<p>-styles</p>`;
-error.innerText += `...`;
-error.style.fontStyle = 'italic';
-error.style.marginLeft = '5rem';
-
-const paragraphs = document.querySelectorAll('.challenge > p');
-paragraphs.forEach(p => {
-  if (p.textContent.includes('error')) {
-    p.classList.add('error');
-  }
-
-  if (p.textContent.includes('success')) {
-    p.classList.add('success');
-  }
-});
-
-let content = document.querySelector('.content');
 content.innerHTML = `<h2>The End</h2>`;
-content.classList.add('success', 'spacing');
 
-content = document.querySelector('.content > h2');
-content.innerText += `, My Gorgeous Friends!`;
+const additionalContent = document.querySelector('.content > h2');
 
-const body = document.body;
+additionalContent.textContent += `, My Gorgeous Friends!`;
+
 const copyright = document.createElement('p');
+
 copyright.innerHTML = `Copyright &copy; mil&ugrave; 2020`;
-body.appendChild(copyright);
-body.removeChild(copyright);
-body.append(copyright);
-copyright.remove();
-body.append(copyright);
+copyright.style.textAlign = 'center';
+document.body.append(copyright);
+document.body.style.marginBottom = '3rem';
 
 // Window object
 

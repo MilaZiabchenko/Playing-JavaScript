@@ -89,20 +89,6 @@ const getBiggestNumber = args => {
   return maxNum;
 };
 
-const findMaxDifference = array => {
-  let maxDiff = array[1] - array[0];
-
-  for (let i = 0; i < array.length; i++) {
-    for (let j = i + 1; j < array.length; j++) {
-      if (array[j] - array[i] > maxDiff) {
-        maxDiff = array[j] - array[i];
-      }
-    }
-  }
-
-  return maxDiff;
-};
-
 const findMinDifference = array => {
   const sortedArr = [...array].sort((a, b) => a - b);
 
@@ -118,20 +104,6 @@ const findMinDifference = array => {
 };
 
 const isSorted_1 = array => {
-  const sortedArr = [...array].sort((a, b) => a - b);
-
-  let sorted = true;
-
-  for (let i = 0; i < array.length; i++) {
-    for (let j = 0; j < sortedArr.length; j++) {
-      array[i] !== sortedArr[i] && (sorted = false);
-    }
-  }
-
-  return sorted;
-};
-
-const isSorted_2 = array => {
   for (let i = 1; i < array.length; i++) {
     if (array[i - 1] > array[i]) return false;
   }
@@ -139,10 +111,10 @@ const isSorted_2 = array => {
   return true;
 };
 
-const isSorted_3 = array =>
+const isSorted_2 = array =>
   array.slice(1).every((value, index) => array[index] < value);
 
-const isSorted_4 = array =>
+const isSorted_3 = array =>
   array.every((value, index) => index === 0 || array[index - 1] < value);
 
 const adjacentElementsMaxProduct = array => {
@@ -160,7 +132,6 @@ const sortedArray = [-10, 0, 1, 10, 77, 500, 709];
 
 console.log(getLargestAndSmallestValues(unsortedArray));
 console.log(getBiggestNumber(unsortedArray));
-console.log(findMaxDifference(unsortedArray));
 console.log(findMinDifference(unsortedArray));
 console.log(isSorted_1(sortedArray));
 console.log(isSorted_1(unsortedArray));
@@ -168,8 +139,6 @@ console.log(isSorted_2(sortedArray));
 console.log(isSorted_2(unsortedArray));
 console.log(isSorted_3(sortedArray));
 console.log(isSorted_3(unsortedArray));
-console.log(isSorted_4(sortedArray));
-console.log(isSorted_4(unsortedArray));
 console.log(adjacentElementsMaxProduct(unsortedArray));
 
 const removeFalsy = array => array.filter(Boolean);
@@ -229,17 +198,19 @@ console.log(countOccurrences(array, 5));
 console.log(countOccurrences([5, 5, 2, 1, 2, 3, 5], 5));
 
 const deleteNth = (array, n) => {
-  array.map(el => {
-    let arrOfDuplicates = array.filter(num => num === el);
+  const newArray = [...array];
+
+  newArray.map(el => {
+    let arrOfDuplicates = newArray.filter(num => num === el);
 
     if (arrOfDuplicates.length > n) {
       for (let i = 0; i < arrOfDuplicates.length - n; i++) {
-        array.splice(array.lastIndexOf(el), 1);
+        newArray.splice(newArray.lastIndexOf(el), 1);
       }
     }
   });
 
-  return array;
+  return newArray;
 };
 
 console.log(deleteNth([1, 1, 1, 1, 2], 2));
@@ -349,54 +320,24 @@ const calculateTotalSumOfLuckyTickets = digits => {
 console.log(calculateTotalSumOfLuckyTickets(999_999));
 
 const moveZerosToTheEnd = array => {
-  const newArr1 = [];
-  const newArr2 = [];
+  const arrOfNonZeros = [];
+  const arrOfZeros = [];
 
-  array.map(num => (num !== 0 ? newArr1.push(num) : newArr2.push(num)));
+  array.map(num => (num !== 0 ? arrOfNonZeros.push(num) : arrOfZeros.push(num)));
 
-  return newArr1.concat(newArr2);
+  return arrOfNonZeros.concat(arrOfZeros);
 };
 
 console.log(moveZerosToTheEnd([1, 0, 2, 0, 0, 3]));
 
-const sortArray = array => {
-  const tempArr = [];
-  const arrOfOdds = [];
-  const sortedArray = [];
-
-  array.map(el => {
-    if (el % 2 === 0) {
-      tempArr.push(el);
-    } else {
-      tempArr.push('');
-      arrOfOdds.push(el);
-    }
-  });
-
-  tempArr.map(el => sortedArray.push(el));
-  arrOfOdds.sort((a, b) => a - b);
-
-  sortedArray.map(el => {
-    if (el === '') {
-      for (let elem of arrOfOdds) {
-        sortedArray.splice(sortedArray.indexOf(el), 1, elem);
-      }
-    }
-  });
-
-  return sortedArray;
-};
-
-console.log(sortArray([5, 8, 6, 3, 4]));
-
 const countPairs = gloves => {
-  const obj = gloves.reduce((acc, glove) => {
-    !acc[glove] && (acc[glove] = 0);
-
-    acc[glove]++;
-
-    return acc;
-  }, {});
+  const obj = gloves.reduce(
+    (acc, glove) => ({
+      ...acc,
+      [glove]: acc[glove] ? acc[glove] + 1 : 1,
+    }),
+    {}
+  );
 
   let count = 0;
 
@@ -564,35 +505,6 @@ const toCamelCase = str => {
 
 console.log(toCamelCase('_some_variable'));
 console.log(toCamelCase('Strange-naming'));
-
-const findHighestScoringWord = x => {
-  const words = x.split(' ');
-  const alphabetMap = {};
-
-  for (let i = 'a'.charCodeAt(), j = 1; i <= 'z'.charCodeAt(); i++, j++) {
-    alphabetMap[i] = j;
-  }
-
-  let highestScoringWord = { word: '', score: 0 };
-
-  words.forEach(w => {
-    const chars = w.split('');
-
-    const sumOfChars = chars.reduce(
-      (count, char) => count + alphabetMap[char.charCodeAt()],
-      0
-    );
-
-    if (sumOfChars > highestScoringWord.score) {
-      highestScoringWord = { word: w, score: sumOfChars };
-    }
-  });
-
-  return highestScoringWord.word;
-};
-
-console.log(findHighestScoringWord('Man, I need a taxi up to the hills'));
-console.log(findHighestScoringWord('We are climbing up the volcano'));
 
 const splitStringIntoPairs = str => {
   const array = str.split('');

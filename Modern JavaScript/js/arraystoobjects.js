@@ -126,7 +126,7 @@ const vehicles = [
 ];
 
 // Counting all occurrences of array elements => object
-const countInstances = array => {
+const tallyUpInstances_1 = array => {
   const objectOfInstances = array.reduce((acc, item) => {
     !acc[item] && (acc[item] = 0);
 
@@ -138,7 +138,17 @@ const countInstances = array => {
   return objectOfInstances;
 };
 
-const objectOfCountedVehicleInstances = countInstances(vehicles);
+let objectOfCountedVehicleInstances = tallyUpInstances_1(vehicles);
+
+console.log(objectOfCountedVehicleInstances);
+
+const tallyUpInstances_2 = array =>
+  array.reduce(
+    (acc, item) => ({ ...acc, [item]: acc[item] ? acc[item] + 1 : 1 }),
+    {}
+  );
+
+objectOfCountedVehicleInstances = tallyUpInstances_2(vehicles);
 
 console.log(objectOfCountedVehicleInstances);
 
@@ -161,7 +171,7 @@ console.log(objectOfSortedVehicleInstances);
 // 2. using Object.entries(), sort(), and reduce()
 const sortObjectOfVehiclesByFrequencyOfInstances_2 = object => {
   const sortedObject = Object.entries(object)
-    .sort(([, a], [, b]) => b - a)
+    .sort(([, prev_value], [, next_value]) => next_value - prev_value)
     .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
   return sortedObject;
@@ -176,7 +186,9 @@ console.log(objectOfSortedVehicleInstances);
 // 3. using Object.fromEntries(), Object.entries(), and sort()
 const sortObjectOfVehiclesByFrequencyOfInstances_3 = object => {
   const sortedObject = Object.fromEntries(
-    Object.entries(object).sort(([, a], [, b]) => b - a)
+    Object.entries(object).sort(
+      ([, prev_value], [, next_value]) => next_value - prev_value
+    )
   );
 
   return sortedObject;
@@ -218,31 +230,25 @@ const sizes = [
   'big',
 ];
 
-const calcBirdsOfEachType = () => {
-  const object = birds.reduce((acc, bird) => {
-    !acc[bird] && (acc[bird] = 0);
+const tallyBirdsOfEachType = (array = birds) =>
+  array.reduce(
+    (acc, bird) => ({
+      ...acc,
+      [bird]: acc[bird] ? acc[bird] + 1 : 1,
+    }),
+    {}
+  );
 
-    acc[bird]++;
-
-    return acc;
-  }, {});
-
-  return object;
-};
-
-const amountOfBirdsOfEachType = calcBirdsOfEachType();
+const amountOfBirdsOfEachType = tallyBirdsOfEachType();
 
 console.log(amountOfBirdsOfEachType);
 
-const sortBirdsByQuantity = object => {
-  const sortedObject = Object.fromEntries(
+const sortBirdsByQuantity = object =>
+  Object.fromEntries(
     Object.entries(object).sort(
       ([, prevValue], [, nextValue]) => nextValue - prevValue
     )
   );
-
-  return sortedObject;
-};
 
 const birdsSortedByQuantity = sortBirdsByQuantity(amountOfBirdsOfEachType);
 

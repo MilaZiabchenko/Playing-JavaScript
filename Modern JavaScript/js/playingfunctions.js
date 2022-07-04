@@ -178,7 +178,7 @@ show = () => console.log('Anonymous function 2');
 
 show();
 
-// Immediately invoked function expression(IIFE)
+// Immediately invoked function expression
 (function () {
   console.log('Function executed');
 })(); // trailing parenthesis
