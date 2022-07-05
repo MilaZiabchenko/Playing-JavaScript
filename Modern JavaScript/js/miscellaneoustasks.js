@@ -323,7 +323,9 @@ const moveZerosToTheEnd = array => {
   const arrOfNonZeros = [];
   const arrOfZeros = [];
 
-  array.map(num => (num !== 0 ? arrOfNonZeros.push(num) : arrOfZeros.push(num)));
+  array.map(num =>
+    num !== 0 ? arrOfNonZeros.push(num) : arrOfZeros.push(num)
+  );
 
   return arrOfNonZeros.concat(arrOfZeros);
 };
@@ -369,17 +371,24 @@ console.log(
   )
 );
 
-const buildASquare = num => ('+'.repeat(num) + '\n').repeat(num).trim();
+const findSumOfUnicodeValuesOfTheWord = word => {
+  const chars = word.split('');
 
-console.log(buildASquare(3));
-console.log(buildASquare(5));
+  const sum = chars.reduce((count, char) => count + char.charCodeAt(), 0);
 
-const likes = names => {
+  return sum;
+};
+
+console.log(findSumOfUnicodeValuesOfTheWord('taxi'));
+console.log(findSumOfUnicodeValuesOfTheWord('Venice'));
+console.log(findSumOfUnicodeValuesOfTheWord('Vesuvius'));
+
+const whoLikesThis = names => {
   if (!Array.isArray(names) || names.length <= 0) return;
 
   switch (names.length) {
     case 0:
-      return 'no one likes this';
+      return 'No one likes this';
     case 1:
       return `${names[0]} likes this`;
     case 2:
@@ -393,11 +402,23 @@ const likes = names => {
   }
 };
 
-console.log(likes(['Mila', 'Leo']));
+console.log(whoLikesThis(['Mila', 'Leo']));
 
-const isValidJSON = str => {
+const countVowels = string => {
+  const searchedChars = string.match(/[aeiouy]/g);
+
+  return searchedChars ? searchedChars.length : 0;
+};
+
+console.log(
+  `${countVowels(
+    whoLikesThis(['Bogdan'])
+  )} vowels are found in the phrase '${whoLikesThis(['Bogdan'])}'.`
+);
+
+const isValidJSON = string => {
   try {
-    JSON.parse(str);
+    JSON.parse(string);
     return true;
   } catch (err) {
     return false;
@@ -458,8 +479,8 @@ const makeAcronym = fullName => {
 
 console.log(makeAcronym('teo meo'));
 
-const swapCase = str => {
-  const array = str.split('');
+const swapCase = string => {
+  const array = string.split('');
   const newArr = [];
 
   for (let el of array) {
@@ -477,11 +498,11 @@ const swapCase = str => {
 
 console.log(swapCase(`Hey, how's Michaela?`));
 
-const toCamelCase = str => {
+const toCamelCase = string => {
   const newArr = [];
 
   const createNewStr = sign => {
-    const splittedStr = str.split(sign);
+    const splittedStr = string.split(sign);
 
     splittedStr.map(word => {
       splittedStr.indexOf(word) === 0
@@ -490,24 +511,24 @@ const toCamelCase = str => {
     });
   };
 
-  if (str.includes('-')) {
+  if (string.includes('-')) {
     createNewStr('-');
 
     return newArr.join('');
-  } else if (str.includes('_')) {
+  } else if (string.includes('_')) {
     createNewStr('_');
 
     return newArr.join('');
   } else {
-    return str;
+    return string;
   }
 };
 
 console.log(toCamelCase('_some_variable'));
 console.log(toCamelCase('Strange-naming'));
 
-const splitStringIntoPairs = str => {
-  const array = str.split('');
+const splitStringIntoPairs = string => {
+  const array = string.split('');
 
   if (array.length % 2 !== 0) {
     array.push('_');
@@ -523,6 +544,11 @@ const splitStringIntoPairs = str => {
 };
 
 console.log(splitStringIntoPairs('abcdef12345'));
+
+const buildASquare = num => ('+'.repeat(num) + '\n').repeat(num).trim();
+
+console.log(buildASquare(3));
+console.log(buildASquare(5));
 
 // Deoxyribonucleic acid (DNA) is a chemical found in the nucleus of cells and carries the "instructions" for the development and functioning of living organisms. In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
 

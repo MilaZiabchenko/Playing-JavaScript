@@ -406,18 +406,18 @@ console.log(curry.name);
 console.log(curry.length);
 console.log(sum.length);
 
-console.log(sum.call(null, 1, 3, 5));
-console.log(sum.apply(null, [1, 3, 5]));
+console.log(sum.call(null, 10, 3, 5));
+console.log(sum.apply(null, [10, 3, 5]));
 
-const sum1 = sum.bind(null, 1);
+const firstArgument_10 = sum.bind(null, 10);
 
-console.log(sum1(3, 5));
+console.log(firstArgument_10(3, 5));
 
-const args = [1, 3, 5];
+const args = [10, 3, 5];
 
-console.log(sum(1, 3, 5) === sum.call(null, ...args));
-console.log(sum(...args) === sum.apply(null, [1, 3, 5]));
-console.log(curriedResult(1)(3)(5) === sum1(3, 5));
+console.log(sum(10, 3, 5) === sum.call(null, ...args));
+console.log(sum(...args) === sum.apply(null, [10, 3, 5]));
+console.log(curriedResult(10)(3)(5) === firstArgument_10(3, 5));
 
 const curryAMessage = greeting => name => message =>
   `${greeting}, ${name}! ${message}?`;

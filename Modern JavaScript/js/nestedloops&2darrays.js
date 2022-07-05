@@ -103,19 +103,19 @@ console.log(
   )} characters 'u', 'i', and 'y' are found in the phrase.`
 );
 
-const findAnagrams = (word, allWords) => {
-  const charsOfTheWord = word.split('').sort();
+const findAnagrams = (word, arrayOfWords) => {
+  const sortedCharsOfTheWord = word.split('').sort();
   const anagrams = [];
 
-  allWords.filter(entry => {
-    const charsOfTheEntry = entry.split('').sort();
-    const tempArr = [];
+  arrayOfWords.filter(entry => {
+    const sortedCharsOfTheEntry = entry.split('').sort();
+    let matchesCount = 0;
 
-    for (let i of charsOfTheWord) {
-      for (let j of charsOfTheEntry) {
+    for (let i of sortedCharsOfTheWord) {
+      for (let j of sortedCharsOfTheEntry) {
         if (i === j) {
-          tempArr.push(j);
-          if (tempArr.length === charsOfTheWord.length && entry !== word) {
+          matchesCount++;
+          if (sortedCharsOfTheWord.length === matchesCount && entry !== word) {
             anagrams.push(entry);
           }
         }
@@ -136,30 +136,31 @@ const findHighestScoringWord = sentence => {
   const words = sentence.split(' ');
   const alphabetMap = {};
 
-  for (let i = 'a'.charCodeAt(), j = 1; i <= 'z'.charCodeAt(); i++, j++) {
+  for (let i = 'A'.charCodeAt(), j = 0; i <= 'z'.charCodeAt(); i++, j++) {
     alphabetMap[i] = j;
   }
 
-  let highestScoringWord = { word: '', score: 0 };
+  const highestScoringWord = { word: '', score: 0 };
 
   words.forEach(word => {
     const chars = word.split('');
 
-    const sumOfChars = chars.reduce(
+    const sumOfUnicodeValuesOfTheWord = chars.reduce(
       (count, char) => count + alphabetMap[char.charCodeAt()],
       0
     );
 
-    if (sumOfChars > highestScoringWord.score) {
-      highestScoringWord = { word: word, score: sumOfChars };
+    if (sumOfUnicodeValuesOfTheWord > highestScoringWord.score) {
+      highestScoringWord.word = word;
+      highestScoringWord.score = sumOfUnicodeValuesOfTheWord;
     }
   });
 
   return highestScoringWord.word;
 };
 
-console.log(findHighestScoringWord('Man, I need a taxi up to the hills'));
-console.log(findHighestScoringWord('We are climbing up the volcano'));
+console.log(findHighestScoringWord('Man, I need a taxi up to Venice'));
+console.log(findHighestScoringWord('We are climbing up the volcano Vesuvius'));
 
 const findMaxDifference = array => {
   let maxDiff = array[1] - array[0];
@@ -189,13 +190,13 @@ const isSorted = array => {
   return sorted;
 };
 
-const unsortedArray = [1, 55, 17, 77, 709, 95, -10, 100, 205];
+const unsortedArray = [1000, 55, 17, 77, 709, 95, -10, -120, 205];
 const sortedArray = [-10, 0, 1, 10, 77, 500, 709];
 
 console.log(findMaxDifference(unsortedArray));
 console.log(findMaxDifference(sortedArray));
-console.log(isSorted(sortedArray));
 console.log(isSorted(unsortedArray));
+console.log(isSorted(sortedArray));
 
 const sortOddNumbersOfTheArray = array => {
   const arrayOfOdds = [];
@@ -220,7 +221,8 @@ const sortOddNumbersOfTheArray = array => {
   return sortedArray;
 };
 
-console.log(sortOddNumbersOfTheArray([5, 17, 8, 15, 6, 3, 4]));
+console.log(sortOddNumbersOfTheArray(unsortedArray));
+console.log(sortOddNumbersOfTheArray([5, 17, 82, 15, 8, 3, 2]));
 
 const arrayOfArrays = [
   [0, 5],
