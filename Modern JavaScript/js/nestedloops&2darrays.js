@@ -104,11 +104,11 @@ console.log(
 );
 
 const findAnagrams = (word, arrayOfWords) => {
-  const sortedCharsOfTheWord = word.split('').sort();
+  const sortedCharsOfTheWord = [...word].sort();
   const anagrams = [];
 
   arrayOfWords.filter(entry => {
-    const sortedCharsOfTheEntry = entry.split('').sort();
+    const sortedCharsOfTheEntry = [...entry].sort();
     let matchesCount = 0;
 
     for (let i of sortedCharsOfTheWord) {
@@ -202,18 +202,18 @@ const sortOddNumbersOfTheArray = array => {
   const arrayOfOdds = [];
   const sortedArray = [];
 
-  array.map(el =>
-    el % 2 === 0
-      ? sortedArray.push(el)
-      : sortedArray.push('') && arrayOfOdds.push(el)
+  array.map(element =>
+    element % 2 === 0
+      ? sortedArray.push(element)
+      : sortedArray.push('') && arrayOfOdds.push(element)
   );
 
   arrayOfOdds.sort((a, b) => a - b);
 
-  for (let el of sortedArray) {
+  for (let element of sortedArray) {
     for (let oddNum of arrayOfOdds) {
-      if (el === '') {
-        sortedArray.splice(sortedArray.indexOf(el), 1, oddNum);
+      if (element === '') {
+        sortedArray.splice(sortedArray.indexOf(element), 1, oddNum);
       }
     }
   }
@@ -247,20 +247,20 @@ console.log(calcSum(arrayOfArrays));
 calcSum = matrix => {
   let count = 0;
 
-  matrix.forEach(arr => arr.forEach(el => (count += el)));
+  matrix.forEach(array => array.forEach(element => (count += element)));
 
   return count;
 };
 
 console.log(calcSum(arrayOfArrays));
 
-const calcMaxSum = (arr, ranges) => {
+const calcMaxSum = (array, ranges) => {
   let maxSum = -Infinity;
   let currentSum = 0;
 
   ranges.forEach(([from, to]) => {
     for (let i = from; i <= to; i++) {
-      currentSum += arr[i];
+      currentSum += array[i];
     }
 
     currentSum > maxSum && (maxSum = currentSum);
@@ -412,7 +412,7 @@ console.log(findTheMostPopularSong(playlistOfRadioheadSongs));
 
 const calcAverageSongPopularity = tracks => {
   let average =
-    tracks.reduce((total, cur) => (total += cur[2]), 0) / tracks.length;
+    tracks.reduce((total, track) => (total += track[2]), 0) / tracks.length;
 
   return average.toFixed(2);
 };

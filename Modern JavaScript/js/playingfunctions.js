@@ -28,8 +28,10 @@ console.log(`Energy equals ${calcEnergy(62)} Joules`);
 const calcPriceWithDiscount = (price = 43.6, percentage = 75) =>
   (price / 100) * percentage;
 
-console.log(`Today my fav biscuits cost ${calcPriceWithDiscount()}.`);
-console.log(`Today my fav biscuits cost ${calcPriceWithDiscount(43.6, 70)}.`);
+console.log(`Today my fav biscuits cost ${calcPriceWithDiscount()} UAH.`);
+console.log(
+  `Today my fav biscuits cost ${calcPriceWithDiscount(43.6, 70)} UAH.`
+);
 
 const calcMaxNumber = (a = 3, b = 30) => Math.max(a, b);
 
@@ -47,14 +49,8 @@ console.log(a);
 
 function a() {}
 
-f();
-f.call(f);
-
-function f() {
-  console.log(this);
-}
-
 // During the creation phase, the engine places var variable in the memory and initializes its value to undefined
+
 console.log(b);
 
 var b = function () {};
@@ -94,16 +90,13 @@ for (var i = 0; i < 9; i += 2) {
 
 console.log(i);
 
-// The JavaScript engine hoists the variables declared using the let keyword, but it doesn’t initialize them
+// The JavaScript engine hoists the variables declared using the let and const keywords, but it doesn’t initialize them
 
 // console.log(c);
-// console.log(d);
 
 let c = function () {};
-d = function () {};
 
 console.log(c);
-console.log(d);
 
 // Function declaration
 
