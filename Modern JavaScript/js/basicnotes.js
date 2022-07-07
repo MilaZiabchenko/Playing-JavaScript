@@ -42,47 +42,41 @@ console.log(Number.isInteger(0));
 console.log(Number.isInteger(3.7));
 console.log(Number.isInteger(Infinity));
 
-// Type conversion: string <==> number
-let something = '55.55';
+// Type conversion
 
-console.log(
-  something,
-  +something,
-  +something + '',
-  parseInt(something),
-  parseFloat(something),
-  (+something).toFixed(2),
-  (+something).toFixed(2) + 5,
-  Number(something).toFixed(2) + 5,
-  parseFloat(something).toFixed(2) + 5
-);
+// string => number
+let entry = '55.55';
 
-// Number constructor
-something = Number(something);
+console.log(+entry);
+console.log(Number(entry));
+console.log(parseFloat(entry));
+console.log(parseInt(entry));
+console.log(parseInt('55.55 * 10'));
+console.log(parseInt(entry * 10));
 
-console.log(something, typeof something);
+// number => string
+entry = 55.55;
 
-// String constructor
-something = String(something);
+console.log(entry + '');
+console.log(String(entry));
+console.log(entry.toString());
 
-console.log(something, typeof something);
+// Number.toFixed()
+console.log(Number(entry).toFixed(2));
+console.log(Number(entry).toFixed(2) + 5);
 
 // Boolean constructor
-something = Boolean(something);
+entry = Boolean(entry);
 
-console.log(something, typeof something);
+console.log(entry, typeof entry);
 
-something = Boolean(0);
+entry = Boolean(0);
 
-console.log(something, typeof something);
+console.log(entry, typeof entry);
 
-something = Boolean('0');
+entry = Boolean('0');
 
-console.log(something, typeof something);
-
-varOrNotVar = 5 + '5';
-
-console.log(varOrNotVar, typeof varOrNotVar);
+console.log(entry, typeof entry);
 
 // Conversion to boolean
 const True = !0;
@@ -92,6 +86,8 @@ const alsoFalse = !!0;
 
 console.log(True, alsoTrue, False, alsoFalse);
 console.log(typeof True, typeof False, typeof alsoTrue, typeof alsoFalse);
+
+// Conversion to undefined
 
 // void operator
 
