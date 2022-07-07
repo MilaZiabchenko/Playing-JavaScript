@@ -1,4 +1,7 @@
-// Comparison operators/loose vs strict equality
+// Comparison operators
+
+// Loose vs strict equality
+console.log(null == undefined);
 console.log(NaN == NaN);
 console.log(55 == '55');
 console.log(55 != '55');
@@ -9,8 +12,10 @@ console.log(55 === 55 / 1);
 console.log('leo' > 'Milu');
 
 // Object.is()
+console.log(Object.is(null, undefined));
 console.log(Object.is(NaN, NaN));
 console.log(Object.is(55, '55'));
+console.log(Object.is(55, 55 * 1));
 
 // isNaN()
 
@@ -42,56 +47,41 @@ console.log(Number.isInteger(0));
 console.log(Number.isInteger(3.7));
 console.log(Number.isInteger(Infinity));
 
-// Type conversion: string <==> number
-let something = '55.55';
+// Type conversion
 
-console.log(
-  something,
-  +something,
-  +something + '',
-  parseInt(something),
-  parseFloat(something),
-  (+something).toFixed(2),
-  (+something).toFixed(2) + 5,
-  Number(something).toFixed(2) + 5,
-  parseFloat(something).toFixed(2) + 5
-);
+// Conversion to number
+const string = '55.55';
 
-// Number constructor
-something = Number(something);
+console.log(Number(true));
+console.log(Number(string));
+console.log(+string);
+console.log(parseFloat(string));
+console.log(parseInt(string));
+console.log(parseInt('55.55 * 10'));
+console.log(parseInt(string * 100));
 
-console.log(something, typeof something);
+// Conversion to string
+const number = 55.55;
 
-// String constructor
-something = String(something);
+console.log(number + '');
+console.log(String(number));
+console.log(number.toString());
 
-console.log(something, typeof something);
-
-// Boolean constructor
-something = Boolean(something);
-
-console.log(something, typeof something);
-
-something = Boolean(0);
-
-console.log(something, typeof something);
-
-something = Boolean('0');
-
-console.log(something, typeof something);
-
-varOrNotVar = 5 + '5';
-
-console.log(varOrNotVar, typeof varOrNotVar);
+// Number.toFixed()
+console.log(Number(55.55555).toFixed(2));
+console.log(Number(55.55555).toFixed(2) + 789);
 
 // Conversion to boolean
+console.log(Boolean(string), Boolean(number), Boolean('0'), Boolean(0));
+
 const True = !0;
 const alsoTrue = !!1;
 const False = !1;
 const alsoFalse = !!0;
 
 console.log(True, alsoTrue, False, alsoFalse);
-console.log(typeof True, typeof False, typeof alsoTrue, typeof alsoFalse);
+
+// Conversion to undefined
 
 // void operator
 
@@ -100,7 +90,7 @@ console.log(typeof True, typeof False, typeof alsoTrue, typeof alsoFalse);
 console.log(void 1);
 console.log(void { name: 'Banksy' });
 
-// Order of math operations/operators
+// Order of math operations
 let m = 60;
 const c = 1080000000;
 const e = m * c ** 2;
@@ -310,17 +300,17 @@ if (time <= 6 || time >= 22) {
 }
 
 // Ternary operator
-let func =
+const activity =
   time < 7 || time > 22
     ? 'Sleep'
     : time > 10 && time < 19
     ? 'Be active'
     : 'Relax';
 
-console.log(func);
+console.log(activity);
 
 // Switch statement
-switch (func) {
+switch (activity) {
   case 'Be active':
     console.log('Be active');
     break;
@@ -331,7 +321,7 @@ switch (func) {
     console.log('Sleep');
 }
 
-let flat = 62;
+const flat = 62;
 
 if (flat === 62) {
   console.log('Mila and Leo live here');
@@ -362,18 +352,6 @@ switch (flat) {
   default:
     console.log('Bogdan, Leo and Mila do not live there');
 }
-
-flat = String(flat);
-
-console.log(flat, typeof flat);
-
-flat = Number(flat);
-
-console.log(flat, typeof flat);
-
-flat = Boolean(flat);
-
-console.log(flat, typeof flat);
 
 if (typeof flat === 'number') {
   console.log(`Flat No. ${flat}`);
