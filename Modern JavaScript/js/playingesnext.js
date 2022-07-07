@@ -46,7 +46,15 @@ const details = new Map([
   ],
 ]);
 
+console.log(details);
+console.log(details.size);
+
+details.clear();
+
+console.log(details);
+
 details.set('students', 12);
+
 console.log(details);
 console.log(details.size);
 
@@ -63,8 +71,6 @@ console.log(course);
 console.log(course.get('React'));
 
 // Unlike objects, Maps can iterate their elements in their insertion order
-course.forEach(item => console.log(item));
-
 for (let item of course) console.log(item);
 
 for (let entry of course.entries()) {
@@ -87,18 +93,38 @@ for (let value of course.values()) {
 
 // WeakSet is similar to Set, but it can only store objects, it is not enumerable, and there is no way to loop over the items contained within it because there is no list of current objects stored in the collection; they are weakly referenced and may be removed at any point.
 
-const animals = new WeakSet();
+const animals_1 = new WeakSet();
+const animals_2 = new Set();
+
 const turtle = { name: 'Tin-tin' };
-let lion = { name: 'Ray' };
+let lion_1 = { name: 'Mars' };
+let lion_2 = { name: 'Saturn' };
+let lion_3 = { name: 'Jupiter' };
 
-animals.add(turtle);
-animals.add(lion);
+animals_1.add(turtle).add(lion_1);
+animals_2.add(turtle).add(lion_2);
 
-lion = 'Ray';
+const animals_3 = [turtle, lion_3];
 
-console.log(animals);
-console.log(animals.has(lion));
-console.log(animals.has(turtle));
+console.log(animals_1.has(lion_1));
+console.log(animals_2.has(lion_2));
+console.log(animals_3.includes(lion_3));
+console.log(animals_3[1] === lion_3);
+console.log(animals_3.at(-1));
+
+lion_1 = 'Mars';
+lion_2 = 'Saturn';
+lion_3 = 'Jupiter';
+
+console.log(animals_1.has(lion_1));
+console.log(animals_2.has(lion_2));
+console.log(animals_3.includes(lion_3));
+console.log(animals_3[1] === lion_3);
+console.log(animals_3.at(-1));
+
+console.log(animals_1);
+console.log(animals_2);
+console.log(animals_3);
 
 // WeakMap data structure
 
@@ -152,6 +178,7 @@ console.log(courseInfo[id]);
 console.log(courseInfo['id']);
 console.log(Object.getOwnPropertySymbols(courseInfo));
 console.log(Object.getOwnPropertyNames(courseInfo));
+console.log(Object.keys(courseInfo));
 
 for (let key in courseInfo) {
   console.log(key);
@@ -166,23 +193,36 @@ for (let [key, value] of Object.entries(courseInfo)) {
 }
 
 const addUniqueIdToTheObject = entry => {
-  const id = Symbol();
   const obj = entry;
+  const id = Symbol();
+
   obj.id = id;
+
   return obj;
 };
 
-const obj1 = { name: 'Nick' };
-const obj2 = { name: 'Veronika' };
+const object_1 = { name: 'Nick' };
+const object_2 = { name: 'Veronika' };
 
-console.log('id' in obj1);
+addUniqueIdToTheObject(object_1);
+addUniqueIdToTheObject(object_2);
 
-console.log(addUniqueIdToTheObject(obj1));
-console.log(addUniqueIdToTheObject(obj2));
-console.log(addUniqueIdToTheObject({ name: 'Buffy' }));
+console.log(object_1);
+console.log(object_2);
 
-console.log('id' in obj1 && 'id' in obj2);
-console.log(obj1.id === obj2.id);
+console.log(object_1.hasOwnProperty('id'));
+console.log(Object.hasOwn(object_1, 'id'));
+
+Object.prototype.keyInheritedFromPrototype = 'valueInheritedFromPrototype';
+
+console.log('keyInheritedFromPrototype' in object_1);
+console.log(object_1.hasOwnProperty('keyInheritedFromPrototype'));
+console.log(Object.hasOwn(object_1, 'keyInheritedFromPrototype'));
+
+console.log(Object.keys(object_1));
+console.log(Object.getOwnPropertyNames(object_1));
+console.log('id' in object_1 && 'id' in object_2);
+console.log(object_1.id === object_2.id);
 
 // Object literal enhancement
 const skier = (name, sound) => ({
@@ -216,8 +256,8 @@ const gang = {
   keyThree: 'Mi',
 };
 
-// Object keys
-function getKeys(obj) {
+// Getting keys of an object
+const getKeys = obj => {
   const result = [];
 
   for (let key in obj) {
@@ -225,12 +265,13 @@ function getKeys(obj) {
   }
 
   return result;
-}
+};
 
-console.log(getKeys(gang));
+console.log(getKeys(gang)); // own properties + inherited properties
+console.log(Object.keys(gang)); // just own properties
 
-// Object values
-function getValues(obj) {
+// Getting values of an object
+const getValues = obj => {
   const result = [];
 
   for (let key in obj) {
@@ -238,13 +279,13 @@ function getValues(obj) {
   }
 
   return result;
-}
+};
 
 console.log(getValues(gang));
-console.log((getValues(gang) + '').replaceAll(',', ', '));
-console.log(`${String(getValues(gang)).replaceAll(',', ', ')}`);
+console.log(Object.values(gang));
+console.log(Object.values(gang).toString().replaceAll(',', ', '));
 
-// Map values
+// Getting Map values
 const gangMap = new Map(Object.entries(gang));
 
 console.log(gangMap);
