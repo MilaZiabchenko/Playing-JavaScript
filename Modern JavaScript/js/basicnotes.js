@@ -166,7 +166,6 @@ console.log(email.indexOf('i'));
 console.log(email.lastIndexOf('i'));
 console.log(editedEmail.slice(0, 8));
 console.log(editedEmail.slice(-9));
-console.log(editedEmail.substring(9, 16));
 console.log(email < editedEmail);
 
 const line = `I don't love you like I did yesterday`;
