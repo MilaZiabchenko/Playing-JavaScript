@@ -1,7 +1,6 @@
 // Comparison operators
 
 // Loose vs strict equality
-
 console.log(null == undefined);
 console.log(NaN == NaN);
 console.log(55 == '55');
@@ -21,7 +20,6 @@ console.log(Object.is(55, 55 * 1));
 // isNaN()
 
 // isNaN() converts the argument to a Number and returns true if the resulting value is NaN
-
 console.log(isNaN(77));
 console.log(isNaN('77'));
 console.log(isNaN('Milu'));
@@ -30,7 +28,6 @@ console.log(isNaN(NaN));
 // Number.isNaN()
 
 // Number.isNaN() does not convert the argument; it returns true when the argument is a Number and is NaN
-
 console.log(Number.isNaN(77));
 console.log(Number.isNaN('77'));
 console.log(Number.isNaN('Milu'));
@@ -87,7 +84,6 @@ console.log(True, alsoTrue, False, alsoFalse);
 // void operator
 
 // The void operator evaluates the given expression and then returns undefined
-
 console.log(void 1);
 console.log(void { name: 'Banksy' });
 
@@ -111,20 +107,15 @@ const evenOrOdd = day % 2 ? 'odd' : 'even';
 
 console.log(evenOrOdd);
 
-let score;
-score = 10;
+let num = 5;
 
-console.log(score);
+// Increment and decrement
+console.log(num++, num, ++num, num);
+console.log(num--, num, --num, num);
+
+let score = 10;
 
 // Shorthand notation
-score++;
-
-console.log(score);
-
-score--;
-
-console.log(score);
-
 score += 2;
 
 console.log(score);
@@ -132,23 +123,22 @@ console.log(score);
 score -= 2;
 
 console.log(score);
-console.log(`Game over. ${(score *= 2)} was your final score.`);
 
-let num = 5;
+score *= 2;
 
-console.log(num++, num, ++num, num);
+console.log(`Game is over. ${score} is your final score.`);
 
 // Template strings with HTML templates
 const title =
   'Enlightenment Now: The Case for Reason, Science, Humanism, and Progress';
 const author = 'Steven Pinker';
 const yearOfPublication = '2018';
-let likesPercentage = '91%';
+const likesPercentage = '91%';
 
-let html = `
+const html = `
     <h2>${title}</h2>
     <p>by ${author}, published in ${yearOfPublication}</p>
-    <span>was liked by ${likesPercentage} of Google users.</span>
+    <span>liked by ${likesPercentage} of Google users.</span>
 `;
 
 console.log(html);
@@ -223,14 +213,13 @@ for (let i = initialArr.length - 1; i >= 0; i--) {
 
 console.log(reversedArr);
 
-// Optional 'for' expressions
-
-// All three expressions ([initialization]; [condition]; [final-expression]) in the head of the 'for' loop are optional.
-
 for (let i = 0; i < 4; i++) {
   console.log(i);
 }
 
+// Optional 'for' expressions
+
+// All three expressions ([initialization]; [condition]; [final-expression]) in the head of the 'for' loop are optional.
 for (let i = 0; ; i++) {
   console.log(i);
 
