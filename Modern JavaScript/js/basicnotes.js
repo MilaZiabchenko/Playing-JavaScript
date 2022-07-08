@@ -1,6 +1,7 @@
 // Comparison operators
 
 // Loose vs strict equality
+
 console.log(null == undefined);
 console.log(NaN == NaN);
 console.log(55 == '55');
