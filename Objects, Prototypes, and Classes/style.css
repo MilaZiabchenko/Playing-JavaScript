@@ -3,12 +3,14 @@ body {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 2rem;
   background: #111;
+  color: hsl(65, 65%, 65%);
 }
 
-h1 {
+h1,
+p {
   margin-top: 3rem;
   background-image: linear-gradient(
     to right,
@@ -20,6 +22,11 @@ h1 {
   -webkit-text-fill-color: transparent;
   font-size: calc(1.65rem + 1.85vw);
   text-align: center;
+}
+p {
+  font-size: 1.9rem;
+  width: 65%;
+  margin-bottom: 3rem;
 }
 
 div {
