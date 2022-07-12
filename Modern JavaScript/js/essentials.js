@@ -1,37 +1,3 @@
-// Data types & variables
-let right = 'red';
-let left = 'orange';
-left = true;
-
-console.log(right, left);
-console.log(right[0], right[1], right[2]);
-
-// String methods
-const email = 'mi.podgurska@gmail.com';
-let index = email.indexOf('m');
-
-console.log(index);
-
-index = email.lastIndexOf('m');
-
-console.log(index);
-
-let result = email.slice(0, 3);
-
-console.log(result);
-
-result = email.slice(3);
-
-console.log(result);
-
-result = email.substring(0, 3);
-
-console.log(result);
-
-result = email.replace('mi.podgurska', 'milu.ziablik');
-
-console.log(result);
-
 // Operations with numbers
 
 // Operators: +, -, *, /, %, **
@@ -182,21 +148,15 @@ console.log(
 console.log(undefined + [], null + [], true + []);
 
 // Methods that return booleans
-result = email.includes('@');
+const email = 'leo@home.com';
 
-console.log(result);
-
-result = email.includes('leo');
+result = email.includes('leo') && !!email.includes('@');
 
 console.log(result);
 
 const names = ['mario', 'luigi', 'toad'];
 
-result = names.includes('mario');
-
-console.log(result);
-
-result = names.includes('massimo');
+result = names.includes('mario') && names.includes('toad');
 
 console.log(result);
 

@@ -238,6 +238,7 @@ for (;;) {
 // 'while' loop
 while (i < today.length) {
   console.log(today[i].task);
+
   i++;
 }
 
@@ -248,13 +249,46 @@ while (i) {
 }
 
 // 'do-while' loop
-i = 'I send you one message.';
-let j = null;
+i = 'I send you a message.';
+j = 'You read my message';
 
 do {
   console.log(i);
-  i++;
-} while (j === 'You wright me back.');
+
+  j++;
+} while (j === 'You wright me back');
+
+// Nested loops
+console.log('Loop start');
+
+for (let i = 1; i <= 3; i++) {
+  for (let j = 1; j <= 3; j++) {
+    console.log(i, j);
+  }
+  console.log('End of iteration', i);
+}
+
+console.log('Loop finish');
+console.log('Loop start');
+
+for (let i = 1; i <= 3; i++) {
+  for (let j = i; j <= 3; j++) {
+    console.log(i, j);
+  }
+  console.log('End of iteration', i);
+}
+
+console.log('Loop finish');
+console.log('Loop start');
+
+for (let i = 1; i <= 3; i++) {
+  for (let j = i; j > 0; j--) {
+    console.log(i, j);
+  }
+  console.log('End of iteration', i);
+}
+
+console.log('Loop finish');
 
 // 'for-of' statement
 const bonuses = [1000, 2000, 3000];
@@ -275,7 +309,7 @@ console.log(resultA, resultB, resultC);
 
 let time = 5;
 
-// 'if-else' statement
+// 'if-else if-else' statement
 if (time <= 6 || time >= 22) {
   console.log('Time to sleep');
 } else if (time > 7 && time <= 10) {
@@ -348,6 +382,7 @@ if (typeof flat === 'number') {
   console.error('Datatype error');
 }
 
+// Adding methods to prototypes
 String.prototype.giveLeoMeat = () => `Just give Leo meat!`;
 
 const gang = ['Bo', 'Mi', 'Leo', 'Art'];
