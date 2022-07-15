@@ -4,7 +4,6 @@
 
 // Prototypes are the mechanism by which JavaScript objects inherit features from one another.
 
-// Constructor function
 function Person(firstName, lastName, dob) {
   this.firstName = firstName;
   this.lastName = lastName;
@@ -12,49 +11,49 @@ function Person(firstName, lastName, dob) {
 }
 
 // Attaching methods to the prototype
-Person.prototype.getBirthYear = function () {
-  return this.dob.getFullYear();
+Object.prototype.logInfo = function () {
+  return `This info can be logged for every object in this prototype chain.`;
 };
 
 Person.prototype.getFullName = function () {
   return `${this.firstName} ${this.lastName}`;
 };
 
-Object.prototype.logInfo = function () {
-  return `This info can be logged for every object in this prototype chain.`;
+Person.prototype.getBirthYear = function () {
+  return this.dob.getFullYear();
 };
+
+// Setting prototypes
+
+// Setting the prototype of a constructor, we can ensure that all objects created with that constructor are given that prototype
+
+Person.prototype.constructor = Person;
 
 // Prototype inheritance
 
+// Inheriting properties
+
 function Director(firstName, lastName, dob, movies) {
-  // Inheriting properties
   Person.call(this, firstName, lastName, dob);
-  delete this.dob;
   this.movies = movies;
 }
 
 const Author = function (...args) {
-  // Inheriting properties
   Person.apply(this, args);
 };
 
-// Ways of setting a prototype
-
-// Using Object.create()
-
-// The Object.create() method creates a new object and allows you to specify an object that will be used as the new object's prototype.
-Director.prototype = Object.create(Person.prototype);
-
-// Using a constructor
-
-// If we set the prototype of a constructor, we can ensure that all objects created with that constructor are given that prototype
-Director.prototype.constructor = Director;
-
 // Inheriting methods
+
+// Object.create()
+
+// The Object.create() method creates a new object and allows you to specify an object that will be used as the new object's prototype
+
+// inherited methods
+Director.prototype = Object.create(Person.prototype);
 Author.prototype = Object.create(Person.prototype);
 
-// Own methods
-Author.prototype.addBook = function (title, publicationDate) {
+// own methods
+Author.prototype.addBookInfo = function (title, publicationDate) {
   publicationDate = new Date(publicationDate);
 
   const bookAge = new Date().getFullYear() - publicationDate.getFullYear();
@@ -62,18 +61,20 @@ Author.prototype.addBook = function (title, publicationDate) {
   return `${this.getFullName()} wrote a memoir called ${title}. It was published ${bookAge} years ago on ${publicationDate}.`;
 };
 
-// 2. Classes
+// 2. Classes (with prototypes under the hood)
 
 class Personality {
   // Encapsulation
 
   // The hole idea behind encapsulation is that you hide the inner details of a class and only share or expose what is needed for the user of the class
+
   constructor(firstName, lastName, dob) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.dob = new Date(dob);
   }
 
+  // getter
   get name() {
     return this.firstName;
   }
@@ -87,11 +88,18 @@ class Personality {
   }
 }
 
-Personality.prototype.say = function () {
-  return `${this.firstName} says meow...`;
-};
-
 // Class inheritance
+
+// 1. without a constructor
+class Cat extends Personality {
+  // We use the parent class constructor here
+
+  say() {
+    return `${this.firstName} says meow...`;
+  }
+}
+
+// 2. with a constructor
 class Programmer extends Personality {
   constructor(firstName, lastName, dob, language) {
     // We must call super constructor in derived class before accessing 'this' or returning from derived constructor
@@ -114,7 +122,7 @@ class Programmer extends Personality {
     return `Welcome, ${this.firstName}! Let's create some cool stuff with ${this.language}!`;
   }
 
-  // Static method
+  // static method
   static countCoders() {
     console.log(
       `Actually there is just one creative self-educating coder here, who's having fun and trying not to overwhelm herself.`
@@ -124,46 +132,49 @@ class Programmer extends Personality {
 
 // A constructor in JS is a function that happens to be called with the new operator
 const turtleMan = new Person('Bogdan', 'Starynets', '9-28-1982');
-const superHuman = new Author('Edward', 'Snowden', '6-21-1983');
 const director = new Director(
   'Martin',
   'Scorsese',
   '',
   'The Last Temptation Of Christ, Gangs Of New York, Silence, The Irishman'
 );
-const superCat = new Personality('Leo', 'Ziablick', '4-3-2017');
-const catWoman = new Programmer('Mila', 'Ziablick', '7-3-1579', 'JavaScript');
-const matrixBoy = new Programmer('Neo', 'Nerdy', '9-3-1999', 'Go');
+const superHuman = new Author('Edward', 'Snowden', '6-21-1983');
+const superCat = new Cat('Leo', 'Ziablick', '4-3-2017');
+const catWoman = new Programmer('Mila', 'Ziablick', '7-3-2017', 'JavaScript');
+const matrixBoy = new Programmer('Neo', 'Nerdy', '9-3-1999', 'Golang');
+
+delete director.dob;
 
 console.log(turtleMan);
-console.log(superHuman);
 console.log(director);
+console.log(superHuman);
 console.log(superCat);
 console.log(catWoman);
 console.log(matrixBoy);
 
 console.log(Object.logInfo());
+console.log(matrixBoy.logInfo());
 
 console.log(
   `${matrixBoy.getFullName()} is pretty good at ${matrixBoy.language}.`
 );
 console.log(matrixBoy.validateLanguage());
 
+console.log(catWoman.name);
 console.log(catWoman.getLanguage());
 console.log(catWoman.validateLanguage());
 
-console.log(Object.hasOwn(catWoman, 'firstName'));
-console.log(catWoman.hasOwnProperty('firstName'));
-console.log('firstName' in catWoman);
+console.log(Object.getOwnPropertyNames(catWoman));
+console.log(Object.hasOwn(catWoman, 'language'));
+console.log(Object.hasOwn(catWoman, 'getLanguage'));
+console.log('getLanguage' in catWoman);
 
-console.log(catWoman instanceof Personality);
-console.log(catWoman instanceof Programmer);
-console.log(catWoman instanceof Object);
-console.log(Programmer instanceof Object);
-console.log(typeof Programmer);
 console.log(typeof catWoman);
+console.log(typeof Programmer);
+console.log(typeof Object);
 
 // Static methods are not attached to any individual object, but instead are invoked on the class itself
+
 Programmer.countCoders();
 
 console.log(
@@ -183,20 +194,24 @@ console.log(
   }'s home and life.`
 );
 
+// Prototype chain
+
 // Every object in JavaScript has a built-in property, which is called its prototype. The prototype is itself an object, so the prototype will have its own prototype, making what's called a prototype chain. The chain ends when we reach a prototype that has null for its own prototype
 
-// An object called Object.prototype is the most basic prototype, that all objects have by default. The prototype of Object.prototype is null, so it's at the end of the prototype chain
+// Object.prototype
 
-// The property of an object that points to its prototype is called __proto__
+// An object called Object.prototype is the most basic prototype, that all objects have by default.
+
+console.log(Object.prototype);
+
+// The prototype of Object.prototype is null, so it's at the end of the prototype chain
+
+// __proto__
+
+// __proto__ is the property of an object that points to its prototype
 
 console.log(Object.prototype.__proto__);
-console.log(Object.prototype);
-console.log(Date.prototype);
-console.log(Date.prototype.__proto__ === Object.prototype);
-
 console.log(superCat.__proto__);
-console.log(superCat.__proto__ === Object.getPrototypeOf(superCat));
-console.log(Object.prototype.isPrototypeOf(superCat));
 
 let object = superCat;
 
@@ -210,15 +225,17 @@ do {
 
 // The instanceof operator tests to see if the prototype property of a constructor appears anywhere in the prototype chain of an object
 
-console.log(superCat instanceof Object);
 console.log(Personality instanceof Object);
+console.log(superCat instanceof Object);
 console.log(superCat instanceof Personality);
+console.log(superCat instanceof Cat);
 
 // When you try to access a property of an object: if the property can't be found in the object itself, the prototype is searched for the property. If the property still can't be found, then the prototype's prototype is searched, and so on until either the property is found, or the end of the chain is reached, in which case undefined is returned
 
 console.log(superCat.meow);
 console.log(superCat.say);
 console.log(superCat.say());
+console.log('say' in superCat);
 console.log(Object.hasOwn(superCat, 'say'));
 console.log(Object.hasOwn(superCat, 'firstName'));
 
@@ -234,10 +251,9 @@ console.log(turtleMan.dob.getFullYear());
 console.log(turtleMan.dob.getMonth() + 1);
 console.log(turtleMan.dob.getDate());
 console.log(turtleMan.dob.getDay());
-console.log(Object.hasOwn(turtleMan, 'dob')); //static method
-console.log(turtleMan.hasOwnProperty('dob')); // non-static method
+console.log(Object.hasOwn(turtleMan, 'dob'));
 
-console.log(superHuman.addBook('Permanent Record', '9-17-2019'));
+console.log(superHuman.addBookInfo('Permanent Record', '9-17-2019'));
 
 const basics = [
   'HTML5/CSS3/SASS/UI/UX',
@@ -248,7 +264,7 @@ const basics = [
 ];
 
 const medium = [
-  ...basics, // expanding the array into list with the spread operator
+  ...basics,
   'Algorithms/Data Structures/Design Patterns',
   'React/Routing/Hooks/Context/Firebase',
   'Material UI/Framer Motion/Tailwind',
@@ -269,16 +285,16 @@ const advanced = [
 ];
 
 const frontEndDeveloper = [
-  `Can setup a productive development environment`,
   `Can create responsive layouts`,
   `Can create CSS animations and effects`,
   `Can add dynamic page functionality and work with the DOM`,
   `Understand HTTP and can connect to 3rd party APIs`,
+  `Can setup a productive development environment`,
   `Can use your browser's dev tools`,
   `Can utilize Git with GitHub`,
-  `Can build websites for individuals and small businesses`,
-  `Can build small client side apps with JS`,
   `Can deploy and maintain small projects`,
+  `Can build small client side apps with JS`,
+  `Can build websites for individuals and small businesses`,
 ];
 
 const frontEndWizard = [
@@ -287,108 +303,65 @@ const frontEndWizard = [
   `Can manage application, working with component and global state`,
   `Can interact with back-end APIs and data`,
   `Can write and test clean and efficient code`,
-  `Can perform server side rendering and static site generation`,
   `Can write more robust code with TypeScript`,
+  `Can perform server side rendering`,
 ];
 
 const frontEndMaestro = [
   ...frontEndWizard,
   `Fluent in a server-side language(s) and framework(s)`,
   `Can build back-end apps, APIs, micro-services`,
-  `Can work with databases(SQL, ORM)`,
   `Can deploy to production(SSH, Git, Cloud)`,
+  `Can work with databases(SQL, ORM)`,
 ];
 
-class WebDeveloper {
-  constructor(name, basicSalaryMultiplier) {
+class Engineer {
+  constructor(name, tech, skills, basicSalaryMultiplier) {
     this.name = name;
+    this.tech = tech;
+    this.skills = skills;
     this.basicSalaryMultiplier = basicSalaryMultiplier;
     this.basicSalary = 1500;
   }
 
-  getSalary() {
+  getTech() {
+    console.log(`${this.name}'s tech stack is: \n\n${this.tech}`);
+  }
+
+  getSkills() {
+    console.log(`${this.name} has the following skills: \n\n${this.skills}`);
+  }
+
+  calcSalary() {
     return this.basicSalaryMultiplier * this.basicSalary;
   }
 
-  getTech() {
-    return basics;
-  }
-
-  static displayTechnologies() {
-    console.log(`Junior web dev is familiar with technologies:`);
-    console.log(basics);
-  }
-
-  static displaySkills() {
-    console.log(`and has following skills`);
-    console.log(frontEndDeveloper);
+  logSalary() {
+    console.log(`${this.name}'s salary is ${this.calcSalary()} per month.`);
   }
 }
 
-WebDeveloper.displayTechnologies();
-WebDeveloper.displaySkills();
+const engineer_1 = new Engineer('Miriam', basics, frontEndDeveloper, 1);
+const engineer_2 = new Engineer('Andrea', medium, frontEndWizard, 3);
+const engineer_3 = new Engineer('Yuri', advanced, frontEndMaestro, 6);
 
-class WebDevMaster extends WebDeveloper {
-  getTech() {
-    return medium;
-  }
+console.log(engineer_1);
+console.log(engineer_2);
+console.log(engineer_3);
 
-  static displayTechnologies() {
-    console.log(`Middle web dev is familiar with technologies:`);
-    console.log(medium);
-  }
-
-  static displaySkills() {
-    console.log(`and has following skills`);
-    console.log(frontEndWizard);
-  }
-}
-
-WebDevMaster.displayTechnologies();
-WebDevMaster.displaySkills();
-
-class WebDevMaestro extends WebDevMaster {
-  getTech() {
-    return advanced;
-  }
-
-  static displayTechnologies() {
-    console.log(`Senior web dev is familiar with technologies:`);
-    console.log(advanced);
-  }
-
-  static displaySkills() {
-    console.log(`and has following skills`);
-    console.log(frontEndMaestro);
-  }
-}
-
-WebDevMaestro.displayTechnologies();
-WebDevMaestro.displaySkills();
-
-const webDeveloper = new WebDeveloper('Lynn', 1);
-const middleWebDev = new WebDevMaster('Andrea', 3);
-const seniorWebDev = new WebDevMaestro('Max', 6);
-
-console.log(webDeveloper);
-console.log(webDeveloper.getTech());
-console.log(middleWebDev);
-console.log(middleWebDev.getTech());
-console.log(seniorWebDev);
-console.log(seniorWebDev.getTech());
-console.log(
-  `${webDeveloper.name}'s salary is ${webDeveloper.getSalary()}$ per month.`
-);
-console.log(
-  `${middleWebDev.name}'s salary is ${middleWebDev.getSalary()}$ per month.`
-);
-console.log(
-  `${seniorWebDev.name}'s salary is ${seniorWebDev.getSalary()}$ per month.`
-);
+engineer_1.getTech();
+engineer_1.getSkills();
+engineer_1.logSalary();
+engineer_2.getTech();
+engineer_2.getSkills();
+engineer_2.logSalary();
+engineer_3.getTech();
+engineer_3.getSkills();
+engineer_3.logSalary();
 
 class Meal {
+  // definition => parameters
   constructor(time, first, second, third) {
-    // definition => paramaters
     this.time = time;
     this.first = first;
     this.second = second;
@@ -397,7 +370,8 @@ class Meal {
   }
 }
 
-const breakfast = new Meal('7am', 'coffee', 'milk', 'biscuits'); // instantiation/invocation => arguments
+// instantiation (invocation) => arguments
+const breakfast = new Meal('7am', 'coffee', 'milk', 'biscuits');
 const lunch = new Meal('11am', 'compote', 'chocolate', null);
 const dinner = new Meal(
   '3pm',
@@ -412,7 +386,7 @@ console.log(breakfast);
 console.log(lunch);
 console.log(dinner);
 
-// Array of object instances
+// array of object instances
 const meals = [
   new Meal('8am', 'coffee', 'milk', 'pancakes'),
   new Meal('1pm', 'cottage cheese', 'sour cream', 'jam'),
@@ -435,16 +409,18 @@ class Vampire {
     this.weaknesses = props.weaknesses;
   }
 
-  get age() {
-    return this.calcAge();
-  }
-
   // The regular functions are the usual way to define methods on classes
+
   calcAge() {
     return this.deathDate - this.birthDate;
   }
 
+  logAge() {
+    console.log(this.calcAge());
+  }
+
   // In contrast with regular functions, the method defined using an arrow binds this lexically to the class instance
+
   logWeaknesses = () => console.log(this.weaknesses);
   getName = () => Promise.resolve(this.name);
 }
@@ -458,13 +434,13 @@ const Dracula = new Vampire({
 });
 
 console.log(Dracula);
-console.log(Dracula.age);
-console.log(Dracula instanceof Vampire);
 
-// When we use Dracula.calcAge (method of a Class defined with a regular func) as a callback, we bind 'this' value manually
-setTimeout(Dracula.calcAge.bind(Dracula), 0);
+// When we use Dracula.logAge (method of a Class defined with a regular func) as a callback, we bind 'this' value manually
+
+setTimeout(Dracula.logAge.bind(Dracula), 1000);
 
 // We use Dracula.logWeaknesses (method of a Class defined with an arrow func) as a callback without any manual binding of 'this'
-setTimeout(() => Dracula.logWeaknesses(), 1000);
-setTimeout(Dracula.logWeaknesses, 2000);
+
+setTimeout(() => Dracula.logWeaknesses(), 2000);
+
 Dracula.getName().then(console.log);

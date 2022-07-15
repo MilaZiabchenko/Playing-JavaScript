@@ -145,7 +145,7 @@ console.log(10);
 // A promise is basically something which is gonna take some time to do. It's ultimately gonna lead to one of two outcomes: either it's gonna be resolved meaning we get the data we want, or it's gonna be rejected meaning we get an error at some point. In a promise we automatically get access to 'resolve' and 'reject' parameters inside a callback used to initialize a promise. These two are functions built into the Promise API, we don't make them up.
 
 const getSomething = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     resolve('some data');
     // reject('some error');
   });

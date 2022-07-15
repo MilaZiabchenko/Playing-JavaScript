@@ -2,7 +2,6 @@
 
 // Loose vs strict equality
 console.log(null == undefined);
-console.log(NaN == NaN);
 console.log(55 == '55');
 console.log(55 != '55');
 console.log(55 === '55');
@@ -13,7 +12,6 @@ console.log('leo' > 'Milu');
 
 // Object.is()
 console.log(Object.is(null, undefined));
-console.log(Object.is(NaN, NaN));
 console.log(Object.is(55, '55'));
 console.log(Object.is(55, 55 * 1));
 
@@ -250,7 +248,7 @@ while (i) {
 
 // 'do-while' loop
 i = 'I send you a message.';
-j = 'You read my message';
+let j = 'You read my message';
 
 do {
   console.log(i);

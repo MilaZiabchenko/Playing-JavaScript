@@ -1,4 +1,5 @@
 // Date object
+
 const currentDate = new Date();
 const currentYear = new Date().getFullYear();
 const birthday = new Date(1980, 4, 3);
@@ -21,6 +22,7 @@ console.log(birthday1 === birthday2);
 console.log(birthday1.getTime() === birthday2.getTime());
 
 // Math object
+
 console.log(Math);
 console.log(Math.PI);
 console.log(Math.E);
@@ -32,7 +34,6 @@ console.log(Math.ceil(area));
 console.log(Math.floor(area));
 console.log(Math.trunc(area));
 
-// Random numbers
 const random = Math.random();
 
 console.log(random);
@@ -65,10 +66,10 @@ console.log(typeof myStringObject);
 // Object literal
 
 // Object literal notation is a shorthand notation of 'variable = new Object()'
+
 const blogger = {
   name: 'Crystal',
   age: 30,
-  age: 33,
   email: 'crystal@thenetninja.co.uk',
   hometown: 'Berlin',
   location: 'Berlin',
@@ -78,6 +79,7 @@ const blogger = {
   ],
 
   // When we make methods on an object, we can use a shorthand version of a regular function
+
   login() {
     console.log('The blogger logged in.');
   },
@@ -90,6 +92,7 @@ const blogger = {
     // 'this' keyword
 
     // The 'this' keyword is a context object and it represents the context in which the current code is executed
+
     console.log(this.blogs);
     console.log('This blogger has written the following blogs:');
     console.log(this.blogs[0].title);
@@ -98,22 +101,15 @@ const blogger = {
       console.log(`The blog '${blog.title}' has received ${blog.likes} likes.`);
     });
   },
-
-  logUser() {
-    // This 'this' refers to the blogger object:
-    console.log(this);
-  },
 };
 
 setTimeout(blogger.login, 0);
 setTimeout(blogger.logout, 5000);
+
 blogger.logBlogs();
-blogger.logUser();
-blogger.age = 90;
 console.log(blogger);
-console.log(blogger.age);
-console.log(blogger.blogs[0].likes);
 console.log(blogger.hometown);
+console.log(blogger.blogs[0].likes);
 
 console.log(blogger.location); // key location value
 console.log(blogger['location']); // key location value
@@ -131,7 +127,7 @@ let user = {
   // It is a good practice to keep all properties and methods inside the object literal definition, so we can see everything in one place. If at some point in this program a user is gonna have an age property, we should put that property to begin with. Even if we don't know the value of it, we could just set it to null or zero to begin with, then update it later on
 
   email: 'ryu@ninjas.uk',
-  fname: 'Ryu',
+  firstName: 'Ryu',
   status: null,
 
   login() {
@@ -143,15 +139,16 @@ let user = {
   },
 };
 
-// Accessing/updating/changing/adding the object's properties and methods:
+// Accessing/updating/changing/adding the object's properties and methods
 
-// 1. Dot notation (used most of the time)
+// 1. with dot notation (used most of the time)
 user.email = 'ryu@ninjascorp.com';
 
-// 2. Bracket notation
+// 2. with bracket notation
 user['status'] = 'admin';
 
 // Bracket notation is useful, when we are accessing something dynamic and not necessarily set in stone
+
 let prop = 'status';
 
 console.log(user[prop]); // status value
@@ -204,13 +201,10 @@ class Car {
 const car1 = new Car(80, 'Any');
 const car2 = new Car(85, 'Brad');
 const car3 = new Car(90, 'Dan');
-const car4 = new Car(70, 'Kim');
-const car5 = new Car(100, 'Johnny');
 
-car1.logDriver();
+car1.logDriver().logMaxSpeed().drive(3, 90);
 car2.logMaxSpeed();
-car4.drive(5, 60);
-car5.logDriver().logMaxSpeed().drive(3, 90);
+car3.drive(5, 60);
 
 // JavaScript as a language doesn't really have classes built into it, and under the hood classes are doing the same thing as the prototype model
 
@@ -219,10 +213,12 @@ car5.logDriver().logMaxSpeed().drive(3, 90);
 class User {
   constructor(email, fname) {
     // Whenever we refer to 'this' inside the constructor, then it's the new object that 'this' just created
+
     this.email = email;
     this.fname = fname;
 
     // We don't pass the score as a parameter because it's the same for every user to begin with
+
     this.score = 0;
   }
 
@@ -250,11 +246,11 @@ class User {
 
 // The 'new' keyword does 3 things essentially:
 
-// 1) creates a new empty object {};
+// 1. creates a new empty object {};
 
-// 2) binds the context of 'this' inside the class to be equal to that new empty object, so we have access to that empty object via 'this' keyword;
+// 2. binds the context of 'this' inside the class to be equal to that new empty object, so we have access to that empty object via 'this' keyword;
 
-// 3) calls the constructor method inside the class specified right after the 'new' keyword, so then we can go about attaching new properties on to that object by using 'this' keyword. And when we create a new object, we pass in a new information, new values into the constructor method by using arguments
+// 3. calls the constructor method inside the class specified right after the 'new' keyword, so then we can go about attaching new properties on to that object by using 'this' keyword. And when we create a new object, we pass in a new information, new values into the constructor method by using arguments
 
 const userOne = new User('ryu@ninjas.com', 'Ryu');
 const userTwo = new User('yoshi@mariocorp.com', 'Yoshi');
@@ -262,22 +258,27 @@ const userTwo = new User('yoshi@mariocorp.com', 'Yoshi');
 userOne.login();
 userTwo.logout();
 
-// Method chaining
+// methods chaining
 userOne.login().updateScore().updateScore().logout();
 
 console.log(userOne);
 console.log(userTwo);
 
 // Class inheritance
+
 class Admin extends User {
   // If we don't have a constructor in the class that extends from another, then it will just use the parent constructor
 
   // We pass in as an argument the user we want to delete to update users array
+
   deleteUser(user) {
     // The filter method in JS allows us to cycle through each element inside the array and then filter one or more of them out of the array. We pass in each individual item as a parameter to the arrow function
+
     users = users.filter(u => {
       // If u === user, we want to filter it out of the array. If we return false for a particular user, it's gonna remove that user from the array. If we return true, it's gonna keep the user inside the array
-      return u.email !== user.email; // true
+
+      return u.email !== user.email;
+
       // If emails match, then we gonna return false
     });
   }
@@ -297,7 +298,7 @@ console.log(users);
 
 // Prototype model (constructors under the hood)
 
-// Classes are just a thin layer of abstraction built on top of the JS prototype model, but mainly it's the constructor function that binds all of the properties and values to the object, when we create it.
+// Classes are just a thin layer of abstraction built on top of the JS prototype model, but mainly it's the constructor function that binds all of the properties and values to the object, when we create it
 
 function Member(email, name) {
   this.email = email;
@@ -312,30 +313,34 @@ function Member(email, name) {
 // Accessing the prototype property
 
 // It's just the constructor function that has the prototype property, not the instances of the object type
+
 console.log(User.prototype);
 console.log(Member.prototype);
 console.log(Creator.prototype);
 
-// The instances of the object have the __proto__ property which points to the prototype.
+// The instances of the object have the __proto__ property which points to the prototype
+
 console.log(admin.__proto__);
 
 // Attaching methods to the prototype
+
 Member.prototype.login = function () {
   // 'this' will refer to the object that we call this function on
+
   this.online = true;
+
   console.log(`${this.email} has logged in.`);
 };
 
 Member.prototype.logout = function () {
   this.online = false;
+
   console.log(`${this.email} has logged out.`);
 };
 
 // Prototype inheritance
-function Creator(...args) {
-  // 3 dots are turning new objects's values into an array
-  console.log(args);
 
+function Creator(...args) {
   // Inheriting parameters from Member function
   Member.apply(this, args);
   this.role = 'founder';
@@ -344,9 +349,11 @@ function Creator(...args) {
 // Inheriting methods from Member prototype
 
 // Calling Object.create() method creates a new object
+
 Creator.prototype = Object.create(Member.prototype);
 
 // The prototype property is an object, that's why we create a new object for the Creator prototype based on the prototype for the Member
+
 console.log(Creator.prototype);
 
 // Prototype chain
@@ -357,7 +364,8 @@ console.log(Creator.prototype);
 
 // When an inherited function is executed, the value of 'this' points to the inheriting object, not to the prototype object where the function is an own property.
 
-// We have the __proto__ nested inside the __proto__ because we've not directly added the Member methods on to the Creator prototype as far as we might want to add additional functionality specific to the Creator prototype, like this:
+// We have the __proto__ nested inside the __proto__ because we've not directly added the Member methods on to the Creator prototype as far as we might want to add additional functionality specific to the Creator prototype
+
 Creator.prototype.addMember = function (newMember) {
   members.push(newMember);
   return members;
@@ -394,46 +402,31 @@ const proto = {
 
 console.log(proto);
 
-const obj = Object.create(proto);
+const object = Object.create(proto);
 
-console.log(Object, typeof Object);
+console.log(object);
+console.log(object.name);
 
-console.log(obj);
-console.log(obj.name);
+object.name = 'Leo';
+Object.seal(object);
+delete object.name;
 
-console.log(delete obj.name);
+console.log(object);
+console.log(object.name);
 
-console.log(obj);
-console.log(obj.name);
+object.name = 'Bogdan';
+object.surname = 'OldMan';
 
-obj.name = 'Bo';
+console.log(object);
+console.log(object.name);
+console.log(object.surname);
 
-console.log(obj);
-console.log(obj.name);
-console.log(delete obj.name);
-console.log(obj);
-console.log(obj.name);
+Object.freeze(object);
 
-obj.name = 'Leo';
-Object.seal(obj);
-delete obj.name;
+object.name = 'Mi';
 
-console.log(obj);
-console.log(obj.name);
-
-obj.name = 'Bogdan';
-obj.surname = 'OldMan';
-
-console.log(obj);
-console.log(obj.name);
-console.log(obj.surname);
-
-Object.freeze(obj);
-
-obj.name = 'Mi';
-
-console.log(obj);
-console.log(obj.name);
+console.log(object);
+console.log(object.name);
 
 const UserDataBlueprint = {
   name: '',
@@ -446,7 +439,7 @@ const UserDataValidationBlueprint = {
     return this._name.length >= 2 && this._password.length >= 8;
   },
 
-  __proto__: UserDataBlueprint, //setter
+  __proto__: UserDataBlueprint,
 };
 
 console.info(UserDataValidationBlueprint);
@@ -465,12 +458,8 @@ user = new ProtectedUser('Leo', '87654321');
 console.info(user);
 console.info(user.validate());
 console.info(user.__proto__);
-console.info(UserDataValidationBlueprint.isPrototypeOf(user));
 console.info(Object.getPrototypeOf(user));
-console.info(Object.hasOwn(user, 'password'));
-console.info(user.hasOwnProperty('password'));
 console.info(Object.hasOwn(user, '_password'));
-console.info(user.hasOwnProperty('_password'));
 
 class AdminUser extends ProtectedUser {
   _workingHours = 0; // protected field;
@@ -486,10 +475,10 @@ class AdminUser extends ProtectedUser {
   }
 
   constructor(name = '', password = '', level = 0, workingHours = 0) {
-    // Protected fields are inheritable:
+    // Protected fields are inheritable
     super(name, password);
 
-    // Private fields are only accessible from inside the class:
+    // Private fields are only accessible inside the class
     this.#level = level;
     this._workingHours = workingHours;
   }

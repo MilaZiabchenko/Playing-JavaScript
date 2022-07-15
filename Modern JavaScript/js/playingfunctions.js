@@ -187,13 +187,6 @@ const personality = {
   );
 })(personality);
 
-(() => {
-  let assign = (y = 10);
-})();
-
-console.log(typeof assign);
-console.log(typeof y);
-
 // Pure functions
 
 // Pure functions are functions that accept an input and return a value without modifying any data outside its scope (no side effects). A pure function only works with its internal data. For the same input it always returns the same output
@@ -281,13 +274,21 @@ const parentFn = mentor => topic =>
 
 // There are two ways to call the inner function:
 
-// 1. Call the returned function using a variable
-const returnedFnInstance = parentFn('Andrii');
+// 1. using a variable
+const returnedFnInstance = parentFn('Andy');
 
 returnedFnInstance('matrices');
 
-// 2. Call the returned function using double parentheses
-parentFn('Andrii')('matrices');
+// 2. using double parentheses
+parentFn('Andy')('matrices');
+
+const validateParam = param => (param ? () => '😎' : undefined);
+
+const f1 = validateParam(true);
+const f2 = validateParam(false);
+
+// When used with function calls, the optional chaining operator returns undefined if the given function does not exist.
+console.log(f1?.(), f2?.());
 
 // Returning objects from functions
 
@@ -359,22 +360,21 @@ const btn = document.createElement('button');
 btn.textContent = `Click me!`;
 document.body.append(btn);
 
-btn.addEventListener(
-  'click',
-  (handleClick = () => {
-    countClicked++;
-    countClicked === 1
-      ? (btn.textContent = `You clicked ${countClicked} time`)
-      : (btn.textContent = `You clicked ${countClicked} times`);
+const handleClick = () => {
+  countClicked++;
+  countClicked === 1
+    ? (btn.textContent = `You clicked ${countClicked} time`)
+    : (btn.textContent = `You clicked ${countClicked} times`);
 
-    // Being a closure, handleClick() captures countClicked from the lexical scope and updates it when a click happens. Even more, btn.textContent is captured too
+  // Being a closure, handleClick() captures countClicked from the lexical scope and updates it when a click happens. Even more, btn.textContent is captured too
 
-    setTimeout(() => {
-      btn.textContent = `Clicking session is over!`;
-      btn.removeEventListener('click', handleClick);
-    }, 10000);
-  })
-);
+  setTimeout(() => {
+    btn.textContent = `Clicking session is over!`;
+    btn.removeEventListener('click', handleClick);
+  }, 10000);
+};
+
+btn.addEventListener('click', handleClick);
 
 // Currying
 

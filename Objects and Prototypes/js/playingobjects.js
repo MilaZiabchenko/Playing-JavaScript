@@ -6,14 +6,15 @@ console.time('Elapsed');
 console.log(Math.max(1980, 2017));
 
 // We can't call Math.max with an array because it expects a list of numeric arguments. Spread syntax to the rescue! When ...arrayName is used in the function call, it 'expands' an iterable array object into the list of arguments
-const arr1 = [12, 90, 77, 5, 2020, 33];
 
-console.log(Math.max(...arr1));
+const array_1 = [12, 90, 77, 5, 2020, 33];
 
-const arr2 = [3, 3000, -33];
-const merged = [7, ...arr1, -17, ...arr2];
+console.log(Math.max(...array_1));
 
-console.log(Math.min(0, 1753, ...merged));
+const array_2 = [3, 3000, -33];
+const mergedArray = [7, ...array_1, -17, ...array_2];
+
+console.log(Math.min(0, 1753, ...mergedArray));
 
 const random = Math.random();
 
@@ -79,33 +80,28 @@ myString = new String('33 dolphins make love');
 console.log(myString); // string wrapped in the object
 
 // Array constructor
-const myArray = new Array();
-myArray[0] = 'Sea';
-myArray[1] = 'turtles';
-myArray[2] = 'have';
-myArray[3] = 'fun';
+const myArray = new Array('🐳🐋🐬', 'have', 'fun', 'with', '🐢🐢🐢');
 
 console.log(myArray);
 
 // Comparing objects
-const obj1 = { mushrooms: '🍄🍄🍄' };
-const obj2 = obj1;
-const obj3 = { mushrooms: '🍄🍄🍄' };
+const object_1 = { mushrooms: '🍄🍄🍄' };
+const object_2 = object_1;
+const object_3 = { mushrooms: '🍄🍄🍄' };
 
 console.log({} === {});
-console.log(obj1 === obj2);
-console.log(obj1 === obj3);
+console.log(object_1 === object_2);
+console.log(object_1 === object_3);
 console.log({ mushrooms: '🍄🍄🍄' } === { mushrooms: '🍄🍄🍄' });
 
-console.log(obj1);
+console.log(object_1);
 
-obj2.mushrooms = '🍄🍄🍄🍄🍄';
+object_2.mushrooms = '🍄🍄🍄🍄🍄';
 
-console.log(obj1);
+console.log(object_1);
 
 // Object literal
 const human = {
-  // Encapsulation
   firstName: 'Bogdan',
   lastName: 'Starynets',
   dateOfBirth: '09/28/1982',
@@ -138,23 +134,28 @@ function surprise(drink) {
 
 // Copying a value in JavaScript is almost always shallow, as opposed to deep. That means that changes to deeply nested values will be visible in the copy as well as the original.
 
-// Shallow copy
-const h1 = { ...human };
-const h2 = Object.assign({}, human);
+// Shallow object copy
 
-// Deep copy
-const h3 = JSON.parse(JSON.stringify(human));
+// 1. with Object.assign()
+const human_1 = Object.assign({}, human);
 
-// The expression {...human} iterates over the (enumerable) properties of 'human' using the Spread Operator. It uses the property name and value, and assigns them one by one to a freshly created, empty object. As such, the resulting object is identical in shape, but with its own copy of the list of properties and values. The values are copied, too, but so-called primitive values are handled differently than non-primitive values.
+// 2. with spread operator
+const human_2 = { ...human };
+
+// The expression {...human} iterates over the (enumerable) properties of 'human' using the spread operator. It uses the property name and value, and assigns them one by one to a freshly created, empty object. As such, the resulting object is identical in shape, but with its own copy of the list of properties and values. The values are copied, too, but so-called primitive values are handled differently than non-primitive values.
 
 // Non-primitive values are handled as references, meaning that the act of copying the value is really just copying a reference to the same underlying object, resulting in the shallow copy behavior.
 
+// Deep object copy
+
 // The opposite of a shallow copy is a deep copy. A deep copy algorithm also copies an object’s properties one by one, but invokes itself recursively when it finds a reference to another object, creating a copy of that object as well. This can be very important to make sure that two pieces of code don’t accidentally share an object and unknowingly manipulate each others’ state.
 
+const human_3 = JSON.parse(JSON.stringify(human));
+
 console.log(human);
-console.log(h1);
-console.log(h2);
-console.log(h3);
+console.log(human_1);
+console.log(human_2);
+console.log(human_3);
 
 console.log(human.logName());
 console.log(human.logName.call({ firstName: 'Bo' }));
@@ -165,9 +166,9 @@ console.log(surprise.call(human, 'uzvar'));
 
 // Getting object members
 console.log(human.dateOfBirth);
-console.log(h1['dateOfBirth']);
-console.log(h2.interests[1]);
-console.log(h3.address.city);
+console.log(human_1['dateOfBirth']);
+console.log(human_2.interests[1]);
+console.log(human_3.address.city);
 
 // Setting/updating object members
 
@@ -175,33 +176,33 @@ console.log(h3.address.city);
 human.interests = [...human.interests, 'riding a bicycle', 'playing with Leo'];
 
 console.log(human.interests);
-console.log(h1.interests);
-console.log(h2.interests);
-console.log(h3.interests);
+console.log(human_1.interests);
+console.log(human_2.interests);
+console.log(human_3.interests);
 
 // 2. using bracket notation
 human['hair'] = 'long curly';
 
-console.log(human.hasOwnProperty('hair'));
-console.log(h1.hasOwnProperty('hair'));
-console.log(h2.hasOwnProperty('hair'));
-console.log(h3.hasOwnProperty('hair'));
+console.log(Object.hasOwn(human, 'hair'));
+console.log(Object.hasOwn(human_1, 'hair'));
+console.log(Object.hasOwn(human_2, 'hair'));
+console.log(Object.hasOwn(human_3, 'hair'));
 
 // 3. using Object.defineProperty()
 Object.defineProperty(human, 'eyes', { value: 'dark' });
 
-console.log(human.hasOwnProperty('eyes'));
-console.log(h1.hasOwnProperty('eyes'));
-console.log(h2.hasOwnProperty('eyes'));
-console.log(h3.hasOwnProperty('eyes'));
+console.log(Object.hasOwn(human, 'eyes'));
+console.log(Object.hasOwn(human_1, 'eyes'));
+console.log(Object.hasOwn(human_2, 'eyes'));
+console.log(Object.hasOwn(human_3, 'eyes'));
 
 human['address'] = { ...human['address'], country: 'Ukraine' };
 
 console.log(human['address']['country']);
 console.log(human['address']);
-console.log(h1['address']);
-console.log(h2['address']);
-console.log(h3['address']);
+console.log(human_1['address']);
+console.log(human_2['address']);
+console.log(human_3['address']);
 
 // Accessing/updating dynamic properties, using square brackets
 let property = 'dateOfBirth';
@@ -216,10 +217,10 @@ console.log(human['special']); // special value
 // Deleting object members
 delete human.gender;
 
-console.log(human.hasOwnProperty('gender'));
-console.log(h1.hasOwnProperty('gender'));
-console.log(h2.hasOwnProperty('gender'));
-console.log(h3.hasOwnProperty('gender'));
+console.log(Object.hasOwn(human, 'gender'));
+console.log(Object.hasOwn(human_1, 'gender'));
+console.log(Object.hasOwn(human_2, 'gender'));
+console.log(Object.hasOwn(human_3, 'gender'));
 
 let getSelectedInfo = person => ({
   name: person.firstName,
@@ -235,7 +236,6 @@ console.log(getSelectedInfo(human));
 
 const {
   firstName,
-  lastName,
   address: { city, country },
   special,
 } = human;
@@ -249,26 +249,31 @@ getSelectedInfo = ({ firstName, lastName, address: { city } }) =>
 console.log(getSelectedInfo(human));
 
 // Using destructuring with rest parameters
-getSelectedInfo = ({ firstName, lastName, ...otherInfo }) => otherInfo;
+const getRegroupedInfo = ({ firstName, lastName, ...otherInfo }) => ({
+  primaryInfo: `${firstName} ${lastName}`,
+  secondaryInfo: Object.entries(otherInfo).map(([key, value]) => ({
+    [key]: value,
+  })),
+});
 
-console.log(getSelectedInfo(human));
+console.log(getRegroupedInfo(human));
 
 const updatedHuman = Object.assign(human, { kind: true });
 
 console.log(updatedHuman === human);
-console.log(human.hasOwnProperty('kind'));
-console.log(h1.hasOwnProperty('kind'));
-console.log(h2.hasOwnProperty('kind'));
-console.log(h3.hasOwnProperty('kind'));
+console.log(Object.hasOwn(human, 'kind'));
+console.log(Object.hasOwn(human_1, 'kind'));
+console.log(Object.hasOwn(human_2, 'kind'));
+console.log(Object.hasOwn(human_3, 'kind'));
 
 Object.seal(human);
 human.interests[1] = 'drinking coffee with me';
 delete human.interests;
-delete h1.interests;
+delete human_1.interests;
 
-console.log(h1.interests);
-console.log(h2.interests);
-console.log(h3.interests);
+console.log(human_1.interests);
+console.log(human_2.interests);
+console.log(human_3.interests);
 console.log(human.interests);
 console.log(updatedHuman.interests);
 
@@ -340,14 +345,15 @@ const originalObject = {
   },
 };
 
-// Shallow object copy with spread operator
 const clonedObject = { ...originalObject };
 
 // Adding or changing a property directly on the shallow copy will only affect the copy, not the original, and vice versa
+
 clonedObject.city = 'Paris';
 originalObject.surname = 'Dean';
 
 // However, adding or changing a deeply nested property affects both the shallow copy and the original, even if they were 'freezed'
+
 Object.freeze(originalObject);
 Object.freeze(clonedObject);
 originalObject.details.faculty = 'Engineering';
@@ -399,7 +405,6 @@ Object.defineProperty(musician, 'genres', {
 console.log(Object.getOwnPropertyNames(musician));
 
 console.log(Object.hasOwn(musician, 'genres'));
-console.log(musician.hasOwnProperty('genres'));
 console.log('genres' in musician);
 
 // Copying object with methods
@@ -417,7 +422,7 @@ console.log(musicianDeepCopyWithoutMethods);
 const props = [];
 const values = [];
 
-for (item in musician) {
+for (let item in musician) {
   props.push(item);
   values.push(musician[item]);
 }
@@ -537,6 +542,11 @@ info = (((object || {}).littleFriends || {}).Danny || {}).says;
 console.log(info);
 
 // 3. Optional chaining
+
+// The optional chaining operator (?.) enables you to read the value of a property located deep within a chain of connected objects without having to check that each reference in the chain is valid.
+
+// The ?. operator is like the . chaining operator, except that instead of causing an error if a reference is nullish (null or undefined), the expression short-circuits with a return value of undefined.
+
 info = object?.littleFriends?.Danny?.actions;
 
 console.log(info);

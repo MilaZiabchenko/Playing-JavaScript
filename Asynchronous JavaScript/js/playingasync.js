@@ -197,7 +197,7 @@ getCountriesData()
       const population = country.population;
       const arrOfLanguages = [];
 
-      for (item in country.languages) {
+      for (let item in country.languages) {
         arrOfLanguages.push(country.languages[item]);
       }
 
@@ -356,7 +356,7 @@ const badSmoothie = async () => {
     const second = getFruit('strawberry');
     const smoothie = await Promise.all([first, second]);
 
-    throw `It's broken!`;
+    // throw `It's broken!`;
 
     return smoothie;
   } catch (err) {
@@ -366,7 +366,7 @@ const badSmoothie = async () => {
     return `We are going to get some 🍑🍑🍑 and be fine...`;
 
     // or catching the error and throwing another error
-    throw `💩 It's really broken!`;
+    // throw `💩 It's really broken!`;
   }
 };
 

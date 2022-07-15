@@ -14,9 +14,18 @@ planets = Array.of('Earth', 'Saturn', 'Jupiter');
 
 console.log(planets);
 
-planets.length = 2;
+// Array initialization is a usual task when dealing with collections. JavaScript allows a decent number of ways and flexibility to achieve that.
 
-console.log(planets);
+// The array constructor has a number of situations when its behavior may be surprising. So the array literal is a better and simpler solution to initialize array instances.
+
+// Destructuring
+const [first] = planets;
+const [, second] = planets;
+const [, , third] = planets;
+const [planet_1, planet_2, planet_3] = planets;
+
+console.log(first, second, third);
+console.log(planet_1, planet_2, planet_3);
 
 console.log(planets instanceof Array);
 console.log(planets instanceof Object);
@@ -24,58 +33,30 @@ console.log(planets instanceof Object);
 // at()
 console.log(planets.at(1));
 console.log(planets.at(-1));
-console.log(planets.at(-5));
 
-let emptyArr = [];
+// sparse array with empty slots
+const emptyArray = Array(5);
 
-emptyArr[7] = 'Venus';
-
-console.log(emptyArr);
-console.log(emptyArr.length);
-
-// Sparse array with empty slots(length)
-emptyArr = Array(8);
-
-console.log(emptyArr);
-
-// fill()
-const filledArr = emptyArr.fill(planets[0], 0, 8); // dense array
-
-emptyArr[3] = 'Venus';
-
-console.log(emptyArr);
-console.log(filledArr);
-
-// Array initialization is a usual task when dealing with collections. JavaScript allows a decent number of ways and flexibility to achieve that.
-
-// The array constructor has a number of situations when its behavior may be surprising. So the array literal is a better and simpler solution to initialize array instances.
-
-// Destructuring
-const [planet] = planets;
-const [, second] = planets;
-const [, , third] = planets;
-const [pl1, pl2, pl3] = planets;
-
-console.log(planet, second, third);
-console.log(pl1, pl2, pl3);
-
-const physicalState = `I feel tired and need some rest`;
-
-// split()
-console.log(physicalState.split());
-console.log(physicalState.split(' and '));
-console.log(physicalState.split(' '));
-console.log(physicalState.split(''));
-console.log([...physicalState]);
+console.log(emptyArray);
 
 // Mutable methods
 
-// Array has several mutable operations - push, pop, unshift, shift, reverse, sort and splice. Using them is usually causing side effects and bugs that are hard to track. That’s why it’s important to use an immutable way.
+// Array has several mutable operations - fill, pop, push, unshift, shift, reverse, sort and splice. Using them is usually causing side effects and bugs that are hard to track. That’s why it’s important to use an immutable way
+
+// fill()
+const filledArray = emptyArray.fill(planets[0]);
+
+// pop()
+filledArray.pop();
 
 // push()
+filledArray.push('Venus');
+
+console.log(filledArray);
+
 const array = [];
 
-const arrLength = array.push(2020, 'bicycle', 'backpack');
+const arrLength = array.push('bicycle', 'backpack');
 
 console.log(array);
 console.log(arrLength);
@@ -86,7 +67,8 @@ const shiftedValue = array.shift();
 console.log(array);
 console.log(shiftedValue);
 
-array[0] = 'bike';
+// unshift()
+array.unshift('bike');
 
 console.log(array);
 
@@ -179,6 +161,15 @@ let sumOfYears = (...args) => {
 console.log([...'Leo']);
 console.log(sumOfYears(...ascendingYears));
 console.log(sumOfYears(...ascendingYears, 2021, 2022, 2023));
+
+const physicalState = `I feel tired and need some rest`;
+
+// split()
+console.log(physicalState.split());
+console.log(physicalState.split(' and '));
+console.log(physicalState.split(' '));
+console.log(physicalState.split(''));
+console.log([...physicalState]);
 
 // reduce()
 
@@ -288,7 +279,7 @@ const B = [
   'designer',
   'unstable',
   'sensitive',
-  ['independent', ['unusual', ['faithful']]],
+  'faithful',
 ];
 
 // Copying arrays
@@ -311,20 +302,8 @@ console.log(Bo instanceof Object); // instanceof
 console.log(Bogdan.indexOf('tender')); // indexOf
 console.log(Bogdan[2]);
 
-// unshift()
 Bogdan.unshift('1982');
-
-console.log(Bogdan);
-
-Bogdan.push('outgoing', 'strong');
-
-console.log(Bogdan);
-
-// pop()
-Bogdan.pop();
-
-console.log(Bogdan);
-
+Bogdan.push('outgoing');
 Bogdan.reverse();
 
 console.log(Bogdan);
@@ -368,13 +347,10 @@ const SaturdayDeepCopy = JSON.parse(SaturdayJSON);
 SaturdayDeepCopy[2].task[Object.entries(Saturday[2].task).length] = 'Sleeping';
 
 console.log(Saturday);
+console.log(Saturday[0].task);
 console.log(typeof Saturday[0].task);
 console.log(SaturdayJSON);
 console.log(SaturdayDeepCopy);
-
-console.log(Saturday[0].hasOwnProperty('time'));
-console.log(Saturday[0].hasOwnProperty('task'));
-console.log(Saturday[0].task);
 
 for (let i = 0; i < Saturday.length; i++) {
   console.log(Saturday[i].id);
@@ -391,15 +367,29 @@ Saturday.forEach(todo => console.log(todo));
 
 // map()
 
-// performs a function for each todo and returns a transformed array of the same length
+// Map performs a function for each todo and returns a transformed array of the same length
 
-const todoTask = Saturday.map(todo => console.log(todo.task));
+// The way we use map is by calling it on an array and passing it some function we want to apply to each element in the array. Map then returns another array that contains the return values of the function for each element in the original array
+
+const todoTask = todo => todo.task;
+
+const tasks = Saturday.map(todoTask);
+
+console.log(tasks);
 
 // filter()
 
-// returns a subset of the original array with elements that meet the condition
+// Filter returns a subset of the original array with elements that meet the condition
 
-const todoDone = Saturday.filter(todo => console.log(todo.done));
+// Filter is used when you want to find all of the elements in the array that fit some criteria
+
+// The main difference between filter and map is the type of function that we pass into it. In map we pass in a function that returns a value for each element in the array. And the return value of this function represents what the element becomes in our new array. On the other hand, for filter we pass it a function that returns either true or false for each element. If the function that we pass returns true for a given element, then that element's included in the final array. Otherwise, it's left out.
+
+const completedTask = todo => todo.done;
+
+const completedTasks = Saturday.filter(completedTask);
+
+console.log(completedTasks);
 
 // Higher-order array methods with predicate functions
 
@@ -436,7 +426,7 @@ const allPastYears = ascendingYears.every(year => {
 
 console.log({ allPastYears });
 
-const areAllTasksCompleted = Saturday.every(todo => todo.done);
+const areAllTasksCompleted = Saturday.every(completedTask);
 
 console.log({ areAllTasksCompleted });
 
@@ -445,7 +435,7 @@ const sortedIds = Saturday.map(todo => todo.id).sort(); // map().sort()
 
 console.log(sortedIds);
 
-const doneTasks = Saturday.filter(todo => todo.done).map(todo => todo.task); // filter().map()
+const doneTasks = Saturday.filter(completedTask).map(todoTask); // filter().map()
 
 console.log(doneTasks);
 
@@ -488,19 +478,15 @@ for (let idx in newAgenda) {
 
 newAgenda.forEach(console.log);
 
-const agendaTasks = newAgenda.map(todo => todo.task);
+const agendaTasks = newAgenda.map(todoTask);
 
 console.log(agendaTasks);
-
-const agendaIdsWithTasks = newAgenda.map(todo =>
-  console.log(`${todo.id}) ${todo.task}`)
-);
 
 const descendingIds = newAgenda.map(todo => todo.id).sort((a, b) => b - a); // map().sort()
 
 console.log(descendingIds);
 
-const bingo = newAgenda.filter(todo => todo.status).map(todo => todo.task); // filter().map()
+const bingo = newAgenda.filter(todo => todo.status).map(todoTask); // filter().map()
 
 console.log(bingo);
 
@@ -514,7 +500,7 @@ const foundCompletedTask = newAgenda
 
 console.log(foundCompletedTask);
 
-const sortedTasks = newAgenda.map(todo => todo.task).sort(); //map().sort()
+const sortedTasks = newAgenda.map(todoTask).sort(); //map().sort()
 
 console.log(sortedTasks);
 
@@ -623,7 +609,7 @@ console.log(
 );
 console.log(myMapFuncOne(arrOfNums, double));
 console.log(myMapFuncTwo(arrOfNums, element => element + 5));
-console.log(myMapFuncThree(newAgenda, todo => todo.task));
+console.log(myMapFuncThree(newAgenda, todoTask));
 
 Array.prototype.myFilterPolyfill = function (cb) {
   if (!Array.isArray(this) || !this.length || typeof cb !== 'function') return;
@@ -654,9 +640,7 @@ const myFilterFunc = (array, test) => {
 const greaterThanThree = num => num > 3;
 
 console.log(newAgenda.myFilterPolyfill(todo => !todo.status));
-console.log(
-  myFilterFunc(newAgenda, todo => todo.status).map(todo => todo.task)
-);
+console.log(myFilterFunc(newAgenda, todo => todo.status).map(todoTask));
 
 console.log(arrOfNums.myFilterPolyfill(greaterThanThree));
 console.log(myFilterFunc(arrOfNums, greaterThanThree));
@@ -851,12 +835,10 @@ console.log(Array.from(catsNames[0]));
 console.log([...'Mila']);
 
 console.log(Array.from(Object.values(mixedArray)));
-console.log(Object.values(mixedArray));
 
 console.log(Object.getOwnPropertyNames(mixedArray));
-console.log(mixedArray.hasOwnProperty('length'));
-console.log(mixedArray.hasOwnProperty(10));
-
+console.log(Object.hasOwn(mixedArray, 'length'));
+console.log(Object.hasOwn(mixedArray, 5));
 console.log(Object.values(mixedArray));
 console.log(Object.entries(mixedArray));
 console.log(Object.fromEntries(Object.entries(mixedArray)));
@@ -864,31 +846,31 @@ console.log(Object.fromEntries(Object.entries(mixedArray)));
 console.log([...new Set(mixedArray)]);
 
 // Copying arrays
-let mixedArrayCopy1 = mixedArray;
-const mixedArrayCopy2 = [...mixedArray];
-const mixedArrayCopy3 = mixedArray.slice();
-const mixedArrayCopy4 = Object.assign([], mixedArray);
-const mixedArrayCopy5 = JSON.parse(JSON.stringify(mixedArray));
+let mixedArrayCopy_1 = mixedArray;
+const mixedArrayCopy_2 = [...mixedArray];
+const mixedArrayCopy_3 = mixedArray.slice();
+const mixedArrayCopy_4 = Object.assign([], mixedArray);
+const mixedArrayCopy_5 = JSON.parse(JSON.stringify(mixedArray));
 
 // Comparing arrays
-console.log(Object.is(mixedArrayCopy1, mixedArray));
-console.log(mixedArrayCopy1 === mixedArray);
-console.log(mixedArrayCopy2 == mixedArray);
-console.log(mixedArrayCopy3 == mixedArray);
-console.log(mixedArrayCopy4 == mixedArray);
-console.log(mixedArrayCopy5 == mixedArray);
+console.log(Object.is(mixedArrayCopy_1, mixedArray));
+console.log(mixedArrayCopy_1 === mixedArray);
+console.log(mixedArrayCopy_2 == mixedArray);
+console.log(mixedArrayCopy_3 == mixedArray);
+console.log(mixedArrayCopy_4 == mixedArray);
+console.log(mixedArrayCopy_5 == mixedArray);
 console.log([1, 20] == [1, 20]);
 console.log([] == []);
 console.log([] == true);
 console.log(Boolean([]) === true);
 
-mixedArrayCopy1.unshift('first element');
-mixedArrayCopy1.push('last element');
+mixedArrayCopy_1.unshift('first element');
+mixedArrayCopy_1.push('last element');
 
-console.log(mixedArrayCopy1);
+console.log(mixedArrayCopy_1);
 console.log(mixedArray);
 
-mixedArrayCopy1 = ['This', 'array', 'has', 'changed', 'completely', '.'];
+mixedArrayCopy_1 = ['This', 'array', 'has', 'changed', 'completely', '.'];
 
-console.log(mixedArrayCopy1);
+console.log(mixedArrayCopy_1);
 console.log(mixedArray);

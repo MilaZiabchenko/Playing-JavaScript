@@ -210,13 +210,11 @@ addUniqueIdToTheObject(object_2);
 console.log(object_1);
 console.log(object_2);
 
-console.log(object_1.hasOwnProperty('id'));
 console.log(Object.hasOwn(object_1, 'id'));
 
 Object.prototype.keyInheritedFromPrototype = 'valueInheritedFromPrototype';
 
 console.log('keyInheritedFromPrototype' in object_1);
-console.log(object_1.hasOwnProperty('keyInheritedFromPrototype'));
 console.log(Object.hasOwn(object_1, 'keyInheritedFromPrototype'));
 
 console.log(Object.keys(object_1));
@@ -368,10 +366,10 @@ console.log(cat?.snore?.(8) || `The cat doesn't snore`);
 // Nullish coalescing operator
 console.log(cat?.bark?.(8) ?? `Hey, cats don't bark 😂😂😂`);
 
-a = undefined ?? 'Hello';
-b = null ?? cat.name;
-let c = '' || '! 👻';
-let d = '' ?? 'Bye!';
+const a = undefined ?? 'Hello';
+const b = null ?? cat.name;
+const c = '' || '! 👻';
+const d = '' ?? 'Bye!';
 
 console.log(`${a}, ${b}${c}${d}`);
 
@@ -395,7 +393,6 @@ const finalProp = 'finalScore';
 
 const objectWithResults = {
   [initialProp]: getScore(0).score,
-  updatedScore: getScore(10).score,
   updatedScore: getScore(52).score,
   [finalProp]: getScore(99).score,
 };

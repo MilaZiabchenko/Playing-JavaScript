@@ -13,7 +13,7 @@ let area = pi * radius ** 2;
 console.log(area);
 
 // Order of math operations is known as B E D M A S
-result = 5 * (10 - 3) ** 2;
+let result = 5 * (10 - 3) ** 2;
 
 console.log(result);
 
@@ -364,16 +364,16 @@ switch (grade) {
 
 console.log(`The age is ${age} outside code block`);
 
-if (true) {
+if (age) {
   let age = 30;
   console.log(`The age is ${age} inside code block`);
 
-  if (true) {
+  if (age) {
     let age = 35;
     console.log(`The age is ${age} inside 1st nested code block`);
   }
 
-  if (true) {
+  if (age) {
     console.log(`The age is ${age} inside 2nd nested code block`);
   }
 }
