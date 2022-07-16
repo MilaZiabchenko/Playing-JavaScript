@@ -443,17 +443,17 @@ const agenda = [
   {
     id: 1,
     task: 'Buying a new scratching post for Leo',
-    status: true,
+    done: true,
   },
   {
     id: 2,
     task: 'Progressing in learning of web development',
-    status: true,
+    done: true,
   },
   {
     id: 3,
     task: 'Riding to the forest with Bogdan',
-    status: true,
+    done: true,
   },
 ];
 
@@ -462,7 +462,7 @@ const newAgenda = [
   {
     id: 4,
     task: 'Resolving health issues',
-    status: false,
+    done: false,
   },
 ];
 
@@ -486,7 +486,7 @@ const descendingIds = newAgenda.map(todo => todo.id).sort((a, b) => b - a); // m
 
 console.log(descendingIds);
 
-const bingo = newAgenda.filter(todo => todo.status).map(todoTask); // filter().map()
+const bingo = newAgenda.filter(completedTask).map(todoTask); // filter().map()
 
 console.log(bingo);
 
@@ -495,7 +495,7 @@ const bingoCopy = JSON.parse(JSON.stringify(bingo));
 console.log(bingoCopy);
 
 const foundCompletedTask = newAgenda
-  .filter(todo => todo.status)
+  .filter(completedTask)
   .find(todo => todo.task.includes('of')); // filter().find()
 
 console.log(foundCompletedTask);
@@ -576,7 +576,7 @@ Array.prototype.myMapPolyfill = function (cb) {
   return newArray;
 };
 
-const myMapFuncOne = (array, transform) => {
+const myMapFunc_1 = (array, transform) => {
   const mapped = [];
 
   for (let element of array) {
@@ -586,7 +586,7 @@ const myMapFuncOne = (array, transform) => {
   return mapped;
 };
 
-const myMapFuncTwo = (array, transform) => {
+const myMapFunc_2 = (array, transform) => {
   const mapped = array.reduce((acc, cur) => {
     acc.push(transform(cur));
 
@@ -596,7 +596,7 @@ const myMapFuncTwo = (array, transform) => {
   return mapped;
 };
 
-const myMapFuncThree = (array, transform) =>
+const myMapFunc_3 = (array, transform) =>
   array.reduce((acc, cur) => [...acc, transform(cur)], []);
 
 const double = num => num + num;
@@ -607,9 +607,9 @@ console.log(arrOfNums.myMapPolyfill(raiseToThePowerOfTwo));
 console.log(
   arrOfNums.myMapPolyfill(raiseToThePowerOfTwo).myMapPolyfill(double)
 );
-console.log(myMapFuncOne(arrOfNums, double));
-console.log(myMapFuncTwo(arrOfNums, element => element + 5));
-console.log(myMapFuncThree(newAgenda, todoTask));
+console.log(myMapFunc_1(arrOfNums, double));
+console.log(myMapFunc_2(arrOfNums, element => element + 5));
+console.log(myMapFunc_3(newAgenda, todoTask));
 
 Array.prototype.myFilterPolyfill = function (cb) {
   if (!Array.isArray(this) || !this.length || typeof cb !== 'function') return;
@@ -625,7 +625,7 @@ Array.prototype.myFilterPolyfill = function (cb) {
   return output;
 };
 
-const myFilterFunc = (array, test) => {
+const myFilterFunc_1 = (array, test) => {
   const passed = [];
 
   for (let element of array) {
@@ -637,16 +637,27 @@ const myFilterFunc = (array, test) => {
   return passed;
 };
 
-const greaterThanThree = num => num > 3;
+const myFilterFunc_2 = (array, test) =>
+  array.reduce((acc, cur) => {
+    test(cur) && acc.push(cur);
 
-console.log(newAgenda.myFilterPolyfill(todo => !todo.status));
-console.log(myFilterFunc(newAgenda, todo => todo.status).map(todoTask));
+    return acc;
+  }, []);
+
+const greaterThanThree = num => num > 3;
+const odd = num => num % 2;
+const even = num => !(num % 2);
+
+console.log(newAgenda.myFilterPolyfill(todo => !todo.done));
+console.log(myFilterFunc_1(newAgenda, completedTask).map(todoTask));
 
 console.log(arrOfNums.myFilterPolyfill(greaterThanThree));
-console.log(myFilterFunc(arrOfNums, greaterThanThree));
+console.log(myFilterFunc_1(arrOfNums, greaterThanThree));
+console.log(myFilterFunc_2(arrOfNums, greaterThanThree));
 
-console.log(arrOfNums.myFilterPolyfill(num => num % 2));
-console.log(myFilterFunc(arrOfNums, num => num % 2 === 0));
+console.log(arrOfNums.myFilterPolyfill(odd));
+console.log(myFilterFunc_1(arrOfNums, even));
+console.log(myFilterFunc_2(arrOfNums, odd));
 
 const filterReversedNums = (array, test) => {
   const reversedArray = [];
@@ -664,7 +675,7 @@ const mixedArray = [9, 'watermelon', 9, 3, null, 9, '99', 3, 'watermelon', 99];
 
 const isNumber = element => typeof element === 'number';
 
-const numbers = myFilterFunc(mixedArray, isNumber);
+const numbers = myFilterFunc_1(mixedArray, isNumber);
 const reversedNumbers = filterReversedNums(mixedArray, isNumber);
 
 console.log(numbers);
@@ -733,9 +744,8 @@ const mySomeFunc = (array, cb) => {
   return false;
 };
 
-console.log(mySomeFunc(arrOfNums, greaterThanThree));
+console.log(mySomeFunc(arrOfNums, isNumber && greaterThanThree && odd));
 console.log(mySomeFunc(arrOfNums, element => element === 7));
-console.log(mySomeFunc(arrOfNums, element => element === 8));
 
 const myEveryFunc = (array, cb) => {
   for (let element of array) {
@@ -745,9 +755,9 @@ const myEveryFunc = (array, cb) => {
   return true;
 };
 
-console.log(myEveryFunc(arrOfNums, greaterThanThree));
-console.log(myEveryFunc(arrOfNums, element => element === 7));
 console.log(myEveryFunc(arrOfNums, isNumber));
+console.log(myEveryFunc(arrOfNums, isNumber && even));
+console.log(myEveryFunc(arrOfNums, greaterThanThree));
 
 const myFindLastFunc = (array, cb) => {
   for (let i = array.length - 1; i >= 0; i--) {
@@ -758,7 +768,7 @@ const myFindLastFunc = (array, cb) => {
 // findLast()
 console.log(arrOfNums.findLast(greaterThanThree));
 console.log(myFindLastFunc(arrOfNums, greaterThanThree));
-console.log(myFindLastFunc(arrOfNums, element => element % 2));
+console.log(myFindLastFunc(arrOfNums, odd));
 
 console.log(arrOfNums);
 
