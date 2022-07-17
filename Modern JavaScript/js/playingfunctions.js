@@ -1,6 +1,7 @@
 // Regular functions
 
 // Default params
+
 function autumnDays(Sep = 30, Oct = 31, Nov = 30) {
   // The return statement
 
@@ -12,6 +13,7 @@ function autumnDays(Sep = 30, Oct = 31, Nov = 30) {
 console.log(autumnDays());
 
 // Arrow functions
+
 const summerDays = (Jun = 30, Jul = 31, Aug = 31) => Jun + Jul + Aug;
 
 console.log(summerDays());
@@ -65,7 +67,9 @@ console.log(scope);
 
 function func() {
   console.log(scope);
+
   var scope = 'local';
+
   console.log(scope);
 }
 
@@ -79,6 +83,7 @@ let topic = 'JavaScript';
 if (topic) {
   // var topic = 'EcmaScript'; // functional scope
   let topic = 'EcmaScript'; // block scope
+
   console.log(topic);
 }
 
@@ -120,9 +125,11 @@ getMyFriendsName();
 console.log(myFriendsName);
 
 function getMyFriendsName() {
-  // Hoisting inside a function
+  // hoisting inside a function
   inner();
+
   return;
+
   function inner() {
     myFriendsName = 'Hanna';
   }
@@ -150,17 +157,16 @@ greetACoder('Ania', 'Kubow');
 
 const song = () => 'My Funny Valentine';
 
-// Invoking a function
-let songTitle = song();
+let songTitle = song(); // invoking a function
 
 console.log(songTitle);
 
-// Invoking a method
-songTitle = songTitle.toUpperCase();
+songTitle = songTitle.toUpperCase(); // invoking a method
 
 console.log(songTitle);
 
 // Anonymous function
+
 let show = function () {
   console.log('Anonymous function 1');
 };
@@ -172,6 +178,7 @@ show = () => console.log('Anonymous function 2');
 show();
 
 // Immediately invoked function expression
+
 (function () {
   console.log('Function executed');
 })(); // trailing parenthesis
@@ -230,6 +237,7 @@ const outerFunc = () => {
 
     const innerInnerFunc = () => {
       // The function body has access to variables that are defined outside the function body
+
       console.log(`${mi}, ${le} and ${bo} are awesome!`);
     };
 
@@ -244,6 +252,7 @@ outerFunc();
 // Returning functions from functions
 
 // Thanks to closures, the returned function has access to the data of the parent function, even after the parent function is run
+
 const ourNames = ['Mila', 'Leo'];
 
 function outerSpace() {
@@ -292,7 +301,8 @@ console.log(f1?.(), f2?.());
 
 // Returning objects from functions
 
-// The following makePerson function returns an object that can store and change a name thanks to closures
+// A function can return an object that can store and change data thanks to closures
+
 const makePerson = name => {
   let _name = name; // '_name' private variable is not accessible from the outside
 
@@ -312,11 +322,14 @@ me.setName('Mila Ziablick');
 console.log(me.getName());
 
 // The previous example closely resembles a class that stores private state and exposes public getter and setter methods. We can extend this object-oriented parallel further by using closures to implement private methods
+
 const Person = ({ name, job }) => {
   let _name = name;
   let _job = job;
 
-  const privateSetJob = newJob => (_job = newJob); // 'privateSetJob' has access to the private state variable '_job' through a closure, and it is not directly accessible to consumers
+  const privateSetJob = newJob => (_job = newJob);
+
+  // 'privateSetJob' has access to the private state variable '_job' through a closure, and it is not directly accessible to consumers
 
   return {
     getName: () => _name,
@@ -421,10 +434,12 @@ console.log(curryAMessage(`Hey`)(mi)(`What's up`));
 
 // Partial application is having a function with a certain number of arguments and fixing some of them to a set value. This gives us a function with less arguments.
 
-// general function
+// General function
+
 const makeMultiplier = a => b => a * b;
 
-// specific function
+// Specific function
+
 const triple = makeMultiplier(3);
 
 // This function with fixed arguments can then be called from anywhere else in our code, and it will be as if we had called the original function with all of its arguments
@@ -455,21 +470,49 @@ const partialFunctionsOf5 = [func_1, func_2, func_3, func_4, func_5].map(func =>
   func(5)
 );
 
-// array of functions
+// Composition of functions
+
+let resultOfAllOperations = Math.abs(
+  partialFunctionsOf5[4](
+    partialFunctionsOf5[3](
+      partialFunctionsOf5[2](partialFunctionsOf5[1](partialFunctionsOf5[0](1)))
+    )
+  )
+);
+
+console.log(resultOfAllOperations);
+
+let resultOfAllOperationsReversed = partialFunctionsOf5[0](
+  partialFunctionsOf5[1](
+    partialFunctionsOf5[2](partialFunctionsOf5[3](partialFunctionsOf5[4](0)))
+  )
+);
+
+console.log(resultOfAllOperationsReversed);
+
+// Array of functions
+
 const arrayOfFunctions = [...partialFunctionsOf5, Math.abs];
 
-const resultOfAllOperations = arrayOfFunctions.reduce(
-  (acc, func) => func(acc),
-  1
-);
+resultOfAllOperations = arrayOfFunctions.reduce((acc, func) => func(acc), 1);
 
 console.log(
   `The cumulative result of all functions' operations is ${resultOfAllOperations}.`
 );
 
-const getRoles = () => Object.entries(getRoles.team).map(([, role]) => role);
+resultOfAllOperationsReversed = arrayOfFunctions.reduceRight(
+  (acc, func) => func(acc),
+  0
+);
+
+console.log(
+  `The cumulative result of all functions' operations in reverse order is ${resultOfAllOperationsReversed}.`
+);
 
 // Assigning properties to functions
+
+const getRoles = () => Object.entries(getRoles.team).map(([, role]) => role);
+
 getRoles.team = {
   Hanna: 'QA Engineer',
   Mila: 'Software Engineer',
@@ -613,7 +656,8 @@ console.log(objectOfAddresses.arrayOfAddresses);
 const myFunc = function (...args) {
   console.log(this, arguments, args);
 
-  // Inside of the body of myArrowFunc, arguments object equals to the arguments of myFunc invocation. If you’d like to access the direct arguments of the arrow function, you can use the rest parameters feature:
+  // Inside of the body of myArrowFunc, arguments object equals to the arguments of myFunc invocation. If you’d like to access the direct arguments of the arrow function, you can use the rest parameters feature
+
   const myArrowFunc = (...args) => console.log(this, arguments, args);
 
   myArrowFunc(1, 2, 3);
