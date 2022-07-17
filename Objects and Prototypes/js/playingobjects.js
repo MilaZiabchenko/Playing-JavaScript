@@ -1,5 +1,3 @@
-console.time('Elapsed');
-
 // Math object
 
 // Built-in functions of Math object
@@ -101,6 +99,7 @@ object_2.mushrooms = '🍄🍄🍄🍄🍄';
 console.log(object_1);
 
 // Object literal
+
 const human = {
   firstName: 'Bogdan',
   lastName: 'Starynets',
@@ -134,7 +133,7 @@ function surprise(drink) {
 
 // Copying a value in JavaScript is almost always shallow, as opposed to deep. That means that changes to deeply nested values will be visible in the copy as well as the original.
 
-// Shallow object copy
+// Shallow object copy:
 
 // 1. with Object.assign()
 const human_1 = Object.assign({}, human);
@@ -165,12 +164,13 @@ human.logInterests();
 console.log(surprise.call(human, 'uzvar'));
 
 // Getting object members
+
 console.log(human.dateOfBirth);
 console.log(human_1['dateOfBirth']);
 console.log(human_2.interests[1]);
 console.log(human_3.address.city);
 
-// Setting/updating object members
+// Setting/updating object members:
 
 // 1. using dot notation
 human.interests = [...human.interests, 'riding a bicycle', 'playing with Leo'];
@@ -204,7 +204,8 @@ console.log(human_1['address']);
 console.log(human_2['address']);
 console.log(human_3['address']);
 
-// Accessing/updating dynamic properties, using square brackets
+// Accessing/updating dynamic properties
+
 let property = 'dateOfBirth';
 
 console.log(human[property]); // dateOfBirth value
@@ -215,6 +216,7 @@ console.log(human[property]); // special value
 console.log(human['special']); // special value
 
 // Deleting object members
+
 delete human.gender;
 
 console.log(Object.hasOwn(human, 'gender'));
@@ -311,7 +313,8 @@ const updates = {
   shortName: 'Milina',
 };
 
-// Merging objects in an immutable way
+// Merging objects
+
 const creativeCoder = {
   ...me,
   ...updates, // updating (rewriting) a property
@@ -326,6 +329,7 @@ const creativeCoder = {
 console.log({ creativeCoder });
 
 // Deep object destructuring
+
 const getRegroupedObject = obj => {
   const {
     details: { university } = university,
@@ -407,11 +411,13 @@ console.log(Object.getOwnPropertyNames(musician));
 console.log(Object.hasOwn(musician, 'genres'));
 console.log('genres' in musician);
 
-// Copying object with methods
+// Copying object with its methods (shallow copy)
+
 const musicianShallowCopyOneWithMethods = Object.assign({}, musician);
 const musicianShallowCopyTwoWithMethods = { ...musician };
 
-// Copying object without methods
+// Copying object without its methods (deep copy)
+
 const musicianDeepCopyWithoutMethods = JSON.parse(JSON.stringify(musician));
 
 console.log(musician);
@@ -453,6 +459,8 @@ const humans = [].concat(human, creativeCoder, musician);
 
 console.log(humans);
 
+// Strong reference
+
 let keyboardist = { firstName, pro: false };
 const bandMember = { ...keyboardist, memberSince: 2022 }; // keyboardist shallow copy, reference is changed
 
@@ -481,6 +489,7 @@ const schedule = {};
 console.log(isEmpty(schedule));
 
 // Dynamic object keys (aka computed properties)
+
 const time = ['morning_', 'night_'];
 
 schedule[time[0] + '7:30'] = 'Get up, greet Leo, and have a cup of coffee :)';
@@ -491,6 +500,7 @@ console.log(isEmpty(schedule));
 console.log(schedule);
 
 // Nested objects
+
 const object = {
   littleFriends: {
     Wendy: {
@@ -522,9 +532,10 @@ console.log(
   )
 ); // function replacer
 
-// Nested Object Access Patterns
+// Nested Object Access Patterns:
 
 // 1. Logical && operator
+
 let info =
   object &&
   object.littleFriends &&
@@ -556,6 +567,7 @@ info = object?.littleFriends?.Danny?.says;
 console.log(info);
 
 // Getting deep object properties
+
 const path1 = 'littleFriends.Wendy.says';
 const path2 = 'littleFriends.Tim.says';
 const path3 = 'littleFriends.Danny.actions';
@@ -606,9 +618,11 @@ const objectCopyThree = JSON.parse(JSON.stringify(object));
 const objectCopyFour = structuredClone(object);
 
 // Changing deeply nested properties affects shallow copies, but doesn't affect deep copies
+
 object.littleFriends.Peter = 'On his way...';
 
 // Changing direct properties does't affect neither shallow nor deep copies
+
 object.littleFriends = '4 Little Friends';
 
 console.log(object);
@@ -617,5 +631,3 @@ console.log(objectCopyOne.littleFriends.Peter);
 console.log(objectCopyTwo.littleFriends.Peter);
 console.log(objectCopyThree.littleFriends.Peter);
 console.log(objectCopyFour.littleFriends.Peter);
-
-console.timeEnd('Elapsed');

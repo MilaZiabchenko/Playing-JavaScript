@@ -1,4 +1,4 @@
-// Regular functions
+// Regular function
 
 // Default params
 
@@ -12,7 +12,7 @@ function autumnDays(Sep = 30, Oct = 31, Nov = 30) {
 
 console.log(autumnDays());
 
-// Arrow functions
+// Arrow function
 
 const summerDays = (Jun = 30, Jul = 31, Aug = 31) => Jun + Jul + Aug;
 
@@ -125,7 +125,7 @@ getMyFriendsName();
 console.log(myFriendsName);
 
 function getMyFriendsName() {
-  // hoisting inside a function
+  // Hoisting inside a function
   inner();
 
   return;
@@ -157,11 +157,11 @@ greetACoder('Ania', 'Kubow');
 
 const song = () => 'My Funny Valentine';
 
-let songTitle = song(); // invoking a function
+let songTitle = song(); // function invocation
 
 console.log(songTitle);
 
-songTitle = songTitle.toUpperCase(); // invoking a method
+songTitle = songTitle.toUpperCase(); // method invocation
 
 console.log(songTitle);
 
@@ -194,7 +194,7 @@ const personality = {
   );
 })(personality);
 
-// Pure functions
+// Pure function
 
 // Pure functions are functions that accept an input and return a value without modifying any data outside its scope (no side effects). A pure function only works with its internal data. For the same input it always returns the same output
 
@@ -217,7 +217,7 @@ console.log(calcResult1);
 console.log(calcResult2);
 console.log(calcResult3);
 
-// Closures
+// Closure
 
 // A closure is a function combined with references to the variables defined outside of it. Closures maintain the variable references, which allow functions to access variables outside of their scope.
 
@@ -296,7 +296,10 @@ const validateParam = param => (param ? () => '😎' : undefined);
 const f1 = validateParam(true);
 const f2 = validateParam(false);
 
-// When used with function calls, the optional chaining operator returns undefined if the given function does not exist.
+// The optional chaining operator with function calls
+
+// When used with function calls, the optional chaining operator returns undefined if the given function does not exist
+
 console.log(f1?.(), f2?.());
 
 // Returning objects from functions
@@ -521,7 +524,7 @@ getRoles.team = {
 console.log(getRoles.team);
 console.log(getRoles());
 
-// Recursive functions
+// Recursive function
 
 // All recursive algorithms work on the same principle. The function calls itself and passes results from the previous calculation.
 
@@ -610,7 +613,9 @@ console.log(makeTree(categories, null));
 
 // 1. 'this' value
 
-// Regular function from the lowest priority to the highest:
+// Regular function:
+
+// (from the lowest priority to the highest)
 
 // -simple invocation => global object;
 // -method invocation => object owning the method;
@@ -641,7 +646,7 @@ console.log(objectOfAddresses.arrayOfAddresses);
 
 // Contrary to a regular function, the indirect invocation of an arrow function using myArrowFunc.call(thisVal) or myArrowFunc.apply(thisVal) doesn’t change the value of this: the context value is always resolved lexically.
 
-// 2.Constructors
+// 2.constructors
 
 // The regular function can easily construct objects (instances of a function).
 

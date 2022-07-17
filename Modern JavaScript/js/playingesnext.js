@@ -29,6 +29,7 @@ setOfBooks.delete('War and Peace');
 console.log(setOfBooks);
 
 // We can iterate through the elements of a Set in the insertion order
+
 setOfBooks.forEach(book => console.log(book));
 
 for (let book of setOfBooks) console.log(book);
@@ -68,6 +69,7 @@ course
 console.log(course);
 
 // Unlike a standard object in JavaScript, with Map we must use the get() method to access the values
+
 console.log(course.get('React'));
 
 // Unlike objects, Maps can iterate their elements in their insertion order
@@ -144,6 +146,7 @@ console.log(pets);
 // If you need to store additional data temporarily and don’t want to worry about cleaning up the memory or how the objects are removed, then using weak references is an absolute lifesaver, but in the majority of situations, use normal (strong) references.
 
 // Object from entries
+
 const getObjFrom = entry => Object.fromEntries(entry);
 
 console.log(getObjFrom(course));
@@ -223,6 +226,7 @@ console.log('id' in object_1 && 'id' in object_2);
 console.log(object_1.id === object_2.id);
 
 // Object literal enhancement
+
 const skier = (name, sound) => ({
   name,
   sound,
@@ -293,6 +297,7 @@ for (let value of gangMap.values()) {
 }
 
 // Generator functions
+
 function* generateIterableSequence() {
   yield 'I';
   yield 'feel';
@@ -310,6 +315,7 @@ const generateString = [...generateIterableSequence()].join(' ');
 console.log(generateString);
 
 // Required parameters (default params)
+
 const isRequired = () => {
   throw new Error(`Param is required`);
 };
@@ -319,6 +325,7 @@ const add = (a = isRequired(), b = isRequired(), c = isRequired()) => a + b + c;
 console.log(add(2, 3, 5));
 
 // String destructuring with rest
+
 const [first, second, ...rest] = isRequired.name;
 
 console.log(first, second);
@@ -326,14 +333,16 @@ console.log(...rest);
 
 console.log([...rest].join(''));
 
-// padStart() string method
+// String methods
+
+// padStart()
 const hideNumber = number => number.slice(-4).padStart(number.length, '*');
 
 const phoneNumber = '0123456789';
 
 console.log(hideNumber(phoneNumber));
 
-// repeat() string method
+// repeat()
 const yell = 'Woo! ';
 
 const party = yell.repeat(2);
@@ -361,9 +370,11 @@ console.log(cat.meow(3));
 console.log(cat.purr(5));
 
 // Optional chaining operator
+
 console.log(cat?.snore?.(8) || `The cat doesn't snore`);
 
 // Nullish coalescing operator
+
 console.log(cat?.bark?.(8) ?? `Hey, cats don't bark 😂😂😂`);
 
 const a = undefined ?? 'Hello';
@@ -388,6 +399,7 @@ console.log(getScore(0));
 console.log(getScore(5));
 
 // Computed properties
+
 const initialProp = 'initialScore';
 const finalProp = 'finalScore';
 

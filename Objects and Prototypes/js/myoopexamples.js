@@ -2,7 +2,7 @@
 
 // 1. Prototype model
 
-// Prototypes are the mechanism by which JavaScript objects inherit features from one another.
+// Prototypes are the mechanism by which JavaScript objects inherit features from one another
 
 function Person(firstName, lastName, dob) {
   this.firstName = firstName;
@@ -11,6 +11,7 @@ function Person(firstName, lastName, dob) {
 }
 
 // Attaching methods to the prototype
+
 Object.prototype.logInfo = function () {
   return `This info can be logged for every object in this prototype chain.`;
 };
@@ -61,7 +62,9 @@ Author.prototype.addBookInfo = function (title, publicationDate) {
   return `${this.getFullName()} wrote a memoir called ${title}. It was published ${bookAge} years ago on ${publicationDate}.`;
 };
 
-// 2. Classes (with prototypes under the hood)
+// 2. Classes
+
+// Classes use prototypes under the hood
 
 class Personality {
   // Encapsulation
@@ -90,7 +93,7 @@ class Personality {
 
 // Class inheritance
 
-// 1. without a constructor
+// with parent constructor
 class Cat extends Personality {
   // We use the parent class constructor here
 
@@ -99,7 +102,7 @@ class Cat extends Personality {
   }
 }
 
-// 2. with a constructor
+// with own constructor
 class Programmer extends Personality {
   constructor(firstName, lastName, dob, language) {
     // We must call super constructor in derived class before accessing 'this' or returning from derived constructor
@@ -130,7 +133,7 @@ class Programmer extends Personality {
   }
 }
 
-// A constructor in JS is a function that happens to be called with the new operator
+// A constructor is a function that happens to be called with the 'new' operator
 const turtleMan = new Person('Bogdan', 'Starynets', '9-28-1982');
 const director = new Director(
   'Martin',

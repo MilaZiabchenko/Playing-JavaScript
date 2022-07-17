@@ -111,13 +111,13 @@ console.log(blogger);
 console.log(blogger.hometown);
 console.log(blogger.blogs[0].likes);
 
-console.log(blogger.location); // key location value
-console.log(blogger['location']); // key location value
-console.log(blogger['location']); // key location value
+console.log(blogger.location);
+console.log(blogger['location']);
+console.log(blogger['location']);
 
 const key = 'location';
 
-console.log(blogger[key]); // const key value;
+console.log(blogger[key]);
 
 let user = {
   // Encapsulation
@@ -141,10 +141,7 @@ let user = {
 
 // Accessing/updating/changing/adding the object's properties and methods
 
-// 1. with dot notation (used most of the time)
 user.email = 'ryu@ninjascorp.com';
-
-// 2. with bracket notation
 user['status'] = 'admin';
 
 // Bracket notation is useful, when we are accessing something dynamic and not necessarily set in stone
@@ -396,6 +393,8 @@ console.log(members);
 
 // All of this good stuff - creating a prototype for our emulated class, adding the methods to that prototype etc - this is all going in the background when we use the 'class' keyword
 
+// Object.create()
+
 const proto = {
   name: 'Mila',
 };
@@ -406,6 +405,8 @@ const object = Object.create(proto);
 
 console.log(object);
 console.log(object.name);
+
+// Object.seal()
 
 object.name = 'Leo';
 Object.seal(object);
@@ -420,6 +421,8 @@ object.surname = 'OldMan';
 console.log(object);
 console.log(object.name);
 console.log(object.surname);
+
+//Object.freeze()
 
 Object.freeze(object);
 
@@ -461,6 +464,8 @@ console.info(user.__proto__);
 console.info(Object.getPrototypeOf(user));
 console.info(Object.hasOwn(user, '_password'));
 
+// Protected and private fields
+
 class AdminUser extends ProtectedUser {
   _workingHours = 0; // protected field;
   #level = 0; // private field;
@@ -501,7 +506,9 @@ console.log('#level' in admin);
 console.log(admin.level);
 console.log(admin.workingHours);
 
-// getters and setters in regular objects
+// Getters and setters
+
+// in regular objects
 const attendance = {
   _list: [],
 
@@ -520,7 +527,7 @@ attendance.addName = 'Bo';
 
 console.log(attendance.list);
 
-// getters and setters in classes
+// in classes
 class Hike {
   constructor(distance, pace) {
     (this.distance = distance), (this.pace = pace);

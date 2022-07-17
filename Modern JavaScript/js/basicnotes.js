@@ -1,6 +1,7 @@
 // Comparison operators
 
 // Loose vs strict equality
+
 console.log(null == undefined);
 console.log(55 == '55');
 console.log(55 != '55');
@@ -11,6 +12,7 @@ console.log(55 === 55 / 1);
 console.log('leo' > 'Milu');
 
 // Object.is()
+
 console.log(Object.is(null, undefined));
 console.log(Object.is(55, '55'));
 console.log(Object.is(55, 55 * 1));
@@ -18,6 +20,7 @@ console.log(Object.is(55, 55 * 1));
 // isNaN()
 
 // isNaN() converts the argument to a Number and returns true if the resulting value is NaN
+
 console.log(isNaN(77));
 console.log(isNaN('77'));
 console.log(isNaN('Milu'));
@@ -26,18 +29,21 @@ console.log(isNaN(NaN));
 // Number.isNaN()
 
 // Number.isNaN() does not convert the argument; it returns true when the argument is a Number and is NaN
+
 console.log(Number.isNaN(77));
 console.log(Number.isNaN('77'));
 console.log(Number.isNaN('Milu'));
 console.log(Number.isNaN(NaN));
 
 // Number.isFinite();
+
 console.log(Number.isFinite(NaN));
 console.log(Number.isFinite(Infinity));
 console.log(Number.isFinite(-Infinity));
 console.log(Number.isFinite(-3));
 
 // Number.isInteger()
+
 console.log(Number.isInteger(-3));
 console.log(Number.isInteger(0));
 console.log(Number.isInteger(3.7));
@@ -46,6 +52,7 @@ console.log(Number.isInteger(Infinity));
 // Type conversion
 
 // Conversion to number
+
 const string = '55.55';
 
 console.log(Number(true));
@@ -57,6 +64,7 @@ console.log(parseInt('55.55 * 10'));
 console.log(parseInt(string * 100));
 
 // Conversion to string
+
 const number = 55.55;
 
 console.log(number + '');
@@ -64,10 +72,12 @@ console.log(String(number));
 console.log(number.toString());
 
 // Number.toFixed()
+
 console.log(Number(55.55555).toFixed(2));
 console.log(Number(55.55555).toFixed(2) + 789);
 
 // Conversion to boolean
+
 console.log(Boolean(string), Boolean(number), Boolean('0'), Boolean(0));
 
 const True = !0;
@@ -82,10 +92,12 @@ console.log(True, alsoTrue, False, alsoFalse);
 // void operator
 
 // The void operator evaluates the given expression and then returns undefined
+
 console.log(void 1);
 console.log(void { name: 'Banksy' });
 
 // Order of math operations
+
 let m = 60;
 const c = 1080000000;
 const e = m * c ** 2;
@@ -108,12 +120,14 @@ console.log(evenOrOdd);
 let num = 5;
 
 // Increment and decrement
+
 console.log(num++, num, ++num, num);
 console.log(num--, num, --num, num);
 
 let score = 10;
 
 // Shorthand notation
+
 score += 2;
 
 console.log(score);
@@ -127,6 +141,7 @@ score *= 2;
 console.log(`Game is over. ${score} is your final score.`);
 
 // Template strings with HTML templates
+
 const title =
   'Enlightenment Now: The Case for Reason, Science, Humanism, and Progress';
 const author = 'Steven Pinker';
@@ -142,6 +157,7 @@ const html = `
 console.log(html);
 
 // String methods
+
 const email = 'mi.podgurska@gmail.com';
 const editedEmail = email.replace('mi.podgurska', 'milochka.ziablik');
 
@@ -174,6 +190,7 @@ const editedLine = line.replace('I did yesterday', 'you do');
 console.log(editedLine);
 
 // Array of objects
+
 const today = [
   {
     id: 'morning',
@@ -193,11 +210,13 @@ const today = [
 ];
 
 // JSON data format
+
 const todayJSON = JSON.stringify(today, null, 2);
 
 console.log(todayJSON);
 
 // 'for' loop
+
 for (let i = 0; i < today.length; i++) {
   console.log(today[i].id);
 }
@@ -217,7 +236,8 @@ for (let i = 0; i < 4; i++) {
 
 // Optional 'for' expressions
 
-// All three expressions ([initialization]; [condition]; [final-expression]) in the head of the 'for' loop are optional.
+// All three expressions ([initialization]; [condition]; [final-expression]) in the head of the 'for' loop are optional
+
 for (let i = 0; ; i++) {
   console.log(i);
 
@@ -234,6 +254,7 @@ for (;;) {
 }
 
 // 'while' loop
+
 while (i < today.length) {
   console.log(today[i].task);
 
@@ -247,6 +268,7 @@ while (i) {
 }
 
 // 'do-while' loop
+
 i = 'I send you a message.';
 let j = 'You read my message';
 
@@ -257,6 +279,7 @@ do {
 } while (j === 'You wright me back');
 
 // Nested loops
+
 console.log('Loop start');
 
 for (let i = 1; i <= 3; i++) {
@@ -289,6 +312,7 @@ for (let i = 1; i <= 3; i++) {
 console.log('Loop finish');
 
 // 'for-of' statement
+
 const bonuses = [1000, 2000, 3000];
 
 console.log(`This year's Zzz company's bonuses are equal to:`);
@@ -299,6 +323,7 @@ for (let bonus of bonuses) {
 }
 
 // Logical operators
+
 const resultA = (40 && 2) || 33;
 const resultB = 4 * 2 && 3 * 6;
 const resultC = 0 && 2;
@@ -308,6 +333,7 @@ console.log(resultA, resultB, resultC);
 let time = 5;
 
 // 'if-else if-else' statement
+
 if (time <= 6 || time >= 22) {
   console.log('Time to sleep');
 } else if (time > 7 && time <= 10) {
@@ -321,6 +347,7 @@ if (time <= 6 || time >= 22) {
 }
 
 // Ternary operator
+
 const activity =
   time < 7 || time > 22
     ? 'Sleep'
@@ -331,6 +358,7 @@ const activity =
 console.log(activity);
 
 // Switch statement
+
 switch (activity) {
   case 'Be active':
     console.log('Be active');
@@ -380,12 +408,14 @@ if (typeof flat === 'number') {
   console.error('Datatype error');
 }
 
-// Adding methods to prototypes
+// Setting methods to prototypes
+
 String.prototype.giveLeoMeat = () => `Just give Leo meat!`;
 
 const gang = ['Bo', 'Mi', 'Leo', 'Art'];
 
 // Keywords 'break' and 'continue'
+
 for (let i = 0; i < gang.length; i++) {
   if (gang[i] === 'Art') {
     continue;
@@ -406,6 +436,7 @@ for (let creature of awesomeCreatures) {
 awesomeCreatures.forEach(console.log);
 
 // DOM
+
 document.querySelector('.hidden').classList.remove('hidden');
 
 const ul = document.querySelector('.awesome-creatures');
@@ -434,12 +465,14 @@ heading.textContent = ``;
 heading.append(span, `, Pussycats!`);
 
 // Setting/removing attributes
+
 span.setAttribute('title', 'Hey!');
 span.removeAttribute('title');
 span.title = 'Yo, gang!';
 span.id = 'greeting';
 
 // Manipulating custom data attributes
+
 span.dataset.longGreeting = span.title;
 span.dataset.longGreeting = 'Hello there!';
 console.log(span.dataset);

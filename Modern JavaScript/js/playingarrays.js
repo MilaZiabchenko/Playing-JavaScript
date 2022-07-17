@@ -1,11 +1,13 @@
-// Array creation
+// Array creation:
 
 // 1. Array literal
+
 let planets = ['Earth', 'Saturn', 'Jupiter'];
 
 console.log(planets);
 
 // 2. Array constructor
+
 planets = new Array('Earth', 'Saturn', 'Jupiter');
 
 console.log(planets);
@@ -19,6 +21,7 @@ console.log(planets);
 // The array constructor has a number of situations when its behavior may be surprising. So the array literal is a better and simpler solution to initialize array instances.
 
 // Destructuring
+
 const [first] = planets;
 const [, second] = planets;
 const [, , third] = planets;
@@ -29,6 +32,8 @@ console.log(planet_1, planet_2, planet_3);
 
 console.log(planets instanceof Array);
 console.log(planets instanceof Object);
+
+// Array methods:
 
 // at()
 console.log(planets.at(1));
@@ -75,6 +80,8 @@ console.log(array);
 let years = [2021, 2020, 2015, 2018, 2017, 2016, 2019];
 
 console.log(years);
+
+// Immutable methods
 
 // slice()
 
@@ -129,7 +136,7 @@ console.log(yearsSortedRandomly);
 
 // When ... occurs in a function call or alike, it’s called a “spread syntax” and expands an array into a list.
 
-// Rest parameters ...
+// Rest parameters
 
 // The rest parameter syntax allows us to more easily handle various input as parameters in a function, representing an indefinite number of arguments as an array.
 
@@ -152,7 +159,7 @@ let sumOfYears = (...args) => {
   return sum;
 };
 
-// Spread operator ...
+// Spread operator
 
 // Spread syntax looks similar to rest parameters, but does quite the opposite: it takes in an iterable (e.g an array) and expands it into individual elements.
 
@@ -174,8 +181,6 @@ console.log([...physicalState]);
 // reduce()
 
 // 'reduce' method reduces the array to a single value. It loops over and executes a function for each value of the array. The return value of the function is stored in an acc (result/total). This method is doing some operation(s) on the array and returns a result of all the operations
-
-// syntax: array.reduce(function(total, currentValue, currentIndex, array), initialValue);
 
 let counter = 0;
 
@@ -209,7 +214,7 @@ console.log(minYear);
 console.log(maxYear);
 console.log(getAverageValue(ascendingYears));
 
-// Merging arrays
+// Merging arrays:
 
 // 1. using the spread syntax
 const myBikeActivity = [...array, '18-30 km/h', ...ascendingYears, 2021];
@@ -241,16 +246,18 @@ console.table(brightSide);
 // indexOf()
 let index = brightSide.indexOf('brave');
 
-brightSide.splice(index, 1); // deleting from the array in a mutable way
+// deleting from the array in a mutable way
+brightSide.splice(index, 1);
 
 console.table(brightSide);
 
 index = brightSide.indexOf('happy');
 
+// creating a copy of an array, removing one item from the original array in an immutable (redux) way
 const newBrightSide = [
   ...brightSide.slice(0, index),
   ...brightSide.slice(index + 1),
-]; // creating a copy of an array, removing one item from the original array in an immutable (redux) way
+];
 
 console.table(brightSide);
 console.table(newBrightSide);
@@ -286,6 +293,7 @@ const B = [
 
 // deep copy
 const Bo = JSON.parse(JSON.stringify(B));
+
 // shallow copy
 const BoStar = Object.assign([], B);
 const Bogdan = [...B];
@@ -296,11 +304,6 @@ console.log(BoStar);
 console.log(Bogdan);
 console.log(Bodia);
 console.log(B === Bo);
-console.log(Bogdan.length);
-console.log(typeof BoStar); // typeof
-console.log(Bo instanceof Object); // instanceof
-console.log(Bogdan.indexOf('tender')); // indexOf
-console.log(Bogdan[2]);
 
 Bogdan.unshift('1982');
 Bogdan.push('outgoing');
@@ -321,6 +324,7 @@ Bogdan.splice(9, 0, 'September', '28');
 console.log(Bogdan);
 
 // Array of objects
+
 const Saturday = [
   {
     id: 'Morning',
@@ -856,6 +860,7 @@ console.log(Object.fromEntries(Object.entries(mixedArray)));
 console.log([...new Set(mixedArray)]);
 
 // Copying arrays
+
 let mixedArrayCopy_1 = mixedArray;
 const mixedArrayCopy_2 = [...mixedArray];
 const mixedArrayCopy_3 = mixedArray.slice();
@@ -863,6 +868,7 @@ const mixedArrayCopy_4 = Object.assign([], mixedArray);
 const mixedArrayCopy_5 = JSON.parse(JSON.stringify(mixedArray));
 
 // Comparing arrays
+
 console.log(Object.is(mixedArrayCopy_1, mixedArray));
 console.log(mixedArrayCopy_1 === mixedArray);
 console.log(mixedArrayCopy_2 == mixedArray);
