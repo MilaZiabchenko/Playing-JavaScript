@@ -61,3 +61,7 @@ input + p {
 input.invalid + p {
   opacity: 1;
 }
+
+.hidden {
+  opacity: 0;
+}
