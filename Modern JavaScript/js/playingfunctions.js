@@ -632,25 +632,21 @@ update.apply(objectOfAddresses, [52, 65]);
 
 console.log(objectOfAddresses.arrayOfAddresses);
 
-update.call(objectOfAddresses, [52, 68]);
-
-console.log(objectOfAddresses.arrayOfAddresses);
-
 update.call(objectOfAddresses, 52, 86);
 
 console.log(objectOfAddresses.arrayOfAddresses);
 
 // Arrow function:
 
-// -No matter how or where being executed, 'this' value inside of an arrow function always equals 'this' value of the outer function. 'this' inside the arrow function is bound lexically.
+// No matter how or where being executed, 'this' value inside of an arrow function always equals 'this' value of the outer function. 'this' inside the arrow function is bound lexically.
 
-// Contrary to a regular function, the indirect invocation of an arrow function using myArrowFunc.call(thisVal) or myArrowFunc.apply(thisVal) doesn’t change the value of this: the context value is always resolved lexically.
+// Contrary to a regular function, the indirect invocation of an arrow function using call or apply doesn’t change the value of 'this': the context value is always resolved lexically.
 
 // 2.constructors
 
 // The regular function can easily construct objects (instances of a function).
 
-// The arrow function cannot be used as a constructor as a consequence of 'this' resolved lexically
+// The arrow function cannot be used as a constructor as a consequence of 'this' resolved lexically.
 
 // 3. arguments object
 
