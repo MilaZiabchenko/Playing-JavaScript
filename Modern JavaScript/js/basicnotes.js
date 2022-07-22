@@ -107,6 +107,7 @@ console.log(e);
 const day = 25;
 
 // Modulus
+
 if (day % 2 === 0) {
   console.log(`${day} is an even day of the month.`);
 } else {
@@ -189,21 +190,19 @@ const editedLine = line.replace('I did yesterday', 'you do');
 
 console.log(editedLine);
 
-// Array of objects
-
 const today = [
   {
-    id: 'morning',
+    time: 'morning',
     task: 'Riding a bicycle',
     done: true,
   },
   {
-    id: 'midday',
+    time: 'midday',
     task: 'Learning JS',
     done: true,
   },
   {
-    id: 'evening',
+    time: 'evening',
     task: 'Buying a new scratching post for Leo',
     done: false,
   },
@@ -212,13 +211,15 @@ const today = [
 // JSON data format
 
 const todayJSON = JSON.stringify(today, null, 2);
+const todayTaskJSON = JSON.stringify(today, ['task'], 4);
 
 console.log(todayJSON);
+console.log(todayTaskJSON);
 
 // 'for' loop
 
 for (let i = 0; i < today.length; i++) {
-  console.log(today[i].id);
+  console.log(today[i].time);
 }
 
 const initialArr = [1, 2, 3, 4, 5];
@@ -436,6 +437,8 @@ for (let creature of awesomeCreatures) {
 awesomeCreatures.forEach(console.log);
 
 // DOM
+
+// Querying and manipulating DOM elements
 
 document.querySelector('.hidden').classList.remove('hidden');
 
