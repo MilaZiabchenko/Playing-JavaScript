@@ -44,7 +44,7 @@ const emptyArray = Array(5);
 
 console.log(emptyArray);
 
-// Mutable methods
+// Mutable & immutable methods
 
 // Array has several mutable operations - fill, pop, push, unshift, shift, reverse, sort and splice. Using them is usually causing side effects and bugs that are hard to track. That’s why it’s important to use an immutable way
 
@@ -81,8 +81,6 @@ let years = [2021, 2020, 2015, 2018, 2017, 2016, 2019];
 
 console.log(years);
 
-// Immutable methods
-
 // slice()
 
 // slice() returns a shallow copy of a portion of an array without modifying the original array
@@ -106,7 +104,7 @@ console.log(years);
 
 // sort()
 
-// sort() takes in a Comparator function with two arguments. The return value of this function for any two elements determines the order in which these elements will appear in relation to each other in the final array.
+// sort() takes in a Comparator function with two arguments. The return value of this function for any two elements determines the order in which these elements will appear in relation to each other in the final array
 
 const ascendingYears = years
   .slice()
@@ -239,7 +237,9 @@ console.log(darkSide[0]);
 console.table(brightSide);
 
 // splice()
-brightSide.splice(2, 1, 'intelligent', 'strong', 'brave', 'happy'); // removing and adding items, modifying the array
+
+// removing and adding items, modifying the array
+brightSide.splice(2, 1, 'intelligent', 'strong', 'brave', 'happy');
 
 console.table(brightSide);
 
@@ -327,17 +327,17 @@ console.log(Bogdan);
 
 const Saturday = [
   {
-    id: 'Morning',
+    time: 'Morning',
     task: 'Coding',
     done: true,
   },
   {
-    id: 'Midday',
+    time: 'Midday',
     task: 'Cooking',
     done: false,
   },
   {
-    id: 'Evening',
+    time: 'Evening',
     task: {
       0: 'Cycling',
       1: 'Walking',
@@ -357,7 +357,7 @@ console.log(SaturdayJSON);
 console.log(SaturdayDeepCopy);
 
 for (let i = 0; i < Saturday.length; i++) {
-  console.log(Saturday[i].id);
+  console.log(Saturday[i].time);
 }
 
 for (let todo of Saturday) {
@@ -434,12 +434,7 @@ const areAllTasksCompleted = Saturday.every(completedTask);
 
 console.log({ areAllTasksCompleted });
 
-// sort()
-const sortedIds = Saturday.map(todo => todo.id).sort(); // map().sort()
-
-console.log(sortedIds);
-
-const doneTasks = Saturday.filter(completedTask).map(todoTask); // filter().map()
+const doneTasks = Saturday.filter(completedTask).map(todoTask);
 
 console.log(doneTasks);
 
@@ -485,10 +480,6 @@ newAgenda.forEach(console.log);
 const agendaTasks = newAgenda.map(todoTask);
 
 console.log(agendaTasks);
-
-const descendingIds = newAgenda.map(todo => todo.id).sort((a, b) => b - a); // map().sort()
-
-console.log(descendingIds);
 
 const bingo = newAgenda.filter(completedTask).map(todoTask); // filter().map()
 
@@ -549,7 +540,7 @@ console.log(getMaxOddElement(arrOfNums));
 
 // Polyfills: how array methods work internally
 
-// A piece of code that provides native support to the older browsers that don't have support of modern functionalities of JavaScript is known as polyfill.
+// A piece of code that provides native support to the older browsers that don't have support of modern functionalities of JavaScript is known as polyfill
 
 Array.prototype.myForEachPolyfill = function (cb) {
   for (let i = 0; i < this.length; i++) {
