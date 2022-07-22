@@ -243,9 +243,9 @@ class User {
 
 // The 'new' keyword does 3 things essentially:
 
-// 1. creates a new empty object {};
+// 1. creates a new empty object {}
 
-// 2. binds the context of 'this' inside the class to be equal to that new empty object, so we have access to that empty object via 'this' keyword;
+// 2. binds the context of 'this' inside the class to be equal to that new empty object, so we have access to that empty object via 'this' keyword
 
 // 3. calls the constructor method inside the class specified right after the 'new' keyword, so then we can go about attaching new properties on to that object by using 'this' keyword. And when we create a new object, we pass in a new information, new values into the constructor method by using arguments
 
@@ -255,7 +255,10 @@ const userTwo = new User('yoshi@mariocorp.com', 'Yoshi');
 userOne.login();
 userTwo.logout();
 
-// methods chaining
+// Method chaining
+
+// Method chaining is a programming strategy that simplifies and embellishes your code. It is a mechanism of calling a method on another method of the same object
+
 userOne.login().updateScore().updateScore().logout();
 
 console.log(userOne);
@@ -305,7 +308,7 @@ function Member(email, name) {
 
 // Prototype & __proto__ property
 
-// Every object (date, array, custom object) has a prototype. The prototype of each different type in JS is like a map for that object type. It contains the functionality that is the different methods for that object type, and for any object created of that type the __proto__ property will point to that prototype, and it will know how to use these different methods. So this way the methods are not being repeated over and over in each different object instance, but instead we are defining them once on a single object prototype, and the __proto__ property will point to the object's prototype. In this way we kind of borrowing these methods from the prototype instead of having them stored directly on the objects, and this way of working using prototypes is more efficient and will allow us later to work with prototype inheritance.
+// Every object (date, array, custom object) has a prototype. The prototype of each different type in JS is like a map for that object type. It contains the functionality that is the different methods for that object type, and for any object created of that type the __proto__ property will point to that prototype, and it will know how to use these different methods. So this way the methods are not being repeated over and over in each different object instance, but instead we are defining them once on a single object prototype, and the __proto__ property will point to the object's prototype. In this way we kind of borrowing these methods from the prototype instead of having them stored directly on the objects, and this way of working using prototypes is more efficient and will allow us later to work with prototype inheritance
 
 // Accessing the prototype property
 
@@ -533,14 +536,39 @@ class Hike {
     (this.distance = distance), (this.pace = pace);
   }
 
-  calcTime() {
-    return this.distance / this.pace;
+  get lengthInHours() {
+    return this.calcTime();
   }
 
-  get lengthInHours() {
-    return `${this.calcTime()} hours`;
+  calcTime() {
+    return this.distance / this.pace;
   }
 }
 
 const mtTallac = new Hike(10, 2);
-console.log(mtTallac.lengthInHours);
+
+console.log(`The hike to mt Tallac took ${mtTallac.lengthInHours} hours.`);
+
+class Vehicle {
+  constructor(type, wheels) {
+    this.type = type;
+    this.wheels = wheels;
+  }
+
+  get description() {
+    return this.describeYourself();
+  }
+
+  describeYourself() {
+    console.log(`I'm a ${this.type} with ${this.wheels} wheels.`);
+  }
+}
+
+class SemiTruck extends Vehicle {
+  constructor() {
+    super('semi truck', 18);
+  }
+}
+
+const groceryStoreSemi = new SemiTruck();
+groceryStoreSemi.description;

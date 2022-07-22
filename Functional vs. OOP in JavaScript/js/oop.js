@@ -88,3 +88,43 @@ console.log(members.getMembers());
 const gang = members.listOfMembers;
 
 console.log(gang);
+
+class Book {
+  constructor(title, author, ISBN, numCopies) {
+    this.title = title;
+    this.author = author;
+    this.ISBN = ISBN;
+    this.numCopies = numCopies;
+  }
+
+  get availability() {
+    return this.getAvailability();
+  }
+
+  getAvailability() {
+    if (this.numCopies === 0) return 'Out of stock';
+    if (this.numCopies < 10) return 'Low stock';
+
+    return 'In stock';
+  }
+
+  sell(numCopiesSold = 1) {
+    return (this.numCopies -= numCopiesSold);
+  }
+
+  restock(numCopiesStocked = 5) {
+    return (this.numCopies += numCopiesStocked);
+  }
+}
+
+const HungerGames = new Book('Hunger Games', 'Suzanne Collins', 123919, 5);
+
+console.log(HungerGames.availability);
+
+HungerGames.restock(12);
+
+console.log(HungerGames.availability);
+
+HungerGames.sell(17);
+
+console.log(HungerGames.availability);

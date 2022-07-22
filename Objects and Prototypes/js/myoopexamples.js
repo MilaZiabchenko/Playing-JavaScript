@@ -12,6 +12,8 @@ function Person(firstName, lastName, dob) {
 
 // Attaching methods to the prototype
 
+// We declare a function on the prototype because we don't need to create a new instance of it each time we create a new object
+
 Object.prototype.logInfo = function () {
   return `This info can be logged for every object in this prototype chain.`;
 };
@@ -78,8 +80,8 @@ class Personality {
   }
 
   // getter
-  get name() {
-    return this.firstName;
+  get fullName() {
+    return this.getFullName();
   }
 
   getFullName() {
@@ -163,7 +165,7 @@ console.log(
 );
 console.log(matrixBoy.validateLanguage());
 
-console.log(catWoman.name);
+console.log(catWoman.fullName);
 console.log(catWoman.getLanguage());
 console.log(catWoman.validateLanguage());
 
@@ -188,7 +190,7 @@ console.log(
   } and other web technologies.`
 );
 
-console.log(superCat.name);
+console.log(superCat.fullName);
 console.log(
   `${superCat.getFullName()} was born in spring of ${superCat.getBirthYear()}. ${
     superCat.firstName
